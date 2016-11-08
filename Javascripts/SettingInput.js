@@ -4,7 +4,6 @@
 
 modul =   require('./Modul');
 
-
 module.exports={
     readcsv:readcsv,
     delayedHello:delayedHello

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #circle circle {
+            fill: none;
+            pointer-events: all;
+        }
+        .group path {
+            fill-opacity: .5;
+        }
+        path.chord {
+            stroke: #000;
+            stroke-width: .25px;
+        }
+        #circle:hover path.fade {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<table border="1">
+    <tr >
+        <td>Departemente</td>
+        <td id="EDA_2011">EDA_2011</td>
+        <td id="EDA_2012">EDA_2012</td>
+        <td id="EDA_2013">EDA_2013</td>
+        <td id="EDA_2014">EDA_2014</td>
+        <td id="EDA_All">EDI_EDA_Test</td>
+        <td></td>
+    </tr>
+    <tr >
+        <td>Departemente</td>
+        <td id="EDI_2011">EDI_2011</td>
+        <td id="EDI_2012">EDI_2012</td>
+        <td id="EDI_2013">EDI_2013</td>
+        <td id="EDI_2014">EDI_2014</td>
+        <td id="EDI_All">EDI_2011-EDA_2014</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td id="Design">Design</td>
+        <td id="Chords_Breite">Breite<select id="breite">
+            <option value="50">50 px</option>
+            <option value="100">100 px</option>
+            <option value="150">150 px</option>
+            <option value="200">200 px</option>
+            <option value="250">250 px</option>
+            <option value="300">300 px</option>
+            <option value="350">350 px</option>
+            <option value="400">400 px</option>
+            <option value="450">450 px</option>
+            <option value="500">500 px</option>
+            <option value="550">550 px</option>
+            <option value="600">600 px</option>
+            <option value="650">650 px</option>
+            <option value="700">700 px</option>
+            <option value="750">750 px</option>
+        </select></td>
+        <td id="Chords_Höhe">Höhe<select id="hohe">
+            <option value="400">400 px</option>
+            <option value="450">450 px</option>
+            <option value="500">500 px</option>
+            <option value="550">550 px</option>
+            <option value="600">600 px</option>
+            <option value="650">650 px</option>
+            <option value="700">700 px</option>
+            <option value="750">750 px</option>
+        </select></td>
+        <td id="Chords_Farbe">Farbe</td>
+        <td id="Chords_Radius_i">(Radius i)<select id="radius_i">
+            <option value="1">1 cm</option>
+            <option value="2">2 cm</option>
+            <option value="3">3 cm</option>
+            <option value="4">4 cm</option>
+            <option value="5">5 cm</option>
+            <option value="6">6 cm</option>
+            <option value="7">7 cm</option>
+            <option value="8">8 cm</option>
+            <option value="9">9 cm</option>
+        </select></td>
+        <td id="Chords_Radius_o">**Radius o<select id="radius_o">
+            <option value="0">0 cm</option>
+            <option value="11">11 cm</option>
+            <option value="12">12 cm</option>
+            <option value="13">13 cm</option>
+            <option value="14">14 cm</option>
+            <option value="15">15 cm</option>
+            <option value="16">16 cm</option>
+            <option value="17">17 cm</option>
+            <option value="18">18 cm</option>
+            <option value="19">19 cm</option>
+        </select></td>
+        <td></td>
+    </tr>
+</table>
+<svg width="960" height="20"></svg>
+<script src="https://d3js.org/d3.v3.js"></script>
+<script src="https://d3js.org/d3-queue.v3.min.js"></script>
+<script src="bundle.js"></script>
+<script>
+    /*EDI*/
+    d3.select("#EDI_2011").on("click", function() {
+        settingCSVFiles("EDI - 2011.csv","EDI - 2011.csv", "#EDI_2011");
+    });
+    d3.select("#EDI_2012").on("click", function() {
+        settingCSVFiles("EDI - 2012.csv","EDI - 2012.csv", "#EDI_2012");
+    });
+    d3.select("#EDI_2013").on("click", function() {
+        settingCSVFiles("EDI - 2013.csv", "EDI - 2013.csv","#EDI_2013");
+    });
+    d3.select("#EDI_2014").on("click", function() {
+        settingCSVFiles("EDI - 2014.csv","EDI - 2014.csv", "#EDI_2014");
+    });
+
+    /*EDA*/
+    d3.select("#EDA_2011").on("click", function() {
+        settingCSVFiles("EDA - 2011.csv","EDA - 2011.csv", "#EDA_2011");
+    });
+    d3.select("#EDA_2012").on("click", function() {
+        settingCSVFiles("EDA - 2012.csv","EDA - 2012.csv", "#EDA_2012");
+    });
+    d3.select("#EDA_2013").on("click", function() {
+        settingCSVFiles("EDA - 2013.csv","EDA - 2013.csv", "#EDA_2013");
+    });
+    d3.select("#EDA_2014").on("click", function() {
+        settingCSVFiles("EDA - 2014.csv","EDA - 2014.csv", "#EDA_2014");
+    });
+    /*Dummy*/
+    d3.select("#EDA_All").on("click", function() {
+        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv","#EDA_All");
+    });
+
+
+    /*EDI*/
+    function settingCSVFiles(csv, csv_B, nameTop){
+        d3.selectAll("td").style("color", "black");
+        d3.select(nameTop).style("color", "red");
+        startprocessglobal(csv, csv_B);
+    }
+    d3.select("#Design").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#Design").style("color", "red");
+        startprocessDesign("EDA - 2011.csv", "Design",
+                d3.select("#breite").property("value"),
+                d3.select("#hohe").property("value"),
+                0,
+                d3.select("#radius_o").property("value")
+        );
+    })
+</script>
+</body>
+</html>

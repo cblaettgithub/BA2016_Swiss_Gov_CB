@@ -219,12 +219,14 @@ function mouseout(d, i) {
 /**
  * Created by chris on 21.10.2016.
  */
+
 modul =   require('./Modul');
 
 module.exports={
     readcsv:readcsv,
     delayedHello:delayedHello
 }
+
 
 function readcsv(data, matrix, data_B)  {
     var supplier;
@@ -243,10 +245,10 @@ function readcsv(data, matrix, data_B)  {
             modul._ds_supplier_EDA= getSupplier_EDA(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
             break;
-        case "csv/Dummy_EDI.csv":
-            var dummyEDI=getDummy_EDI(data, "supplier");
-            var dummyEDA=getDummy_EDA(data_B, "supplier");
-            supplier = matrix_dummy(dummyEDI, dummyEDA);
+        case "csv/Dummy_EDA.csv":
+            var dummyEDA=getDummy_EDA(data, "supplier");
+            var dummyEDI=getDummy_EDI(data_B, "supplier");
+            modul._ds_supplier = matrix_dummy(dummyEDA,dummyEDI);
         default:
             modul._ds_supplier    = getSupplier(modul._supplier, "supplier");//nest
             supplier = matrix_Supplier(data);
@@ -314,7 +316,9 @@ function getDummy_EDI(csv, name){
         .key(function(d){return d.dept})
         .rollup(function(v){return{
             sumEDI: d3.sum(v, function(d){return d["BAG"]})
-        }})
+        };})
+        .entries(csv);
+    return nested_data;
 }
 function getDummy_EDA(csv, name){
     var nested_data=d3.nest()
@@ -322,46 +326,56 @@ function getDummy_EDA(csv, name){
         .key(function(d){return d.dept})
         .rollup(function(v){return{
             sumEDA: d3.sum(v, function(d){return d["1005 EDA"]})
-        }})
+        };})
+        .entries(csv);
+    return nested_data;
 }
-function matrix_dummy(dataEDI, dataEDA){
+function matrix_dummy(dataEDA, dataEDI){
     //Fill Matrix EDA
     var matrix = [];
     var counter=0;
-    //var supplier = d3.keys(data[0]);
-    var length = data.length;
-    var middle=length/2;
+
     //Spaltenüberschriften
-    // -> 0, 0, 100, 200
-    // -> 0, 0, 300, 500
-    data.forEach(function (row) {
-        var mrow = [];
-        if (counter < middle){
-            mrow.push(0);
-        }
-        else{
-            mrow.push(row.values["sumEDA"]);
-            mrow.push(row.values["sumEDI"]);
-        }
-        counter++;
-        matrix.push(mrow);
-        console.log("push");
+    var supplier = [];
+    supplier.push("1")
+    supplier.push("2")
+    supplier.push("3")
+    supplier.push("4")
+
+    //1 Zeile
+    var mrow = [];
+    mrow.push(0),
+        mrow.push(0),
+        dataEDA.forEach(function (row) {
+        mrow.push(row.values[0].values["sumEDA"])
     });
-    // -> 100, 200, 0, 0,
-    // -> 300, 500, 0, 0,
-    data.forEach(function (row) {
-        var mrow = [];
-        if (counter < middle){
-            mrow.push(row.values["sumEDA"]);
-            mrow.push(row.values["sumEDI"]);
-        }
-        else{
-            mrow.push(0);
-        }
-        counter++;
-        matrix.push(mrow);
-        console.log("push");
+    matrix.push(mrow);
+
+    //2 Zeile
+    mrow = [];
+    mrow.push(0),
+    mrow.push(0),
+        dataEDI.forEach(function (row) {
+        mrow.push(row.values[0].values["sumEDI"])
     });
+    matrix.push(mrow);
+
+    //3 zeile
+    mrow = [];
+    dataEDA.forEach(function (row) {
+        mrow.push(row.values[0].values["sumEDA"])
+    });
+    mrow.push(0), mrow.push(0),
+        matrix.push(mrow);
+
+    //4 zeile
+    mrow = [];//neue Zeile
+    dataEDI.forEach(function (row) {
+        mrow.push(row.values[0].values["sumEDI"])
+    });
+    mrow.push(0),
+        mrow.push(0),
+        matrix.push(mrow);
 
     console.log("matrix_Dummy");
     modul._matrix = matrix;

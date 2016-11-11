@@ -31,6 +31,7 @@
     var _ds_cost;
     var _ds_supplier_EDI;
     var _ds_supplier_EDA;
+    /*creatinglinks*/
 
     module.exports ={
         _currentcsv:_currentcsv,

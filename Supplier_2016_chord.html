@@ -101,6 +101,15 @@
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src="bundle.js"></script>
 <script>
+    var params = {data: "data.csv", width:1400,height:800};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    var p;
+    vars.forEach(function(v) {
+         p = v.split("=");
+        params[p[0]]=p[1]
+    })
+
     /*EDI*/
     d3.select("#EDI_2011").on("click", function() {
         settingCSVFiles("EDI - 2011.csv","EDI - 2011.csv", "#EDI_2011");

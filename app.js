@@ -92,3 +92,6 @@ function settingParam(trans_width, trans_height, width, height,
     modul._group_x = group_x;
     modul._group_dy = group_dy;
 }
+function get_requestParam(csvfile,  dep){
+    Querystring
+}

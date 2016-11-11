@@ -9,7 +9,6 @@ module.exports={
     delayedHello:delayedHello
 }
 
-
 function readcsv(data, matrix, data_B)  {
     var supplier;
     switch (modul._currentcsv){

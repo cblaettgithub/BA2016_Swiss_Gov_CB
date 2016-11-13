@@ -4,11 +4,10 @@
 modul =   require('./Modul');
 
 module.exports = {
-    _currentURL:   _currentURL,
-    _queryOutput:  _queryOutput,
     setCurrentUrl: setCurrentUrl,
-    createLink:    creatLink,
-    setParam:      setParam
+    setParam:      setParam,
+    _currentURL:   _currentURL,
+    _queryOutput:  _queryOutput
 }
 
 var _year;
@@ -50,7 +49,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     params[5]=_width;
     params[6]=_height;
 }
-function createLink(){
+/*function createLink(){
 
     var startappend="?";
     var seperator="=";
@@ -63,5 +62,5 @@ function createLink(){
     params.forEach(function(v){
         _queryOutput=_queryOutput+params[i].name +seperator+params[i];
         i=i+1;
-    })
-}
+    });
+}*/

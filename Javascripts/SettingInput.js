@@ -10,6 +10,7 @@ module.exports={
 }
 
 function readcsv(data, matrix, data_B)  {
+    console.log("readcsv");
     var supplier;
     switch (modul._currentcsv){
         case "csv/EDI - 2011.csv":
@@ -30,7 +31,9 @@ function readcsv(data, matrix, data_B)  {
             var dummyEDA=getDummy_EDA(data, "supplier");
             var dummyEDI=getDummy_EDI(data_B, "supplier");
             modul._ds_supplier = matrix_dummy(dummyEDA,dummyEDI);
+            break;
         default:
+            console.log("readcsv:default");
             modul._ds_supplier    = getSupplier(modul._supplier, "supplier");//nest
             supplier = matrix_Supplier(data);
             modul._ds_dept        = getDep(modul._supplier, "dept");
@@ -38,6 +41,7 @@ function readcsv(data, matrix, data_B)  {
             modul._matrix = matrix;
     }
     console.log("setmatrix");
+    //modul._supplier=supplier;
 }
 function matrix_Supplier(data) {
         var matrix = [];
@@ -118,10 +122,10 @@ function matrix_dummy(dataEDA, dataEDI){
 
     //Spaltenüberschriften
     var supplier = [];
-    supplier.push("1")
-    supplier.push("2")
-    supplier.push("3")
-    supplier.push("4")
+    supplier.push("EDA");
+    supplier.push("EDI");
+    supplier.push("Airplus");
+    supplier.push("SBB");
 
     //1 Zeile
     var mrow = [];
@@ -160,6 +164,18 @@ function matrix_dummy(dataEDA, dataEDI){
 
     console.log("matrix_Dummy");
     modul._matrix = matrix;
+    modul._supplier.push( modul._supplier[0]);
+    modul._supplier.push( modul._supplier[1]);
+    //modul._supplier.pop();
+    //modul._supplier.pop();;
+
+    var i=0;
+    supplier.forEach(function(row){
+        modul._supplier[i].supplier=row;
+        i++;
+     });
+
+   // modul._supplier=supplier;
     return supplier;
 }
 

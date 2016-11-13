@@ -38,14 +38,18 @@ function groupText() {//den länderbogen beschriften
     modul._groupText = modul._group.append("svg:text")
         .attr("x", modul._group_x)//6
         .attr("class", "supplier")
-        .attr("dy", modul._group_dy);//15
+        .attr("dy", modul._group_dy);//bro15
 
     modul._groupText.append("svg:textPath")
         .attr("xlink:href", function (d, i) {
             return "#group" + d.index;
         })
         .text(function (d, i) {
-            return modul._supplier[i].supplier;
+            console.log("groupText:"+i+ "   "+modul._supplier[i].supplier);
+            /*if (modul._currentcsv="csv/"+"Dummy_EDA.csv")
+                return modul._supplier[i];
+            else*/
+                return modul._supplier[i].supplier;
             //return modul._ds_supplier[i].key;//Spaltenüberschriften
         }); // modul._ds_supplier[i].values[0].key ="EDA"
             // modul._ds_supplier[i].values[0].values = 20000(summe)

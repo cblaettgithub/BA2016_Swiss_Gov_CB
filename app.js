@@ -15,7 +15,7 @@
 
 //starting with choiced csv-fils
 global.startprocessglobal = function(content, content_B) {
-    console.log("");
+    console.log("startprocessglobal");
     modul._currentcsv="";
     //d3.select("#result").property("value", csv);
     //var res = document.forms[0]["result"].value;
@@ -25,7 +25,7 @@ global.startprocessglobal = function(content, content_B) {
 }
 //changing width, height, outer radius per html
 global.startprocessDesign=function(content, name, width, height, radius_i, radius_o){
-    console.log("");
+    console.log("startprocessDesign");
     modul._currentcsv="";
     console.log("process:design"+content);
     console.log(width +" "+ height +" " +radius_o);
@@ -54,15 +54,19 @@ function process(filename, filename_B) {
         .defer(d3.json,modul._currentjson)
         .defer(d3.csv, modul._currentcolor)
         .defer(d3.csv, modul._currentcsv_B)
+        .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
         .await(SettingsB)
 }
-function SettingsB(error, m_supplier, matrix, color, m_supplier_B)
+function SettingsB(error, m_supplier, matrix, color, m_supplier_B, m_dummy)
 {
     console.log("SettingsB");
-    modul._supplier=m_supplier;
+    modul._supplier=m_supplier;//Länderbogennamenn setzen
+    console.log("1:SettingsB: Anzah:_supplier:"+modul._supplier.length);
     SettingInput.readcsv(m_supplier, matrix, m_supplier_B);//Fill DS-Supplier + DS-Dept, Matrix
     modul._layout.matrix(modul._matrix);
     modul._color=color;
+    console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
+
     SettingGroups.neighborhood();
     SettingGroups.groupPath();
     SettingGroups.groupText();

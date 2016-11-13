@@ -165,16 +165,22 @@ function matrix_dummy(dataEDA, dataEDI){
 
     console.log("matrix_Dummy");
     modul._matrix = matrix;
-    modul._supplier.push( modul._supplier[0]);
-    modul._supplier.push( modul._supplier[1]);
+    modul._supplier=dataEDA;
+    dataEDI.forEach(function(row){
+        modul._supplier.push(row)
+    })
+
+    /*modul._supplier.push( modul._supplier[0]);
+    modul._supplier.push( modul._supplier[1]);*/
     //modul._supplier.pop();
     //modul._supplier.pop();;
+    modul._supplier[0].key="EDI";
+    modul._supplier[1].key="EDA";
 
-    var i=0;
-    supplier.forEach(function(row){
+   /* supplier.forEach(function(row){
         modul._supplier[i].supplier=row;
         i++;
-     });
+     });*/
 
    // modul._supplier=supplier;
     return supplier;

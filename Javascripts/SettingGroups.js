@@ -47,10 +47,8 @@ function groupText() {//den länderbogen beschriften
             })
             .text(function (d, i) {
                 console.log(modul._supplier[i].key);
-                //return modul._supplier[i];
                 return modul._supplier[i].key;
             })
-
 
             //return modul._ds_supplier[i].key;//Spaltenüberschriften
          // modul._ds_supplier[i].values[0].key ="EDA"

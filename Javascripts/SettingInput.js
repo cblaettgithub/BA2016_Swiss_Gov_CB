@@ -19,6 +19,7 @@ function readcsv(data, matrix, data_B)  {
         case "csv/EDI - 2014.csv":
             modul._ds_supplier_EDI= getSupplier_EDI(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDI(modul._ds_supplier_EDI, 10);
+            modul._supplier= modul._ds_supplier_EDI;
             break;
         case "csv/EDA - 2011.csv":
         case "csv/EDA - 2012.csv":
@@ -26,6 +27,7 @@ function readcsv(data, matrix, data_B)  {
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= getSupplier_EDA(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
+            modul._supplier= modul._ds_supplier_EDA;
             break;
         case "csv/Dummy_EDA.csv":
             var dummyEDA=getDummy_EDA(data, "supplier");
@@ -41,7 +43,6 @@ function readcsv(data, matrix, data_B)  {
             modul._matrix = matrix;
     }
     console.log("setmatrix");
-    //modul._supplier=supplier;
 }
 function matrix_Supplier(data) {
         var matrix = [];

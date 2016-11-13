@@ -40,18 +40,20 @@ function groupText() {//den länderbogen beschriften
         .attr("class", "supplier")
         .attr("dy", modul._group_dy);//bro15
 
-    modul._groupText.append("svg:textPath")
-        .attr("xlink:href", function (d, i) {
-            return "#group" + d.index;
-        })
-        .text(function (d, i) {
-            console.log("groupText:"+i+ "   "+modul._supplier[i].supplier);
-            /*if (modul._currentcsv="csv/"+"Dummy_EDA.csv")
-                return modul._supplier[i];
-            else*/
-                return modul._supplier[i].supplier;
+    /*if (modul._currentcsv = "csv/" + "Dummy_EDA.csv") {*/
+        modul._groupText.append("svg:textPath")
+            .attr("xlink:href", function (d, i) {
+                return "#group" + d.index;
+            })
+            .text(function (d, i) {
+                console.log(modul._supplier[i].key);
+                //return modul._supplier[i];
+                return modul._supplier[i].key;
+            })
+
+
             //return modul._ds_supplier[i].key;//Spaltenüberschriften
-        }); // modul._ds_supplier[i].values[0].key ="EDA"
+         // modul._ds_supplier[i].values[0].key ="EDA"
             // modul._ds_supplier[i].values[0].values = 20000(summe)
 
     function groupTicks(d) {

@@ -406,13 +406,7 @@ function matrix_dummy(dataEDA, dataEDI){
     //Fill Matrix EDA
     var matrix = [];
     var counter=0;
-
-    //Spaltenüberschriften
-    var supplier = [];
-    supplier.push("EDA");
-    supplier.push("EDI");
-    supplier.push("Airplus");
-    supplier.push("SBB");
+    var supplier;
 
     //1 Zeile
     var mrow = [];
@@ -449,26 +443,34 @@ function matrix_dummy(dataEDA, dataEDI){
         mrow.push(0),
         matrix.push(mrow);
 
-    console.log("matrix_Dummy");
     modul._matrix = matrix;
-    modul._supplier=dataEDA;
+    /*modul._supplier=dataEDA;
     dataEDI.forEach(function(row){
         modul._supplier.push(row)
-    })
+    })*/
+    //2. version
+    modul._supplier.pop();
+    modul._supplier.pop();
+    var i=0;
+    var k=0;
+    for (var j=0;j<2;j++){
+        getValueEDI_EDA(dataEDI[j]);
+        k=j;
+        if (j==1){k=0;}
+        getValueEDI_EDA(dataEDA[k]);
+    }
 
-    /*modul._supplier.push( modul._supplier[0]);
-    modul._supplier.push( modul._supplier[1]);*/
-    //modul._supplier.pop();
-    //modul._supplier.pop();;
-    modul._supplier[0].key="EDI";
-    modul._supplier[1].key="EDA";
-
+    function getValueEDI_EDA(row){
+        modul._supplier.push(row);
+        if (i == 0 || i == 1){
+            modul._supplier[i].key=row.values[0].key;//dept
+            i++;
+        }
+    }
    /* supplier.forEach(function(row){
         modul._supplier[i].supplier=row;
-        i++;
      });*/
-
-   // modul._supplier=supplier;
+    console.log("matrix_Dummy");
     return supplier;
 }
 

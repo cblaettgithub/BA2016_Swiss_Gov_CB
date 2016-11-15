@@ -34,6 +34,7 @@ global.startprocessDesign=function(content, name, width, height, radius_i, radiu
 }
 
 function process(filename, filename_B) {
+    modul._svg=d3.select("svg").remove();
     modul._svg = d3.select("svg");
     //_svg.selectAll("*").remove();
     console.log("process:main");

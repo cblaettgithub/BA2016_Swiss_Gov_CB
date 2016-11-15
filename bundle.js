@@ -291,15 +291,36 @@ function mouseout(d, i) {
 modul =   require('./Modul');
 
 module.exports={
-    readcsv:readcsv,
-    delayedHello:delayedHello
+    readcsv:readcsv
 }
 
 function readcsv(data, matrix, data_B)  {
     console.log("readcsv");
     var supplier;
+    var csvall;
     switch (modul._currentcsv){
-        case "csv/EDI - 2011.csv":
+        case "csv/EDA - 2011.csv"://EDA 2011, EDI 2011
+        case "csv/EDA - 2012.csv"://EDA 2012, EDI 2011
+        case "csv/EDA - 2013.csv"://EDA 2013, EDI 2011
+        case "csv/EDA - 2014.csv"://EDA 2014, EDI 2011
+            data =filter(data);
+            data_B =filter(data_B);
+            modul._ds_supplier_EDA= getDummy_EDA(data, "supplier");
+            modul._ds_supplier_EDI= getDummy_EDI(data_B, "supplier");
+            csvall=mergingFiles([modul._ds_supplier_EDA,modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI");
+            break;
+        case "csv/BK - 2011.csv"://EDA 2011, EDI 2011
+        case "csv/BK - 2012.csv"://EDA 2012, EDI 2011
+        case "csv/BK - 2013.csv"://EDA 2013, EDI 2011
+        case "csv/BK - 2014.csv"://EDA 2014, EDI 2011
+            data =filter(data);
+            data_B =filter(data_B);
+            modul._ds_supplier_EDI= getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
+            csvall=mergingFiles([modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt");
+            break;
         case "csv/EDI - 2012.csv":
         case "csv/EDI - 2013.csv":
         case "csv/EDI - 2014.csv":
@@ -308,7 +329,6 @@ function readcsv(data, matrix, data_B)  {
             modul._supplier= modul._ds_supplier_EDI;
             break;
         case "csv/EDA - 2011.csv":
-        case "csv/EDA - 2012.csv":
         case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= getSupplier_EDA(modul._supplier, "supplier");
@@ -318,7 +338,9 @@ function readcsv(data, matrix, data_B)  {
         case "csv/Dummy_EDA.csv":
             var dummyEDA=getDummy_EDA(data, "supplier");
             var dummyEDI=getDummy_EDI(data_B, "supplier");
-            modul._ds_supplier = matrix_dummy(dummyEDA,dummyEDI);
+            csvall=mergingFiles([dummyEDA, dummyEDI]);
+            //modul._ds_supplier = matrix_dummay_All(csvall);
+            modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI");
             break;
         default:
             console.log("readcsv:default");
@@ -330,6 +352,17 @@ function readcsv(data, matrix, data_B)  {
     }
     console.log("setmatrix");
 }
+
+function filter(data, param){
+     return data.filter(function(row) {
+        if (row["supplier"] == "AirPlus International AG"
+        ||  row["supplier"] == "Schweizerische Bundesbahnen SBB")
+        {
+            return row;
+        }
+    });
+}
+
 function matrix_Supplier(data) {
         var matrix = [];
         var counter=0;
@@ -402,11 +435,25 @@ function getDummy_EDA(csv, name){
         .entries(csv);
     return nested_data;
 }
+function getDummy_BK(csv, name){
+    var nested_data=d3.nest()
+        .key(function(d){return d.supplier})
+        .key(function(d){return d.dept})
+        .rollup(function(v){return{
+            sumBundeskanzelt: d3.sum(v, function(d){return d["Bundeskanzlei"]})
+        };})
+        .entries(csv);
+    return nested_data;
+}
 function matrix_dummy(dataEDA, dataEDI){
     //Fill Matrix EDA
     var matrix = [];
     var counter=0;
     var supplier;
+
+    dataEDA.forEach(function(row){
+        dataEDI.push(row);
+    })
 
     //1 Zeile
     var mrow = [];
@@ -451,6 +498,7 @@ function matrix_dummy(dataEDA, dataEDI){
     //2. version
     modul._supplier.pop();
     modul._supplier.pop();
+
     var i=0;
     var k=0;
     for (var j=0;j<2;j++){
@@ -466,6 +514,7 @@ function matrix_dummy(dataEDA, dataEDI){
             modul._supplier[i].key=row.values[0].key;//dept
             i++;
         }
+
     }
    /* supplier.forEach(function(row){
         modul._supplier[i].supplier=row;
@@ -474,19 +523,110 @@ function matrix_dummy(dataEDA, dataEDI){
     return supplier;
 }
 
+function matrix_dummay_All(DataEDI_EDA){
+    //ersten zwei Rows EDA
+    //nachfolgenden Rows EDI
+
+    //Fill Matrix EDA
+    var matrix = [];
+    var counter=0;
+    var supplier="";
+    var minus=4000000;
+
+    for (var i=0; i<4; i++){
+        var mrow = [];
+            if (i==0){
+                mrow.push(0); mrow.push(0);
+                mrow.push(d3.round(DataEDI_EDA[0].values[0].values["sumEDA"]));
+                mrow.push(d3.round(DataEDI_EDA[1].values[0].values["sumEDA"]));
+            }
+            else if(i==1){
+                mrow.push(0); mrow.push(0);
+                mrow.push(d3.round(DataEDI_EDA[2].values[0].values["sumEDI"]));
+                mrow.push(d3.round(DataEDI_EDA[3].values[0].values["sumEDI"]));
+            }
+            else if(i==2){
+                mrow.push(d3.round(DataEDI_EDA[0].values[0].values["sumEDA"]));
+                mrow.push(d3.round(DataEDI_EDA[1].values[0].values["sumEDA"]));
+                mrow.push(0); mrow.push(0);
+            }
+            else if(i==3){
+                mrow.push(d3.round(DataEDI_EDA[2].values[0].values["sumEDI"]));
+                mrow.push(d3.round(DataEDI_EDA[3].values[0].values["sumEDI"]));
+                mrow.push(0); mrow.push(0);
+            }
+        matrix.push(mrow);
+    }
+
+    modul._matrix = matrix;
+    modul._supplier.pop();
+    modul._supplier.pop();
+
+    //supplier
+    modul._supplier.push(DataEDI_EDA[0].values[0]);
+    modul._supplier.push(DataEDI_EDA[2].values[0]);
+    modul._supplier.push(DataEDI_EDA[2]);
+    modul._supplier.push(DataEDI_EDA[3]);
+
+    console.log("matrix_DummyALL");
+    return supplier;
+}
+
+function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI){
+    var matrix = [];
+    var counter=2;
+    var supplier="";
+    var minus=4000000;
+    var length = DataEDI_EDA.length;
+    var middle= length/2;
+
+    //Array filtern
+
+    for (var i=0;i<length;i++ ){
+        var mrow=[];
+        if (i < middle){
+            for(var j=0;j<middle;j++)
+                mrow.push(0);
+            for(var j=0;j<middle;j++){
+                if (counter %2 ==0)
+                    mrow.push(d3.round(DataEDI_EDA[j].values[0].values[Name_sumEDA]));
+                else
+                    mrow.push(d3.round(DataEDI_EDA[j+middle].values[0].values[Name_sumEDI]));
+            }
+            counter++;
+        }
+        else{
+            for(var j=0;j<middle;j++)
+                if (counter %2 ==0)
+                    mrow.push(d3.round(DataEDI_EDA[j].values[0].values[Name_sumEDA]));
+                else
+                    mrow.push(d3.round(DataEDI_EDA[j+middle].values[0].values[Name_sumEDI]));
+            for(var j=0;j<middle;j++)
+                mrow.push(0);
+
+            counter++;
+        }
+        matrix.push(mrow);
+    }
+
+    modul._matrix = matrix;
+    while(modul._supplier.length>0)
+         modul._supplier.pop();
+
+
+    //supplier
+    modul._supplier.push(DataEDI_EDA[0].values[0]);
+    modul._supplier.push(DataEDI_EDA[2].values[0]);
+    modul._supplier.push(DataEDI_EDA[2]);
+    modul._supplier.push(DataEDI_EDA[3]);
+
+    console.log("matrix_DummyALL");
+    return supplier;
+}
+
 function getSupplier_EDI(csv, name) {
     var nested_data = d3.nest()
         .key(function(d) { return d.supplier; })
-        /*.key(function(d) { return d["GS-EDI"]; })
-         .key(function(d) { return d["EBG"]; })
-         .key(function(d) { return d["BAR"]; })
-         .key(function(d) { return d["BAK"]; })
-         .key(function(d) { return d["MeteoSchweiz"]; })
-         .key(function(d) { return d["BAG"]; })
-         .key(function(d) { return d["BFS"]; })
-         .key(function(d) { return d["BSV"]; })
-         .key(function(d) { return d["SBF"]; })
-         .key(function(d) { return d["NB"]; })*/
         .rollup(function(v) { return{
             sumGSEDI: d3.sum(v, function(d) { return d["GS-EDI"]; }),
             sumEBG: d3.sum(v, function(d) { return d["EBG"]; }),
@@ -500,6 +640,7 @@ function getSupplier_EDI(csv, name) {
             sumNB: d3.sum(v, function(d) { return d["NB"]; })
         };})
         .entries(csv);
+
     console.log(" getSupplier_EDI");
     return nested_data;
 }
@@ -531,10 +672,6 @@ function matrix_Supplier_EDA(data, end) {
 function getSupplier_EDA(csv, name) {
     var nested_data = d3.nest()
         .key(function(d) { return d.supplier; })
-        /*.key(function(d) { return d["1005 EDA"]; })
-        .key(function(d) { return d["1006 EDA"]; })
-        .key(function(d) { return d["1097 Informatik EDA"]; })
-        .key(function(d) { return d["1112 BRZ"]; })*/
         .rollup(function(v) { return{
             sumEDA1005: d3.sum(v, function(d) { return d["1005 EDA"]; }),
             sumEDA1006: d3.sum(v, function(d) { return d["1006 EDA"]; }),
@@ -544,6 +681,26 @@ function getSupplier_EDA(csv, name) {
         .entries(csv);
     console.log("getSupplier_EDA");
     return nested_data;
+}
+function getSupplier_BK(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumBundeskanzelt: d3.sum(v, function(d) { return d["Bundeskanzlei"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_BK");
+    return nested_data;
+}
+
+function mergingFiles(csvFiles) {
+    var results = [];
+    var output;
+    for (var i = 0; i < 2; i++) {
+        results.push(csvFiles[i]);
+    }
+    output = d3.merge(results);
+    return output;
 }
 
 function getSupplier(csv, name) {
@@ -580,29 +737,7 @@ function getYearSupplier(csv){
     return csvdata;
 }
 
-//test
-//.defer(delayedHello, _currentcsv, 260)
-function delayedHello(name, delay, callback) {
-    setTimeout(function() {
-        d3.csv(name, function(error, d)
-        {_maindata.setParam(d, name);});
-        console.log("Hello, " + name + "!");
-        callback(null);
-    }, delay);
-}
-function callback(name){
-}
-function getMoreCSV(files) {
-    var results = [];
-    var filesLength = (files || []).length;
-    for (var i = 0; i < filesLength; i++) {
-        (function (url) {
-            d3.csv(url, function (data) {
-                results.push(data);
-            })
-        })
-    }
-}
+
 
 
 },{"./Modul":2}],6:[function(require,module,exports){

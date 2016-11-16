@@ -23,7 +23,7 @@
 <body>
 <table border="1">
     <tr >
-        <td>Departemente</td>
+        <td>Departemente EDA-EDI</td>
         <td id="EDA_EDI_2011">EDA_EDI_2011</td>
         <td id="EDA_EDI_2012">EDA_EDI_2012_EDI_2012</td>
         <td id="EDA_EDI_2013">EDA_EDI_2013</td>
@@ -32,11 +32,20 @@
         <td></td>
     </tr>
     <tr >
-        <td>Departemente</td>
-        <td id="BK_EDI_2011">BK_EDA_2011</td>
-        <td id="BK_EDI_2012">BK_EDA_2012</td>
-        <td id="BK_EDI_2013">BK_EDA_2013</td>
-        <td id="BK_EDI_2014">BK_EDA_2014</td>
+        <td>Departemente BK-EDI</td>
+        <td id="BK_EDI_2011">BK_EDI_2011</td>
+        <td id="BK_EDI_2012">BK_EDI_2012</td>
+        <td id="BK_EDI_2013">BK_EDI_2013</td>
+        <td id="BK_EDI_2014">BK_EDI_2014</td>
+        <td id="BK_All">EDI_EDA_Dummyt</td>
+        <td></td>
+    </tr>
+    <tr >
+        <td>Departemente BK-EDA-EDI</td>
+        <td id="BK_EDA_EDI_2011">BK_EDA_EDI_2011</td>
+        <td id="BK_EDA_EDI_2012">BK_EDA_EDI_2012</td>
+        <td id="BK_EDA_EDI_2013">BK_EDA_EDI_2013</td>
+        <td id="BK_EDA_EDI_2014">BK_EDA_EDI_2014</td>
         <td id="EDI_00">EDI_00</td>
         <td></td>
     </tr>
@@ -110,73 +119,54 @@
         params[p[0]]=p[1]
     })
 
-    /*EDI, EDA*/
-    d3.select("#EDI_2011").on("click", function() {
-        settingCSVFiles("EDI - 2012.csv","EDA - 2011.csv", "#EDI_2011");
-    });
-    d3.select("#EDI_2012").on("click", function() {
-        settingCSVFiles("EDI - 2012.csv","EDI - 2012.csv", "#EDI_2012");
-    });
-    d3.select("#EDI_2013").on("click", function() {
-        settingCSVFiles("EDI - 2013.csv", "EDI - 2013.csv","#EDI_2013");
-    });
-    d3.select("#EDI_2014").on("click", function() {
-        settingCSVFiles("EDI - 2014.csv","EDI - 2014.csv", "#EDI_2014");
-    });
-
-    /*EDA*/
-    d3.select("#EDA_2011").on("click", function() {
-        settingCSVFiles("EDA - 2011.csv","EDA - 2011.csv", "#EDA_2011");
-    });
-    d3.select("#EDA_2012").on("click", function() {
-        settingCSVFiles("EDA - 2012.csv","EDI - 2012.csv", "#EDA_2012");
-    });
-    d3.select("#EDA_2013").on("click", function() {
-        settingCSVFiles("EDA - 2013.csv","EDA - 2013.csv", "#EDA_2013");
-    });
-    d3.select("#EDA_2014").on("click", function() {
-        settingCSVFiles("EDA - 2014.csv","EDA - 2014.csv", "#EDA_2014");
-    });
-    /*Dummy*/
-    d3.select("#EDA_All").on("click", function() {
-        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv","#EDA_All");
-    });
 
     /*EDA ***EDI*/
-     d3.select("#EDA_EDI_2011").on("click", function() {
-     settingCSVFiles("EDA - 2011.csv","EDI - 2011.csv", "#EDA_EDI_2011");
-     });
-     d3.select("#EDA_EDI_2012").on("click", function() {
-     settingCSVFiles("EDA - 2012.csv","EDI - 2012.csv", "#EDA_EDI_2012");
-     });
-     d3.select("#EDA_EDI_2013").on("click", function() {
-     settingCSVFiles("EDA - 2013.csv","EDI - 2013.csv", "#EDA_EDI_2013");
-     });
-     d3.select("#EDA_EDI_2014").on("click", function() {
-     settingCSVFiles("EDA - 2014.csv","EDI - 2014.csv", "#EDA_EDI_2014");
-     });
-
+    d3.select("#EDA_EDI_2011").on("click", function() {
+        settingCSVFiles("EDA - 2011.csv","EDI - 2011.csv", 0,"#EDA_EDI_2011");
+    });
+    d3.select("#EDA_EDI_2012").on("click", function() {
+        settingCSVFiles("EDA - 2012.csv","EDI - 2012.csv", 0,"#EDA_EDI_2012");
+    });
+    d3.select("#EDA_EDI_2013").on("click", function() {
+        settingCSVFiles("EDA - 2013.csv","EDI - 2013.csv",0, "#EDA_EDI_2013");
+    });
+    d3.select("#EDA_EDI_2014").on("click", function() {
+        settingCSVFiles("EDA - 2014.csv","EDI - 2014.csv", 0,"#EDA_EDI_2014");
+    });
 
     /*BK *** EDA*/
     d3.select("#BK_EDI_2011").on("click", function() {
-        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv", "BK_EDI_2011");
+        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv", 0,"#BK_EDI_2011");
     });
     d3.select("#BK_EDI_2012").on("click", function() {
-        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv", "BK_EDI_2012");
+        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv",0, "#BK_EDI_2012");
     });
     d3.select("#BK_EDI_2013").on("click", function() {
-        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv", "BK_EDI_2013");
+        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv",0, "#BK_EDI_2013");
     });
     d3.select("#BK_EDI_2014").on("click", function() {
-        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv", "BK_EDI_2014");
+        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv",0, "#BK_EDI_2014");
     });
 
+    /*BK *** EDA***EDI*/
+    d3.select("#BK_EDA_EDI_2011").on("click", function() {
+        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2012.csv", "#BK_EDA_EDI_2011");
+    });
+    d3.select("#BK_EDA_EDI_2012").on("click", function() {
+        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "#BK_EDA_EDI_2012");
+    });
+    d3.select("#BK_EDA_EDI_2013").on("click", function() {
+        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "#BK_EDA_EDI_2013");
+    });
+    d3.select("#BK_EDA_EDI_2014").on("click", function() {
+        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "#BK_EDA_EDI_2014");
+    });
 
     /*EDI*/
-    function settingCSVFiles(csv, csv_B, nameTop){
+    function settingCSVFiles(csv, csv_B, csv_C,nameTop){
         d3.selectAll("td").style("color", "black");
         d3.select(nameTop).style("color", "red");
-        startprocessglobal(csv, csv_B);
+        startprocessglobal(csv, csv_B, csv_C, nameTop);
     }
     d3.select("#Design").on("click", function() {
         d3.selectAll("td").style("color", "black");

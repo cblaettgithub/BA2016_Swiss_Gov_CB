@@ -3,6 +3,7 @@
      */
     var _currentcsv="CSV/EDA-2011.csv";
     var _currentcsv_B="CSV/EDA-2011.csv";
+    var _currentcsv_C="CSV/EDA-2011.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");
@@ -31,11 +32,14 @@
     var _ds_cost;
     var _ds_supplier_EDI;
     var _ds_supplier_EDA;
+    var _ds_supplier_BK;
+    var _choice;
     /*creatinglinks*/
 
     module.exports ={
         _currentcsv:_currentcsv,
         _currentcsv_B:_currentcsv_B,
+        _currentcsv_C:_currentcsv_C,
         _currentjson:_currentjson,
         _currentcolor:_currentcolor,
         _svg:_svg,
@@ -65,4 +69,6 @@
         _ds_cost:_ds_cost,
         _ds_supplier_EDI:_ds_supplier_EDI,
         _ds_supplier_EDA:_ds_supplier_EDA,
+        _ds_supplier_BK:_ds_supplier_BK,
+        _v_choice:_ds_supplier_BK
     }

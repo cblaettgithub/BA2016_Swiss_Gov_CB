@@ -14,15 +14,17 @@
     var q;
 
 //starting with choiced csv-fils
-global.startprocessglobal = function(content, content_B) {
+global.startprocessglobal = function(content, content_B,content_C, choice) {
     console.log("startprocessglobal");
     modul._currentcsv="";
+    modul._v_choice=choice;
     //d3.select("#result").property("value", csv);
     //var res = document.forms[0]["result"].value;
-    console.log("process:start"+content, content_B);
+    console.log("process:start"+content, content_B,content_C);
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
-    process(content, content_B);
+    process(content, content_B,content_C);
 }
+
 //changing width, height, outer radius per html
 global.startprocessDesign=function(content, name, width, height, radius_i, radius_o){
     console.log("startprocessDesign");
@@ -33,14 +35,15 @@ global.startprocessDesign=function(content, name, width, height, radius_i, radiu
     process(content);
 }
 
-function process(filename, filename_B) {
+function process(filename, filename_B, filename_C) {
     modul._svg=d3.select("svg").remove();
     modul._svg = d3.select("svg");
-    //_svg.selectAll("*").remove();
     console.log("process:main");
     //default
     modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
+    if (filename_C!=0)
+        modul._currentcsv_C="csv/"+filename_C;
     console.log("csv/"+filename);
     SettingLayout.createArc();
     SettingLayout.layout();
@@ -52,21 +55,21 @@ function process(filename, filename_B) {
     q= d3.queue()
     q
         .defer(d3.csv, modul._currentcsv)
+        .defer(d3.csv, modul._currentcsv_B)
+        .defer(d3.csv, modul._currentcsv_C)
         .defer(d3.json,modul._currentjson)
         .defer(d3.csv, modul._currentcolor)
-        .defer(d3.csv, modul._currentcsv_B)
         .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
         .await(SettingsB)
 }
-function SettingsB(error, m_supplier, matrix, color, m_supplier_B, m_dummy)
+function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,m_dummy)
 {
     console.log("SettingsB");
     modul._supplier=m_supplier;//Länderbogennamenn setzen
-    console.log("1:SettingsB: Anzah:_supplier:"+modul._supplier.length);
-    SettingInput.readcsv(m_supplier, matrix, m_supplier_B);//Fill DS-Supplier + DS-Dept, Matrix
+    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,matrix);//Fill DS-Supplier + DS-Dept, Matrix
     modul._layout.matrix(modul._matrix);
     modul._color=color;
-    console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
+    //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
 
     SettingGroups.neighborhood();
     SettingGroups.groupPath();

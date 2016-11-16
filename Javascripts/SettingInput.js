@@ -63,12 +63,12 @@ function readcsv(data, data_B,data_C, matrix)  {
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
             modul._supplier= modul._ds_supplier_EDA;
             break;
-        case "csv/Dummy_EDA.csv":
+        case "#Dummy":
             var dummyEDA=getDummy_EDA(data, "supplier");
             var dummyEDI=getDummy_EDI(data_B, "supplier");
             csvall=mergingFiles([dummyEDA, dummyEDI]);
             //modul._ds_supplier = matrix_dummay_All(csvall);
-            modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI");
+            modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI", ["sumEDA","sumEDI"]);
             break;
         default:
             console.log("readcsv:default");
@@ -270,7 +270,7 @@ function createSupplierList(dataRows, supplier_field){
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname summ of each Department
     if (nameValue.length==2) {
-        switch (counter) {//3 Supplier
+        switch (counter) {//2 Supplier
             case 0:
             case 1:
                 depName = nameValue[0];
@@ -303,7 +303,7 @@ function getMatrixValue(row,nameValue, counter){
             }
         }
         else if(nameValue.length==4)        {
-            switch(counter){//3 Supplier
+            switch(counter){//4 Supplier
                 case 0:
                 case 1:
                 case 2:

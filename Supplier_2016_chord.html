@@ -25,10 +25,10 @@
     <tr >
         <td>Departemente EDA-EDI</td>
         <td id="EDA_EDI_2011">EDA_EDI_2011</td>
-        <td id="EDA_EDI_2012">EDA_EDI_2012_EDI_2012</td>
+        <td id="EDA_EDI_2012">EDA_EDI_2012</td>
         <td id="EDA_EDI_2013">EDA_EDI_2013</td>
         <td id="EDA_EDI_2014">EDA_EDI_2014</td>
-        <td id="EDA_All">EDI_EDA_Dummyt</td>
+        <td id="Dummy">EDI_EDA_Dummy</td>
         <td></td>
     </tr>
     <tr >
@@ -37,7 +37,7 @@
         <td id="BK_EDI_2012">BK_EDI_2012</td>
         <td id="BK_EDI_2013">BK_EDI_2013</td>
         <td id="BK_EDI_2014">BK_EDI_2014</td>
-        <td id="BK_All">EDI_EDA_Dummyt</td>
+        <td id="BK_All"></td>
         <td></td>
     </tr>
     <tr >
@@ -46,7 +46,7 @@
         <td id="BK_EDA_EDI_2012">BK_EDA_EDI_2012</td>
         <td id="BK_EDA_EDI_2013">BK_EDA_EDI_2013</td>
         <td id="BK_EDA_EDI_2014">BK_EDA_EDI_2014</td>
-        <td id="EDI_00">EDI_00</td>
+        <td id="EDI_ALL"></td>
         <td></td>
     </tr>
     <tr>
@@ -118,7 +118,10 @@
          p = v.split("=");
         params[p[0]]=p[1]
     })
-
+    //dummy
+    d3.select("#Dummy").on("click", function() {
+        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv",0, "#Dummy");
+    });
 
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {

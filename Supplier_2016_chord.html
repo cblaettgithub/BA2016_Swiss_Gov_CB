@@ -53,6 +53,12 @@
         <td id="BK_EDA_EDI_2013_Cat">BK_EDA_EDI_2013_Cat</td>
         <td id="BK_EDA_EDI_2014_Cat">BK_EDA_EDI_2014_Cat</td>
         <td id="EDI_ALL_Cat"></td>
+    </tr>
+    <tr >
+        <td>Searching</td>
+        <td id="searching">searching supplier</td>
+        <td id="Creating_Link">Creating Link</td>
+        <td id="placeLink" colspan="3"></td>
 
     </tr>
     <tr>
@@ -108,7 +114,6 @@
             <option value="18">18 cm</option>
             <option value="19">19 cm</option>
         </select></td>
-        <td></td>
     </tr>
 </table>
 <svg width="960" height="20"></svg>
@@ -124,72 +129,88 @@
          p = v.split("=");
         params[p[0]]=p[1]
     })
+
+    //startwithLink(p[0],p[1],p[2]);
+    startwithLink(p[0],p[1],"");
+
     //dummy
     d3.select("#Dummy").on("click", function() {
-        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv",0, "#Dummy");
+        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
     });
 
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {
-        settingCSVFiles("EDA - 2011.csv","EDI - 2011.csv", 0,"#EDA_EDI_2011");
+        settingCSVFiles("EDA_EDI_2011");
     });
     d3.select("#EDA_EDI_2012").on("click", function() {
-        settingCSVFiles("EDA - 2012.csv","EDI - 2012.csv", 0,"#EDA_EDI_2012");
+        settingCSVFiles("EDA_EDI_2012");
     });
     d3.select("#EDA_EDI_2013").on("click", function() {
-        settingCSVFiles("EDA - 2013.csv","EDI - 2013.csv",0, "#EDA_EDI_2013");
+        settingCSVFiles("EDA_EDI_2013");
     });
     d3.select("#EDA_EDI_2014").on("click", function() {
-        settingCSVFiles("EDA - 2014.csv","EDI - 2014.csv", 0,"#EDA_EDI_2014");
+        settingCSVFiles("EDA_EDI_2014");
     });
 
     /*BK *** EDA*/
     d3.select("#BK_EDI_2011").on("click", function() {
-        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv", 0,"#BK_EDI_2011");
+        settingCSVFiles("BK_EDI_2011");
     });
     d3.select("#BK_EDI_2012").on("click", function() {
-        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv",0, "#BK_EDI_2012");
+        settingCSVFiles("BK_EDI_2012");
     });
     d3.select("#BK_EDI_2013").on("click", function() {
-        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv",0, "#BK_EDI_2013");
+        settingCSVFiles("BK_EDI_2013");
     });
     d3.select("#BK_EDI_2014").on("click", function() {
-        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv",0, "#BK_EDI_2014");
+        settingCSVFiles("BK_EDI_2014");
     });
 
     /*BK *** EDA***EDI*/
     d3.select("#BK_EDA_EDI_2011").on("click", function() {
-        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "#BK_EDA_EDI_2011");
+        settingCSVFiles("BK_EDA_EDI_2011");
     });
     d3.select("#BK_EDA_EDI_2012").on("click", function() {
-        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "#BK_EDA_EDI_2012");
+        settingCSVFiles("BK_EDA_EDI_2012");
     });
     d3.select("#BK_EDA_EDI_2013").on("click", function() {
-        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "#BK_EDA_EDI_2013");
+        settingCSVFiles("BK_EDA_EDI_2013");
     });
     d3.select("#BK_EDA_EDI_2014").on("click", function() {
-        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "#BK_EDA_EDI_2014");
+        settingCSVFiles("BK_EDA_EDI_2014");
     });
 
     /*BK *** EDA***EDI****_Cat*/
     d3.select("#BK_EDA_EDI_2011_Cat").on("click", function() {
-        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "#BK_EDA_EDI_2011_Cat");
+        settingCSVFiles("BK_EDA_EDI_2011_Cat");
     });
     d3.select("#BK_EDA_EDI_2012_Cat").on("click", function() {
-        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "#BK_EDA_EDI_2012_Cat");
+        settingCSVFiles("BK_EDA_EDI_2012_Cat");
     });
     d3.select("#BK_EDA_EDI_2013_Cat").on("click", function() {
-        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "#BK_EDA_EDI_2013_Cat");
+        settingCSVFiles("BK_EDA_EDI_2013_Cat");
     });
     d3.select("#BK_EDA_EDI_2014_Cat").on("click", function() {
-        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "#BK_EDA_EDI_2014_Cat");
+        settingCSVFiles("BK_EDA_EDI_2014_Cat");
+    });
+    //searching supplier
+    d3.select("#searching").on("click", function() {
+        settingCSVFiles("UVEK - 2012.csv","EJPD - 2012.csv","VBS - 2012.csv", "searching");
+    });
+
+    //creatingLink
+    d3.select("#Creating_Link").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#Creating_Link").style("color", "red");
+        d3.select("#placeLink").text(startcreatinglink());
     });
 
     /*EDI*/
-    function settingCSVFiles(csv, csv_B, csv_C,nameTop){
+    function settingCSVFiles(nameTop){
         d3.selectAll("td").style("color", "black");
-        d3.select(nameTop).style("color", "red");
-        startprocessglobal(csv, csv_B, csv_C, nameTop);
+        d3.select("#"+nameTop).style("color", "red");
+        startwithLink("manual", nameTop);
+
     }
     d3.select("#Design").on("click", function() {
         d3.selectAll("td").style("color", "black");

@@ -102,7 +102,8 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     var _ds_supplier_EDI;
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
-    var _choice;
+    var _v_choice="BK_EDA_EDI_2012";//default
+    var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     /*creatinglinks*/
 
     module.exports ={
@@ -139,7 +140,8 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
         _ds_supplier_EDI:_ds_supplier_EDI,
         _ds_supplier_EDA:_ds_supplier_EDA,
         _ds_supplier_BK:_ds_supplier_BK,
-        _v_choice:_ds_supplier_BK
+        _v_choice:_v_choice,
+        _vhttp:_vhttp
     }
 },{}],3:[function(require,module,exports){
 /**
@@ -306,12 +308,12 @@ function readcsv(data, data_B,data_C, matrix)  {
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    //compareCSV(data, data_B,data_C);
+    compareCSV(data, data_B,data_C, "fullCategory");
     switch (modul._v_choice){
-        case "#EDA_EDI_2011"://EDA 2011, EDI 2011
-        case "#EDA_EDI_2012"://EDA 2012, EDI 2011
-        case "#EDA_EDI_2013"://EDA 2013, EDI 2011
-        case "#EDA_EDI_2014"://EDA 2014, EDI 2011
+        case "EDA_EDI_2011"://EDA 2011, EDI 2011
+        case "EDA_EDI_2012"://EDA 2012, EDI 2011
+        case "EDA_EDI_2013"://EDA 2013, EDI 2011
+        case "EDA_EDI_2014"://EDA 2014, EDI 2011
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -320,10 +322,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([modul._ds_supplier_EDA,modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI", ["sumEDA","sumEDI"]);
             break;
-        case "#BK_EDI_2011"://BK EDA 2011,
-        case "#BK_EDI_2012"://BK EDA 2012,
-        case "#BK_EDI_2013"://BK EDA 2013,
-        case "#BK_EDI_2014"://BK EDA 2014,
+        case "BK_EDI_2011"://BK EDA 2011,
+        case "BK_EDI_2012"://BK EDA 2012,
+        case "BK_EDI_2013"://BK EDA 2013,
+        case "BK_EDI_2014"://BK EDA 2014,
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -332,10 +334,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumEDA","sumBundeskanzelt"]);
             break;
-        case "#BK_EDA_EDI_2011"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2011"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte"];
             data =filter(data, filtercontent, "supplier");
@@ -348,10 +350,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
-        case "#BK_EDA_EDI_2011_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2011_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Hardware","SW-Pflege und HW Wartung",
             "Informatik-DL exkl. Personalverleih im Bereich IKT"];
             data =filter(data, filtercontent, "fullCategory");
@@ -371,7 +373,7 @@ function readcsv(data, data_B,data_C, matrix)  {
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
             modul._supplier= modul._ds_supplier_EDA;
             break;
-        case "#Dummy":
+        case "Dummy":
             var dummyEDA=getDummy_EDA(data, "supplier");
             var dummyEDI=getDummy_EDI(data_B, "supplier");
             csvall=mergingFiles([dummyEDA, dummyEDI]);
@@ -489,22 +491,20 @@ function getDummy_BK(csv, name){
         .entries(csv);
     return nested_data;
 }
-function compareCSV(dataA, dataB, dataC){
-
+function compareCSV(dataA, dataB, dataC, field){
     var mrow=[];
     for (var i=0;i<dataA.length;i++){
         for (var j=0;j<dataB.length;j++){
-            if (dataA[i].fullCategory==dataB[j].fullCategory){
+            if (dataA[i][field]==dataB[j][field]){
                 for (var k=0;k<dataC.length;k++)
-                    if (dataA[i].fullCategory==dataC[k].fullCategory)
-                        mrow.push(dataA[i].fullCategory);
+                    if (dataA[i][field]==dataC[k][field])
+                        mrow.push(dataA[i][field]);
             }
         }
     }
     /*var expensesByName = d3.nest()
         .key(function(d) { return d.fullCategory; })
         .entries(mrow);*/
-
 }
 
 function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI_BK){
@@ -831,6 +831,17 @@ module.exports={
     var CreatingLinks = require('./Javascripts/CreatingLinks');
     var q;
 
+global.startwithLink=function(choice, content, choice_C){
+    console.log("start with Link:"+choice+" "+content+" "+choice_C);
+    startingwithQuery(content);
+}
+
+    // CreateLink
+global.startcreatinglink=function(){
+    console.log("start creatinglink");
+    return modul._vhttp+"?choice="+modul._v_choice;
+}
+
 //starting with choiced csv-fils
 global.startprocessglobal = function(content, content_B,content_C, choice) {
     console.log("startprocessglobal");
@@ -920,6 +931,71 @@ function settingParam(trans_width, trans_height, width, height,
 }
 function get_requestParam(csvfile,  dep){
     Querystring
+}
+function startingwithQuery(content){
+    console.log("starting with Query");
+    switch(content) {//EDA-EDI 2011- 2014
+        case 'EDA_EDI_2011':
+            startprocessglobal("EDA - 2011.csv","EDI - 2011.csv", 0,"EDA_EDI_2011")
+            break;
+        case 'EDA_EDI_2012':
+            startprocessglobal("EDA - 2012.csv","EDI - 2012.csv", 0,"EDA_EDI_2012")
+            break;
+        case 'EDA_EDI_2013':
+            startprocessglobal("EDA - 2013.csv","EDI - 2013.csv",0, "EDA_EDI_2013")
+            break;
+        case 'EDA_EDI_2014':
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "EDA_EDI_2014")
+            break;
+
+            //BK EDI 2011 - 2014
+        case 'BK_EDI_2011':
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDI_2011")
+            break;
+        case 'BK_EDI_2012':
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDI_2012")
+            break;
+        case 'BK_EDI_2013':
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDI_2013")
+            break;
+        case 'BK_EDI_2014':
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDI_2014")
+            break;
+
+            //BK EDA EDI 2011 - 2014
+        case  "BK_EDA_EDI_2011":
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011")
+            break;
+        case  "BK_EDA_EDI_2012":
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012")
+            break;
+        case  "BK_EDA_EDI_2013":
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013")
+            break;
+        case  "BK_EDA_EDI_2014":
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014")
+            break;
+
+            //Cat BK EDA EDI 2011 - 2014
+        case  "BK_EDA_EDI_2011_Cat":
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat")
+            break;
+        case  "BK_EDA_EDI_2012_Cat":
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat")
+            break;
+        case  "BK_EDA_EDI_2013_Cat":
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat")
+            break;
+        case  "BK_EDA_EDI_2014_Cat":
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat")
+            break;
+
+            //dummy
+        case  "Dummy":
+            startprocessglobal("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy")
+            break;
+        default:
+    }
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

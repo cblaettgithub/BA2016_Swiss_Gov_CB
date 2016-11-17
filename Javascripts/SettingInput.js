@@ -14,12 +14,12 @@ function readcsv(data, data_B,data_C, matrix)  {
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    //compareCSV(data, data_B,data_C);
+    compareCSV(data, data_B,data_C, "fullCategory");
     switch (modul._v_choice){
-        case "#EDA_EDI_2011"://EDA 2011, EDI 2011
-        case "#EDA_EDI_2012"://EDA 2012, EDI 2011
-        case "#EDA_EDI_2013"://EDA 2013, EDI 2011
-        case "#EDA_EDI_2014"://EDA 2014, EDI 2011
+        case "EDA_EDI_2011"://EDA 2011, EDI 2011
+        case "EDA_EDI_2012"://EDA 2012, EDI 2011
+        case "EDA_EDI_2013"://EDA 2013, EDI 2011
+        case "EDA_EDI_2014"://EDA 2014, EDI 2011
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -28,10 +28,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([modul._ds_supplier_EDA,modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI", ["sumEDA","sumEDI"]);
             break;
-        case "#BK_EDI_2011"://BK EDA 2011,
-        case "#BK_EDI_2012"://BK EDA 2012,
-        case "#BK_EDI_2013"://BK EDA 2013,
-        case "#BK_EDI_2014"://BK EDA 2014,
+        case "BK_EDI_2011"://BK EDA 2011,
+        case "BK_EDI_2012"://BK EDA 2012,
+        case "BK_EDI_2013"://BK EDA 2013,
+        case "BK_EDI_2014"://BK EDA 2014,
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -40,10 +40,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumEDA","sumBundeskanzelt"]);
             break;
-        case "#BK_EDA_EDI_2011"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2011"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte"];
             data =filter(data, filtercontent, "supplier");
@@ -56,10 +56,10 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
-        case "#BK_EDA_EDI_2011_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
-        case "#BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2011_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Hardware","SW-Pflege und HW Wartung",
             "Informatik-DL exkl. Personalverleih im Bereich IKT"];
             data =filter(data, filtercontent, "fullCategory");
@@ -79,7 +79,7 @@ function readcsv(data, data_B,data_C, matrix)  {
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
             modul._supplier= modul._ds_supplier_EDA;
             break;
-        case "#Dummy":
+        case "Dummy":
             var dummyEDA=getDummy_EDA(data, "supplier");
             var dummyEDI=getDummy_EDI(data_B, "supplier");
             csvall=mergingFiles([dummyEDA, dummyEDI]);
@@ -197,22 +197,20 @@ function getDummy_BK(csv, name){
         .entries(csv);
     return nested_data;
 }
-function compareCSV(dataA, dataB, dataC){
-
+function compareCSV(dataA, dataB, dataC, field){
     var mrow=[];
     for (var i=0;i<dataA.length;i++){
         for (var j=0;j<dataB.length;j++){
-            if (dataA[i].fullCategory==dataB[j].fullCategory){
+            if (dataA[i][field]==dataB[j][field]){
                 for (var k=0;k<dataC.length;k++)
-                    if (dataA[i].fullCategory==dataC[k].fullCategory)
-                        mrow.push(dataA[i].fullCategory);
+                    if (dataA[i][field]==dataC[k][field])
+                        mrow.push(dataA[i][field]);
             }
         }
     }
     /*var expensesByName = d3.nest()
         .key(function(d) { return d.fullCategory; })
         .entries(mrow);*/
-
 }
 
 function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI_BK){

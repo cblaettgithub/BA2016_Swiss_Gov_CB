@@ -29,7 +29,6 @@
         <td id="EDA_EDI_2013">EDA_EDI_2013</td>
         <td id="EDA_EDI_2014">EDA_EDI_2014</td>
         <td id="Dummy">EDI_EDA_Dummy</td>
-        <td></td>
     </tr>
     <tr >
         <td>Departemente BK-EDI</td>
@@ -38,16 +37,23 @@
         <td id="BK_EDI_2013">BK_EDI_2013</td>
         <td id="BK_EDI_2014">BK_EDI_2014</td>
         <td id="BK_All"></td>
-        <td></td>
     </tr>
     <tr >
-        <td>Compare 3 Table</td>
-        <td id="BK_EDA_">BK_EDA_EDI_2011</td>
+        <td>Departemente BK-EDA-EDI</td>
+        <td id="BK_EDA_EDI_2011">BK_EDA_EDI_2011</td>
         <td id="BK_EDA_EDI_2012">BK_EDA_EDI_2012</td>
         <td id="BK_EDA_EDI_2013">BK_EDA_EDI_2013</td>
         <td id="BK_EDA_EDI_2014">BK_EDA_EDI_2014</td>
         <td id="EDI_ALL"></td>
-        <td></td>
+    </tr>
+    <tr >
+        <td>Cat BK-EDA-EDI</td>
+        <td id="BK_EDA_EDI_2011_Cat">BK_EDA_EDI_2011_Cat</td>
+        <td id="BK_EDA_EDI_2012_Cat">BK_EDA_EDI_2012_Cat</td>
+        <td id="BK_EDA_EDI_2013_Cat">BK_EDA_EDI_2013_Cat</td>
+        <td id="BK_EDA_EDI_2014_Cat">BK_EDA_EDI_2014_Cat</td>
+        <td id="EDI_ALL_Cat"></td>
+
     </tr>
     <tr>
         <td id="Design">Design</td>
@@ -153,7 +159,7 @@
 
     /*BK *** EDA***EDI*/
     d3.select("#BK_EDA_EDI_2011").on("click", function() {
-        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2012.csv", "#BK_EDA_EDI_2011");
+        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "#BK_EDA_EDI_2011");
     });
     d3.select("#BK_EDA_EDI_2012").on("click", function() {
         settingCSVFiles("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "#BK_EDA_EDI_2012");
@@ -163,6 +169,20 @@
     });
     d3.select("#BK_EDA_EDI_2014").on("click", function() {
         settingCSVFiles("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "#BK_EDA_EDI_2014");
+    });
+
+    /*BK *** EDA***EDI****_Cat*/
+    d3.select("#BK_EDA_EDI_2011_Cat").on("click", function() {
+        settingCSVFiles("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "#BK_EDA_EDI_2011_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat").on("click", function() {
+        settingCSVFiles("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "#BK_EDA_EDI_2012_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat").on("click", function() {
+        settingCSVFiles("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "#BK_EDA_EDI_2013_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat").on("click", function() {
+        settingCSVFiles("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "#BK_EDA_EDI_2014_Cat");
     });
 
     /*EDI*/

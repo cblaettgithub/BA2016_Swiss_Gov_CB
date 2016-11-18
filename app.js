@@ -64,6 +64,7 @@ function process(filename, filename_B, filename_C) {
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);
     var test=0;
+    console.log("choice:"+test);
     if (test==0){//each year
         q= d3.queue()
         q
@@ -76,9 +77,10 @@ function process(filename, filename_B, filename_C) {
             .await(SettingsB)
     }
     else{ //2011 - 2014
-        var supplierA=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
-        var supplierB=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
-        var supplierC=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
+        var csv="csv/";
+        var supplierA=[csv+"BK - 2011.csv",csv+"BK - 2011.csv",csv+"BK - 2011.csv",csv+"BK - 2011.csv"];
+        var supplierB=[csv+"EDI - 2011.csv",csv+"EDI - 2011.csv",csv+"EDI - 2011.csv",csv+"EDI - 2011.csv"];
+        var supplierC=[csv+"EDA - 2011.csv",csv+"EDA - 2011.csv",csv+"EDA - 2011.csv",csv+"EDA - 2011.csv"];
         q= d3.queue()
         q
             .defer(d3.csv, supplierA[0])
@@ -95,20 +97,21 @@ function process(filename, filename_B, filename_C) {
             .defer(d3.csv, supplierC[3])
             .defer(d3.json,modul._currentjson)
             .defer(d3.csv, modul._currentcolor)
-            .await(SettingsC)
+            .await(settingsC)
     }
 }
 function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014,
                 m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014,
-                m_supplier_C_2011, m_supplier_C_2013, m_supplier_C_2014, matrix, color){
+                m_supplier_C_2011,m_supplier_C_2012, m_supplier_C_2013, m_supplier_C_2014, matrix, color){
     console.log("SettingsB");
+    modul._v_choice="All";
     modul._supplier=m_supplier_2011;//Länderbogennamenn setzen
     //Merging 2011 - 2014
-    var m_supplierA=mergingFiles(m_supplier_2011,m_supplier_2012,m_supplier_2013,m_supplier_2014);
-    var m_supplierB=mergingFiles(m_supplier_B_2011,m_supplier_B_2012,m_supplier_B_2013,m_supplier_B_2014);
-    var m_supplierC=mergingFiles(m_supplier_C_2011,m_supplier_C_2012,m_supplier_C_2013,m_supplier_C_2014);
 
-    SettingInput.readcsv(m_supplierA, m_supplierB, m_supplierC,matrix)
+    //test only 2012/2013
+    SettingInput.readcsv(  mergingFiles([m_supplier_2012,m_supplier_2013]),
+    mergingFiles([m_supplier_B_2012,m_supplier_B_2013]),
+    mergingFiles([m_supplier_C_2012,m_supplier_C_2013]),matrix)
     modul._layout.matrix(modul._matrix);
     modul._color=color;
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
@@ -225,3 +228,14 @@ function startingwithQuery(content){
         default:
     }
 }
+function mergingFiles(csvFiles) {
+    console.log("merging files");
+    var results = [];
+    var output;
+    for (var i = 0; i < csvFiles.length; i++) {
+        results.push(csvFiles[i]);
+    }
+    output = d3.merge(results);
+    return output;
+}
+

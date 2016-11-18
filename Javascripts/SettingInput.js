@@ -14,8 +14,21 @@ function readcsv(data, data_B,data_C, matrix)  {
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C, "fullCategory");
+    //compareCSV(data, data_B,data_C, "fullCategory");
     switch (modul._v_choice){
+        case "All":
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte"];
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "supplier");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
+            break;
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
         case "EDA_EDI_2013"://EDA 2013, EDI 2011

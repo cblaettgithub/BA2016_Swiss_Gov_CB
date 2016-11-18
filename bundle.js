@@ -881,16 +881,58 @@ function process(filename, filename_B, filename_C) {
     //SettingLayout.movesvg();
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);
-    q= d3.queue()
-    q
-        .defer(d3.csv, modul._currentcsv)
-        .defer(d3.csv, modul._currentcsv_B)
-        .defer(d3.csv, modul._currentcsv_C)
-        .defer(d3.json,modul._currentjson)
-        .defer(d3.csv, modul._currentcolor)
-        .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
-        .await(SettingsB)
+    var test=0;
+    if (test==0){
+        q= d3.queue()
+        q
+            .defer(d3.csv, modul._currentcsv)
+            .defer(d3.csv, modul._currentcsv_B)
+            .defer(d3.csv, modul._currentcsv_C)
+            .defer(d3.json,modul._currentjson)
+            .defer(d3.csv, modul._currentcolor)
+            .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
+            .await(SettingsB)
+    }
+    else{ //2011 - 2014
+        var supplierA=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
+        var supplierB=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
+        var supplierC=["csv/"+filename,"csv/"+filename,"csv/"+filename,"csv/"+filename];
+        q= d3.queue()
+        q
+            .defer(d3.csv, supplierA[0])
+            .defer(d3.csv, supplierA[1])
+            .defer(d3.csv, supplierA[2])
+            .defer(d3.csv, supplierA[3])
+            .defer(d3.csv, supplierB[0])
+            .defer(d3.csv, supplierB[1])
+            .defer(d3.csv, supplierB[2])
+            .defer(d3.csv, supplierB[3])
+            .defer(d3.csv, supplierC[0])
+            .defer(d3.csv, supplierC[1])
+            .defer(d3.csv, supplierC[2])
+            .defer(d3.csv, supplierC[3])
+            .defer(d3.json,modul._currentjson)
+            .defer(d3.csv, modul._currentcolor)
+            .await(SettingsC)
+    }
 }
+function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014,
+                m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014,
+                m_supplier_C_2011, m_supplier_C_2013, m_supplier_C_2014, matrix, color){
+    console.log("SettingsB");
+    modul._supplier=m_supplier_2011;//Länderbogennamenn setzen
+    //Merging 2011 - 2014
+    var m_supplierA=mergingFiles(m_supplier_2011,m_supplier_2012,m_supplier_2013,m_supplier_2014);
+    var m_supplierB=mergingFiles(m_supplier_B_2011,m_supplier_B_2012,m_supplier_B_2013,m_supplier_B_2014);
+    var m_supplierC=mergingFiles(m_supplier_C_2011,m_supplier_C_2012,m_supplier_C_2013,m_supplier_C_2014);
+
+    SettingInput.readcsv(m_supplierA, m_supplierB, m_supplierC,matrix)
+    modul._layout.matrix(modul._matrix);
+    modul._color=color;
+    //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
+    Setting_theMethods();
+}
+
 function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,m_dummy)
 {
     console.log("SettingsB");
@@ -899,7 +941,11 @@ function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,
     modul._layout.matrix(modul._matrix);
     modul._color=color;
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
+    Setting_theMethods();
+}
 
+function Setting_theMethods()
+{
     SettingGroups.neighborhood();
     SettingGroups.groupPath();
     SettingGroups.groupText();

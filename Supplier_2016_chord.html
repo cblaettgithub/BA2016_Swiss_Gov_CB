@@ -45,7 +45,15 @@
         <td id="BK_EDA_EDI_2013">BK_EDA_EDI_2013</td>
         <td id="BK_EDA_EDI_2014">BK_EDA_EDI_2014</td>
         <td id="EDI_ALL"></td>
-    </tr>
+    </tr>  <tr >
+    <td>Departemente BK-EDA-EDI Tri</td>
+    <td id="BK_EDA_EDI_2011_Tri">BK_EDA_EDI_2011_Tri</td>
+    <td id="BK_EDA_EDI_2012_Tri">BK_EDA_EDI_2012_Tri</td>
+    <td id="BK_EDA_EDI_2013_Tri">BK_EDA_EDI_2013_Tri</td>
+    <td id="BK_EDA_EDI_2014_Tri">BK_EDA_EDI_2014_Tri</td>
+    <td id="EDI_ALL_Tri"></td>
+</tr>
+
     <tr >
         <td>Cat BK-EDA-EDI</td>
         <td id="BK_EDA_EDI_2011_Cat">BK_EDA_EDI_2011_Cat</td>
@@ -53,6 +61,22 @@
         <td id="BK_EDA_EDI_2013_Cat">BK_EDA_EDI_2013_Cat</td>
         <td id="BK_EDA_EDI_2014_Cat">BK_EDA_EDI_2014_Cat</td>
         <td id="EDI_ALL_Cat"></td>
+    </tr>
+    <tr >
+        <td>Cat BK-EDA-EDI_2</td>
+        <td id="BK_EDA_EDI_2011_Cat_2">BK_EDA_EDI_2011_Cat_2</td>
+        <td id="BK_EDA_EDI_2012_Cat_2">BK_EDA_EDI_2012_Cat_2</td>
+        <td id="BK_EDA_EDI_2013_Cat_2">BK_EDA_EDI_2013_Cat_2</td>
+        <td id="BK_EDA_EDI_2014_Cat_2">BK_EDA_EDI_2014_Cat_2</td>
+        <td id="EDI_ALL_Cat_2"></td>
+    </tr>
+    <tr >
+        <td>Cat BK-EDA-EDI_3</td>
+        <td id="BK_EDA_EDI_2011_Cat_3">BK_EDA_EDI_2011_Cat_3</td>
+        <td id="BK_EDA_EDI_2012_Cat_3">BK_EDA_EDI_2012_Cat_3</td>
+        <td id="BK_EDA_EDI_2013_Cat_3">BK_EDA_EDI_2013_Cat_3</td>
+        <td id="BK_EDA_EDI_2014_Cat_3">BK_EDA_EDI_2014_Cat_3</td>
+        <td id="EDI_ALL_Cat_3"></td>
     </tr>
     <tr >
         <td>Searching</td>
@@ -180,6 +204,20 @@
         settingCSVFiles("BK_EDA_EDI_2014");
     });
 
+    /*BK *** EDA***EDI*Trivadis*/
+    d3.select("#BK_EDA_EDI_2011_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2012_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2013_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2014_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Tri");
+    });
+
     /*BK *** EDA***EDI****_Cat*/
     d3.select("#BK_EDA_EDI_2011_Cat").on("click", function() {
         settingCSVFiles("BK_EDA_EDI_2011_Cat");
@@ -192,6 +230,36 @@
     });
     d3.select("#BK_EDA_EDI_2014_Cat").on("click", function() {
         settingCSVFiles("BK_EDA_EDI_2014_Cat");
+    });
+
+
+    /*BK *** EDA***EDI****_Cat   2*/
+    d3.select("#BK_EDA_EDI_2011_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Cat_2");
+    });
+
+
+    /*BK *** EDA***EDI****_Cat   3*/
+    d3.select("#BK_EDA_EDI_2011_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Cat_3");
     });
     //searching supplier
     d3.select("#searching").on("click", function() {

@@ -14,7 +14,7 @@ function readcsv(data, data_B,data_C, matrix)  {
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C, "supplier");
+    compareCSV(data, data_B,data_C, "fullCategory");
     switch (modul._v_choice){
         case "All":
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
@@ -69,12 +69,61 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
+        case "BK_EDA_EDI_2011_Tri"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012_Tri"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013_Tri"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014_Tri"://EDA 2014, EDI 2011, BK 2011
+            filtercontent=["Trivadis AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte"];
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "supplier");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
+            break;
         case "BK_EDA_EDI_2011_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Hardware","SW-Pflege und HW Wartung",
             "Informatik-DL exkl. Personalverleih im Bereich IKT"];
+            data =filter(data, filtercontent, "fullCategory");
+            data_B =filter(data_B,filtercontent, "fullCategory");
+            data_C =filter(data_C,filtercontent, "fullCategory");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
+            break;
+        case "BK_EDA_EDI_2011_Cat_2"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012_Cat_2"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013_Cat_2"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014_Cat_2"://EDA 2014, EDI 2011, BK 2011
+            filtercontent=["Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+                "Beratungs-DL für Management und Organisation sowie Coaching",
+                "DL im Zusammenhang mit Personentransporten, Hotels, usw. "];
+            data =filter(data, filtercontent, "fullCategory");
+            data_B =filter(data_B,filtercontent, "fullCategory");
+            data_C =filter(data_C,filtercontent, "fullCategory");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
+            break;
+        case "BK_EDA_EDI_2011_Cat_3"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2012_Cat_3"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2013_Cat_3"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_2014_Cat_3"://EDA 2014, EDI 2011, BK 2011
+            filtercontent=["Postdienste","Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+                "Hardware"];
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");

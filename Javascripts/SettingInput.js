@@ -107,7 +107,7 @@ function readcsv(data, data_B,data_C, matrix)  {
         case "BK_EDA_EDI_2014_Cat_2"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
                 "Beratungs-DL für Management und Organisation sowie Coaching",
-                "DL im Zusammenhang mit Personentransporten, Hotels, usw. "];
+                "SW-Pflege und HW Wartung"];
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");

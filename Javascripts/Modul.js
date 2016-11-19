@@ -35,6 +35,8 @@
     var _ds_supplier_BK;
     var _v_choice="BK_EDA_EDI_2012";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
+    var _vmodus="default";
+    var _error_counter=0;
     /*creatinglinks*/
 
     module.exports ={
@@ -72,5 +74,7 @@
         _ds_supplier_EDA:_ds_supplier_EDA,
         _ds_supplier_BK:_ds_supplier_BK,
         _v_choice:_v_choice,
-        _vhttp:_vhttp
+        _vhttp:_vhttp,
+        _vmodus:_vmodus,
+        _error_counter:_error_counter
     }

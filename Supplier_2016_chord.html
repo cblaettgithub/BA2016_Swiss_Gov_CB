@@ -36,7 +36,7 @@
         <td id="BK_EDI_2012">BK_EDI_2012</td>
         <td id="BK_EDI_2013">BK_EDI_2013</td>
         <td id="BK_EDI_2014">BK_EDI_2014</td>
-        <td id="BK_All"></td>
+        <td id="BK_EDI_All">Cumulation BK_EDI</td>
     </tr>
     <tr >
         <td>Departemente BK-EDA-EDI</td>
@@ -188,6 +188,9 @@
     });
     d3.select("#BK_EDI_2014").on("click", function() {
         settingCSVFiles("BK_EDI_2014");
+    });
+    d3.select("#BK_EDI_All").on("click", function() {
+        settingCSVFiles("BK_EDI_All");
     });
 
     /*BK *** EDA***EDI*/

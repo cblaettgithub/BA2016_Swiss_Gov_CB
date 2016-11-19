@@ -16,19 +16,22 @@
 global.startwithLink=function(choice, content, choice_C){
     console.log("*****************************************************************************************");
     console.log("");
-    console.log("start with Link:"+choice+" "+content+" "+choice_C);
+    console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
+    modul._error_counter++;
     startingwithQuery(content);
 }
 
     // CreateLink
 global.startcreatinglink=function(){
-    console.log("start creatinglink");
+    console.log(modul._error_counter+" start creatinglink");
+    modul._error_counter++;
     return modul._vhttp+"?choice="+modul._v_choice;
 }
 
 //starting with choiced csv-fils
 global.startprocessglobal = function(content, content_B,content_C, choice) {
-    console.log("startprocessglobal");
+    console.log(modul._error_counter+" startprocessglobal");
+    modul._error_counter++;
     modul._currentcsv="";
     modul._v_choice=choice;
     //d3.select("#result").property("value", csv);
@@ -40,7 +43,8 @@ global.startprocessglobal = function(content, content_B,content_C, choice) {
 
 //changing width, height, outer radius per html
 global.startprocessDesign=function(content, name, width, height, radius_i, radius_o){
-    console.log("startprocessDesign");
+    console.log(modul._error_counter+" startprocessDesign");
+    modul._error_counter++;
     modul._currentcsv="";
     console.log("process:design"+content);
     console.log(width +" "+ height +" " +radius_o);
@@ -51,7 +55,8 @@ global.startprocessDesign=function(content, name, width, height, radius_i, radiu
 function process(filename, filename_B, filename_C) {
     modul._svg=d3.select("svg").remove();
     modul._svg = d3.select("svg");
-    console.log("process:main");
+    console.log(modul._error_counter+" process:main");
+    modul._error_counter++;
     //default
     modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
@@ -66,8 +71,8 @@ function process(filename, filename_B, filename_C) {
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);
     var test=0; //0 normal, 1 kummulation
-    console.log("choice:"+test);
-    if (test==0){//each year
+    console.log("choice modus:"+modul._vmodus);
+    if (modul._vmodus=="default"){//each year
         q= d3.queue()
         q
             .defer(d3.csv, modul._currentcsv)
@@ -78,11 +83,11 @@ function process(filename, filename_B, filename_C) {
             .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
             .await(SettingsB)
     }
-    else{ //2011 - 2014
+    else{ //2011 - 2014//kummulation
         var csv="csv/";
-        var supplierA=[csv+"BK - 2011.csv",csv+"BK - 2011.csv",csv+"BK - 2011.csv",csv+"BK - 2011.csv"];
-        var supplierB=[csv+"EDI - 2011.csv",csv+"EDI - 2011.csv",csv+"EDI - 2011.csv",csv+"EDI - 2011.csv"];
-        var supplierC=[csv+"EDA - 2011.csv",csv+"EDA - 2011.csv",csv+"EDA - 2011.csv",csv+"EDA - 2011.csv"];
+        var supplierA=[csv+"BK - 2011.csv",csv+"BK - 2012.csv",csv+"BK - 2013.csv",csv+"BK - 2014.csv"];
+        var supplierB=[csv+"EDI - 2011.csv",csv+"EDI - 2012.csv",csv+"EDI - 2013.csv",csv+"EDI - 2014.csv"];
+        //var supplierC=[csv+"EDA - 2011.csv",csv+"EDA - 2012.csv",csv+"EDA - 2013.csv",csv+"EDA - 2014.csv"];
         q= d3.queue()
         q
             .defer(d3.csv, supplierA[0])
@@ -93,10 +98,10 @@ function process(filename, filename_B, filename_C) {
             .defer(d3.csv, supplierB[1])
             .defer(d3.csv, supplierB[2])
             .defer(d3.csv, supplierB[3])
-            .defer(d3.csv, supplierC[0])
+            /*.defer(d3.csv, supplierC[0])
             .defer(d3.csv, supplierC[1])
             .defer(d3.csv, supplierC[2])
-            .defer(d3.csv, supplierC[3])
+            .defer(d3.csv, supplierC[3])*/
             .defer(d3.json,modul._currentjson)
             .defer(d3.csv, modul._currentcolor)
             .await(settingsC)
@@ -104,16 +109,17 @@ function process(filename, filename_B, filename_C) {
 }
 function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014,
                 m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014,
-                m_supplier_C_2011,m_supplier_C_2012, m_supplier_C_2013, m_supplier_C_2014, matrix, color){
-    console.log("SettingsB");
-    modul._v_choice="All";
+                matrix, color){
+    console.log(modul._error_counter+" SettingsC");
+    modul._error_counter++;
     modul._supplier=m_supplier_2011;//Länderbogennamenn setzen
     //Merging 2011 - 2014
 
     //test only 2012/2013
-    SettingInput.readcsv(  mergingFiles([m_supplier_2012,m_supplier_2013]),
-    mergingFiles([m_supplier_B_2012,m_supplier_B_2013]),
-    mergingFiles([m_supplier_C_2012,m_supplier_C_2013]),matrix)
+    SettingInput.readcsv(mergingFiles([m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014]),
+    mergingFiles([m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014]),
+        mergingFiles([m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014])
+    ,matrix);
     modul._layout.matrix(modul._matrix);
     modul._color=color;
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
@@ -122,7 +128,8 @@ function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_su
 
 function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,m_dummy)
 {
-    console.log("SettingsB");
+    console.log(modul._error_counter+" SettingsB");
+    modul._error_counter++;
     modul._supplier=m_supplier;//Länderbogennamenn setzen
     SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,matrix);//Fill DS-Supplier + DS-Dept, Matrix
     modul._layout.matrix(modul._matrix);
@@ -166,114 +173,123 @@ function get_requestParam(csvfile,  dep){
     Querystring
 }
 function startingwithQuery(content){
-    console.log("starting with Query");
+    console.log(modul._error_counter+" starting with Query");
+    modul._error_counter++;
+    if (content=="BK_EDI_All")
+        modul._vmodus="BK_EDI_cumulation";
+    else
+        modul._vmodus="default";
     switch(content) {//EDA-EDI 2011- 2014
         case 'EDA_EDI_2011':
-            startprocessglobal("EDA - 2011.csv","EDI - 2011.csv", 0,"EDA_EDI_2011")
+            startprocessglobal("EDA - 2011.csv","EDI - 2011.csv", 0,"EDA_EDI_2011");
             break;
         case 'EDA_EDI_2012':
-            startprocessglobal("EDA - 2012.csv","EDI - 2012.csv", 0,"EDA_EDI_2012")
+            startprocessglobal("EDA - 2012.csv","EDI - 2012.csv", 0,"EDA_EDI_2012");
             break;
         case 'EDA_EDI_2013':
-            startprocessglobal("EDA - 2013.csv","EDI - 2013.csv",0, "EDA_EDI_2013")
+            startprocessglobal("EDA - 2013.csv","EDI - 2013.csv",0, "EDA_EDI_2013");
             break;
         case 'EDA_EDI_2014':
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "EDA_EDI_2014")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "EDA_EDI_2014");
             break;
 
             //BK EDI 2011 - 2014
         case 'BK_EDI_2011':
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDI_2011")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDI_2011");
             break;
         case 'BK_EDI_2012':
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDI_2012")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDI_2012");
             break;
         case 'BK_EDI_2013':
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDI_2013")
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDI_2013");
             break;
         case 'BK_EDI_2014':
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDI_2014")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDI_2014");
+            break;
+        case 'BK_EDI_All':
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDI_2014");
             break;
 
             //BK EDA EDI 2011 - 2014
         case  "BK_EDA_EDI_2011":
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011");
             break;
         case  "BK_EDA_EDI_2012":
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012");
             break;
         case  "BK_EDA_EDI_2013":
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013")
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013");
             break;
         case  "BK_EDA_EDI_2014":
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014");
             break;
 
         //BK EDA EDI 2011 - 2014 Tri
         case  "BK_EDA_EDI_2011_Tri":
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Tri")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Tri");
             break;
         case  "BK_EDA_EDI_2012_Tri":
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Tri")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Tri");
             break;
         case  "BK_EDA_EDI_2013_Tri":
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Tri")
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Tri");
             break;
         case  "BK_EDA_EDI_2014_Tri":
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Tri")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Tri");
             break;
 
             //Cat BK EDA EDI 2011 - 2014
         case  "BK_EDA_EDI_2011_Cat":
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat");
             break;
         case  "BK_EDA_EDI_2012_Cat":
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat");
             break;
         case  "BK_EDA_EDI_2013_Cat":
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat")
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat");
             break;
         case  "BK_EDA_EDI_2014_Cat":
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat");
             break;
 
         //Cat BK EDA EDI 2011 - 2014 2
         case  "BK_EDA_EDI_2011_Cat_2":
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat_2")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat_2");
             break;
         case  "BK_EDA_EDI_2012_Cat_2":
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat_2")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat_2");
             break;
         case  "BK_EDA_EDI_2013_Cat_2":
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat_2")
-            break;
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat_2");
+            break;;
         case  "BK_EDA_EDI_2014_Cat_2":
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat_2")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat_2");
             break;
 
         //Cat BK EDA EDI 2011 - 2014 3
         case  "BK_EDA_EDI_2011_Cat_3":
-            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat_3")
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_2011_Cat_3");
             break;
         case  "BK_EDA_EDI_2012_Cat_3":
-            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat_3")
+            startprocessglobal("BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "BK_EDA_EDI_2012_Cat_3");
             break;
         case  "BK_EDA_EDI_2013_Cat_3":
-            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat_3")
+            startprocessglobal("BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "BK_EDA_EDI_2013_Cat_3");
             break;
         case  "BK_EDA_EDI_2014_Cat_3":
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat_3")
+            startprocessglobal("BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "BK_EDA_EDI_2014_Cat_3");
             break;
 
             //dummy
         case  "Dummy":
-            startprocessglobal("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy")
+            startprocessglobal("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
             break;
         default:
     }
 }
 function mergingFiles(csvFiles) {
-    console.log("merging files");
+    console.log(modul._error_counter+" merging files");
+    modul._error_counter++;
     var results = [];
     var output;
     for (var i = 0; i < csvFiles.length; i++) {

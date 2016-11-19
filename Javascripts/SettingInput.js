@@ -9,31 +9,19 @@ module.exports={
 }
 
 function readcsv(data, data_B,data_C, matrix)  {
-    console.log("readcsv");
+    console.log(modul._error_counter+" readcsv");
+    modul._error_counter++;
     var supplier;
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
     compareCSV(data, data_B,data_C, "fullCategory");
     switch (modul._v_choice){
-        case "All":
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte"];
-            data =filter(data, filtercontent, "supplier");
-            data_B =filter(data_B,filtercontent, "supplier");
-            data_C =filter(data_C,filtercontent, "supplier");
-            console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "supplier");
-            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
-            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
-            break;
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
         case "EDA_EDI_2013"://EDA 2013, EDI 2011
         case "EDA_EDI_2014"://EDA 2014, EDI 2011
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             modul._ds_supplier_EDA= getDummy_EDA(data, "supplier");
@@ -45,7 +33,7 @@ function readcsv(data, data_B,data_C, matrix)  {
         case "BK_EDI_2012"://BK EDA 2012,
         case "BK_EDI_2013"://BK EDA 2013,
         case "BK_EDI_2014"://BK EDA 2014,
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"]
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             modul._ds_supplier_EDI= getDummy_BK(data, "supplier");
@@ -159,7 +147,8 @@ function readcsv(data, data_B,data_C, matrix)  {
     console.log("setmatrix");
 }
 function filter(data, param, filtername){
-    console.log("filter");
+    console.log(modul._error_counter+" filter");
+    modul._error_counter++;
     if (param.length==2){
         return data.filter(function(row) {
             if (row[filtername] == param[0]
@@ -297,6 +286,8 @@ function checkexistRow(mrow, onerow){
 }
 
 function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI_BK){
+    console.log(modul._error_counter+" matrix_EDI_EDA files");
+    modul._error_counter++;
     var matrix = [];
     var supplier="";
     var minus=4000000;
@@ -338,7 +329,8 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
 }
 
 function createSupplierList(dataRows, supplier_field){
-    console.log()
+    console.log(modul._error_counter+" createSupplierList");
+    modul._error_counter++;
     var v_Supplier=supplier_field.length;
     var i=0;
     var end=v_Supplier*2;
@@ -360,7 +352,7 @@ function createSupplierList(dataRows, supplier_field){
 
     //second supplier
     for (var i=0;i<v_Supplier; i++)
-        modul._supplier.push(dataRows[i])
+        modul._supplier.push("Exists supplier:"+dataRows[i])
     console.log("createSupplierList");
 }
 

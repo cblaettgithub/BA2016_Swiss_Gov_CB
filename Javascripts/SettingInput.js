@@ -14,7 +14,7 @@ function readcsv(data, data_B,data_C, matrix)  {
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    //compareCSV(data, data_B,data_C, "fullCategory");
+    compareCSV(data, data_B,data_C, "supplier");
     switch (modul._v_choice){
         case "All":
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
@@ -210,20 +210,41 @@ function getDummy_BK(csv, name){
         .entries(csv);
     return nested_data;
 }
-function compareCSV(dataA, dataB, dataC, field){
-    var mrow=[];
-    for (var i=0;i<dataA.length;i++){
-        for (var j=0;j<dataB.length;j++){
-            if (dataA[i][field]==dataB[j][field]){
-                for (var k=0;k<dataC.length;k++)
-                    if (dataA[i][field]==dataC[k][field])
-                        mrow.push(dataA[i][field]);
+function compareCSV(dataA, dataB, dataC, field) {
+    var mrow = [];
+    for (var i = 0; i < dataA.length; i++) {
+        for (var j = 0; j < dataB.length; j++) {
+            if (dataA[i][field] == dataB[j][field]) {
+                for (var k = 0; k < dataC.length; k++) {
+                    if (dataA[i][field] == dataC[k][field])
+                        if (mrow.length < 3){
+                            mrow.push(dataA[i][field]);
+                        }
+                        else{
+                            if (checkexistRow(mrow, dataA[i][field]))
+                                mrow.push(dataA[i][field]);
+                        }
+                }
             }
         }
     }
-    /*var expensesByName = d3.nest()
-        .key(function(d) { return d.fullCategory; })
-        .entries(mrow);*/
+    console.log("Result:compare CSV");
+    for (var i = 0; i < mrow.length; i++)
+        console.log(mrow[i]);
+}
+function checkexistRow(mrow, onerow){
+    /*if (mrow.length>2)
+     if (checkexistRow(mrow, dataC[k][field]))
+     mrow.push(dataA[i][field]);*/
+    var check=true;
+   if (mrow.length > 1){
+       for(var i=0;i<mrow.length;i++){
+           if (mrow[i]==onerow){
+               check=false;
+           }
+       }
+   }
+    return check;
 }
 
 function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI_BK){

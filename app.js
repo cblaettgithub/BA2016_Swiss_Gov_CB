@@ -63,7 +63,7 @@ function process(filename, filename_B, filename_C) {
     //SettingLayout.movesvg();
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);
-    var test=0;
+    var test=0; //0 normal, 1 kummulation
     console.log("choice:"+test);
     if (test==0){//each year
         q= d3.queue()

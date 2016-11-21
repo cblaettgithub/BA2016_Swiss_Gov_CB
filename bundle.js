@@ -466,7 +466,7 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
 function filter(data, param, filtername){
     console.log(modul._error_counter+" filter");
     modul._error_counter++;
-    if (param.length==2){
+   /* if (param.length==2){
         return data.filter(function(row) {
             if (row[filtername] == param[0]
                 ||  row[filtername] == param[1]
@@ -480,25 +480,13 @@ function filter(data, param, filtername){
                 ||  row[filtername] == param[1]
                 ||  row[filtername] == param[2])
             {  return row;    }
-        });
-    }else  if (param.length==4){
-        return data.filter(function(row) {
-            if (row[filtername] == param[0]
-                ||  row[filtername] == param[1]
-                ||  row[filtername] == param[2]
-                ||  row[filtername] == param[3])
-            {  return row;    }
-        });
-    }
-    /*return data.filter(function(row) {
-        var query = filtername+ " == " +param[0];
-        for (var i=1;i<param.length;i++){
-            query+=" || " + filtername+ " == '"+param[i] +"'";
+        });*/
+    return data.filter(function(row) {
+        for (var i=0;i< param.length;i++) {
+            if (row[filtername]== param[i])
+                return row;
         }
-        if (query)     {
-            return row;
-        }
-    });*/
+        });
 }
 function matrix_Supplier(data) {
         var matrix = [];

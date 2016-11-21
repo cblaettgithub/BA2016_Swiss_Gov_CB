@@ -56,10 +56,10 @@ function groupText() {//den länderbogen beschriften
 
     function groupTicks(d) {
         var k = (d.endAngle - d.startAngle) / d.value;
-        return d3.range(0, d.value, 10000000).map(function (v, i) {
+        return d3.range(0, d.value, 500000000).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
-                label: d.value + " Fr."
+                label: i % 10 != 0 ? null : v / 500000000 + " Fr"
             };
         });
     }

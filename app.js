@@ -78,6 +78,7 @@ function process(filename, filename_B, filename_C) {
             .defer(d3.csv, modul._currentcsv)
             .defer(d3.csv, modul._currentcsv_B)
             .defer(d3.csv, modul._currentcsv_C)
+            .defer(d3.csv, modul._currentcsv_D)
             .defer(d3.json,modul._currentjson)
             .defer(d3.csv, modul._currentcolor)
             .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
@@ -126,12 +127,12 @@ function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_su
     Setting_theMethods();
 }
 
-function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,m_dummy)
+function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,matrix, color,m_dummy)
 {
     console.log(modul._error_counter+" SettingsB");
     modul._error_counter++;
     modul._supplier=m_supplier;//Länderbogennamenn setzen
-    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,matrix);//Fill DS-Supplier + DS-Dept, Matrix
+    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,m_supplier_D,matrix);//Fill DS-Supplier + DS-Dept, Matrix
     modul._layout.matrix(modul._matrix);
     modul._color=color;
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
@@ -283,6 +284,10 @@ function startingwithQuery(content){
             //dummy
         case  "Dummy":
             startprocessglobal("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
+            break;
+
+        case  "BK_EDA_EDI_EJPD_Cat":
+            startprocessglobal("BK - 2012.csv","EDA - 2014.csv","EDI - 2012.csv", "BK_EDA_EDI_EJPD_Cat");
             break;
         default:
     }

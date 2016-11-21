@@ -70,9 +70,10 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     /**
      * Created by chris on 24.10.2016.
      */
-    var _currentcsv="CSV/EDA-2011.csv";
-    var _currentcsv_B="CSV/EDA-2011.csv";
-    var _currentcsv_C="CSV/EDA-2011.csv";
+    var _currentcsv="CSV/EDA-2012.csv";
+    var _currentcsv_B="CSV/EDI-2012.csv";
+    var _currentcsv_C="CSV/BK-2012.csv";
+    var _currentcsv_D="CSV/EJPD - 2012.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");
@@ -102,6 +103,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     var _ds_supplier_EDI;
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
+    var _ds_supplier_EJPD;
     var _v_choice="BK_EDA_EDI_2012";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     var _vmodus="default";
@@ -112,6 +114,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
         _currentcsv:_currentcsv,
         _currentcsv_B:_currentcsv_B,
         _currentcsv_C:_currentcsv_C,
+        _currentcsv_D:_currentcsv_D,
         _currentjson:_currentjson,
         _currentcolor:_currentcolor,
         _svg:_svg,
@@ -142,6 +145,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
         _ds_supplier_EDI:_ds_supplier_EDI,
         _ds_supplier_EDA:_ds_supplier_EDA,
         _ds_supplier_BK:_ds_supplier_BK,
+        _ds_supplier_EJPD:_ds_supplier_EJPD,
         _v_choice:_v_choice,
         _vhttp:_vhttp,
         _vmodus:_vmodus,
@@ -232,10 +236,10 @@ function groupText() {//den länderbogen beschriften
 
     function groupTicks(d) {
         var k = (d.endAngle - d.startAngle) / d.value;
-        return d3.range(0, d.value, 10000000).map(function (v, i) {
+        return d3.range(0, d.value, 500000000).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
-                label: d.value + " Fr."
+                label: i % 10 != 0 ? null : v / 500000000 + " Fr"
             };
         });
     }
@@ -306,14 +310,14 @@ module.exports={
     readcsv:readcsv
 }
 
-function readcsv(data, data_B,data_C, matrix)  {
+function readcsv(data, data_B,data_C,data_D, matrix)  {
     console.log(modul._error_counter+" readcsv");
     modul._error_counter++;
     var supplier;
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C, "fullCategory");
+    compareCSV(data, data_B,data_C,data_D, "fullCategory");
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -420,6 +424,21 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
+        case "BK_EDA_EDI_EJPD_Cat"://EDA 2014, EDI 2011, BK 2011
+            filtercontent=["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
+                "Hardware","Postdienste"];
+            data =filter(data, filtercontent, "fullCategory");
+            data_B =filter(data_B,filtercontent, "fullCategory");
+            data_C =filter(data_C,filtercontent, "fullCategory");
+            data_D =filter(data_D,filtercontent, "fullCategory");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_EJPD= getDummy_EJPD(data_D, "fullCategory");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI,modul._ds_supplier_EJPD]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI", "sumBFM"]);
+            break;
         case "csv/EDA - 2011.csv":
         case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
@@ -455,14 +474,31 @@ function filter(data, param, filtername){
             {  return row;  }
         });
     }
-    else{
+    else  if (param.length==3){
         return data.filter(function(row) {
             if (row[filtername] == param[0]
                 ||  row[filtername] == param[1]
                 ||  row[filtername] == param[2])
             {  return row;    }
         });
+    }else  if (param.length==4){
+        return data.filter(function(row) {
+            if (row[filtername] == param[0]
+                ||  row[filtername] == param[1]
+                ||  row[filtername] == param[2]
+                ||  row[filtername] == param[3])
+            {  return row;    }
+        });
     }
+    /*return data.filter(function(row) {
+        var query = filtername+ " == " +param[0];
+        for (var i=1;i<param.length;i++){
+            query+=" || " + filtername+ " == '"+param[i] +"'";
+        }
+        if (query)     {
+            return row;
+        }
+    });*/
 }
 function matrix_Supplier(data) {
         var matrix = [];
@@ -546,25 +582,40 @@ function getDummy_BK(csv, name){
         .entries(csv);
     return nested_data;
 }
-function compareCSV(dataA, dataB, dataC, field) {
+function getDummy_EJPD(csv, name){
+    var nested_data=d3.nest()
+        .key(function(d){return d[name]})
+        .key(function(d){return d.dept})
+        .rollup(function(v) { return{
+            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+        };})
+        .entries(csv);
+    return nested_data;
+}
+function compareCSV(dataA, dataB, dataC,dataD, field) {
     var mrow = [];
     for (var i = 0; i < dataA.length; i++) {
         for (var j = 0; j < dataB.length; j++) {
             if (dataA[i][field] == dataB[j][field]) {
                 for (var k = 0; k < dataC.length; k++) {
                     if (dataA[i][field] == dataC[k][field])
-                        if (mrow.length < 3){
-                            mrow.push(dataA[i][field]);
-                        }
-                        else{
-                            if (checkexistRow(mrow, dataA[i][field]))
-                                mrow.push(dataA[i][field]);
+                        for (var l = 0; l < dataD.length; l++) {
+                            if (dataA[i][field] == dataD[l][field]){
+                                if (mrow.length < 4){
+                                    mrow.push(dataA[i][field]);
+                                }
+                                else{
+                                    if (checkexistRow(mrow, dataA[i][field]))
+                                        mrow.push(dataA[i][field]);
+                                }
+                            }
                         }
                 }
             }
         }
     }
-    console.log("Result:compare CSV");
+    console.log("***********Result:compare CSV");
+    console.log("***********"+field);
     for (var i = 0; i < mrow.length; i++)
         console.log(mrow[i]);
 }
@@ -622,7 +673,8 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
          modul._supplier.pop();
     createSupplierList(DataEDI_EDA,Names_sumsEDA_EDI_BK );
 
-    console.log("matrix_DummyALL");
+    console.log(modul._error_counter+" matrix_EDI_EDA");
+    modul._error_counter++;
     return supplier;
 }
 
@@ -631,7 +683,15 @@ function createSupplierList(dataRows, supplier_field){
     modul._error_counter++;
     var v_Supplier=supplier_field.length;
     var i=0;
-    var end=v_Supplier*2;
+    var end;
+    if (v_Supplier==4){
+        end=v_Supplier*3;
+    }
+    else{
+        end=v_Supplier*2;
+    }
+
+
     console.log("createSupplierList:"+end);
 
     //first dept
@@ -647,13 +707,23 @@ function createSupplierList(dataRows, supplier_field){
             i=i+v_Supplier;
         }
     }
+    else if (end==12){
+        while( i<=end){
+            modul._supplier.push(dataRows[i].values[0]);
+            i=i+v_Supplier;
+        }
+    }
+
+    console.log(modul._error_counter+" createSupplierList "+"dept");
+    modul._error_counter++;
 
     //second supplier
-    for (var i=0;i<v_Supplier; i++)
-        modul._supplier.push("Exists supplier:"+dataRows[i])
-    console.log("createSupplierList");
+    for (var i=0;i<v_Supplier; i++){
+        modul._supplier.push(dataRows[i]);
+    }
+    console.log(modul._error_counter+" createSupplierList "+"supplier");
+    modul._error_counter++;
 }
-
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname summ of each Department
     if (nameValue.length==2) {
@@ -713,7 +783,7 @@ function getMatrixValue(row,nameValue, counter){
                 case 11:
                 case 12:
                 case 13:
-                    depName=nameValue[2];
+                    depName=nameValue[3];
                     break;
                 default:
             }
@@ -785,6 +855,16 @@ function getSupplier_BK(csv, name) {
         };})
         .entries(csv);
     console.log("getSupplier_BK");
+    return nested_data;
+}
+function getSupplier_EJPD(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_EJPD");
     return nested_data;
 }
 function mergingFiles(csvFiles) {
@@ -975,6 +1055,7 @@ function process(filename, filename_B, filename_C) {
             .defer(d3.csv, modul._currentcsv)
             .defer(d3.csv, modul._currentcsv_B)
             .defer(d3.csv, modul._currentcsv_C)
+            .defer(d3.csv, modul._currentcsv_D)
             .defer(d3.json,modul._currentjson)
             .defer(d3.csv, modul._currentcolor)
             .defer(d3.csv, "csv/"+"Dummy_EDA_EDI_All.csv")
@@ -1023,12 +1104,12 @@ function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_su
     Setting_theMethods();
 }
 
-function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,matrix, color,m_dummy)
+function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,matrix, color,m_dummy)
 {
     console.log(modul._error_counter+" SettingsB");
     modul._error_counter++;
     modul._supplier=m_supplier;//Länderbogennamenn setzen
-    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,matrix);//Fill DS-Supplier + DS-Dept, Matrix
+    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,m_supplier_D,matrix);//Fill DS-Supplier + DS-Dept, Matrix
     modul._layout.matrix(modul._matrix);
     modul._color=color;
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
@@ -1180,6 +1261,10 @@ function startingwithQuery(content){
             //dummy
         case  "Dummy":
             startprocessglobal("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
+            break;
+
+        case  "BK_EDA_EDI_EJPD_Cat":
+            startprocessglobal("BK - 2012.csv","EDA - 2014.csv","EDI - 2012.csv", "BK_EDA_EDI_EJPD_Cat");
             break;
         default:
     }

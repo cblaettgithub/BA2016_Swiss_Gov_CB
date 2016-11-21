@@ -1,9 +1,10 @@
     /**
      * Created by chris on 24.10.2016.
      */
-    var _currentcsv="CSV/EDA-2011.csv";
-    var _currentcsv_B="CSV/EDA-2011.csv";
-    var _currentcsv_C="CSV/EDA-2011.csv";
+    var _currentcsv="CSV/EDA-2012.csv";
+    var _currentcsv_B="CSV/EDI-2012.csv";
+    var _currentcsv_C="CSV/BK-2012.csv";
+    var _currentcsv_D="CSV/EJPD - 2012.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");
@@ -33,6 +34,7 @@
     var _ds_supplier_EDI;
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
+    var _ds_supplier_EJPD;
     var _v_choice="BK_EDA_EDI_2012";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     var _vmodus="default";
@@ -43,6 +45,7 @@
         _currentcsv:_currentcsv,
         _currentcsv_B:_currentcsv_B,
         _currentcsv_C:_currentcsv_C,
+        _currentcsv_D:_currentcsv_D,
         _currentjson:_currentjson,
         _currentcolor:_currentcolor,
         _svg:_svg,
@@ -73,6 +76,7 @@
         _ds_supplier_EDI:_ds_supplier_EDI,
         _ds_supplier_EDA:_ds_supplier_EDA,
         _ds_supplier_BK:_ds_supplier_BK,
+        _ds_supplier_EJPD:_ds_supplier_EJPD,
         _v_choice:_v_choice,
         _vhttp:_vhttp,
         _vmodus:_vmodus,

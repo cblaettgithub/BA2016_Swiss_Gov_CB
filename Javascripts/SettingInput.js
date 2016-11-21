@@ -8,14 +8,14 @@ module.exports={
     readcsv:readcsv
 }
 
-function readcsv(data, data_B,data_C, matrix)  {
+function readcsv(data, data_B,data_C,data_D, matrix)  {
     console.log(modul._error_counter+" readcsv");
     modul._error_counter++;
     var supplier;
     var csvall;
     var filtercontent;
     console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C, "fullCategory");
+    compareCSV(data, data_B,data_C,data_D, "fullCategory");
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -122,6 +122,21 @@ function readcsv(data, data_B,data_C, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
+        case "BK_EDA_EDI_EJPD_Cat"://EDA 2014, EDI 2011, BK 2011
+            filtercontent=["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
+                "Hardware","Postdienste"];
+            data =filter(data, filtercontent, "fullCategory");
+            data_B =filter(data_B,filtercontent, "fullCategory");
+            data_C =filter(data_C,filtercontent, "fullCategory");
+            data_D =filter(data_D,filtercontent, "fullCategory");
+            console.log("filter created");
+            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_EJPD= getDummy_EJPD(data_D, "fullCategory");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI,modul._ds_supplier_EJPD]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI", "sumBFM"]);
+            break;
         case "csv/EDA - 2011.csv":
         case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
@@ -157,14 +172,31 @@ function filter(data, param, filtername){
             {  return row;  }
         });
     }
-    else{
+    else  if (param.length==3){
         return data.filter(function(row) {
             if (row[filtername] == param[0]
                 ||  row[filtername] == param[1]
                 ||  row[filtername] == param[2])
             {  return row;    }
         });
+    }else  if (param.length==4){
+        return data.filter(function(row) {
+            if (row[filtername] == param[0]
+                ||  row[filtername] == param[1]
+                ||  row[filtername] == param[2]
+                ||  row[filtername] == param[3])
+            {  return row;    }
+        });
     }
+    /*return data.filter(function(row) {
+        var query = filtername+ " == " +param[0];
+        for (var i=1;i<param.length;i++){
+            query+=" || " + filtername+ " == '"+param[i] +"'";
+        }
+        if (query)     {
+            return row;
+        }
+    });*/
 }
 function matrix_Supplier(data) {
         var matrix = [];
@@ -248,25 +280,40 @@ function getDummy_BK(csv, name){
         .entries(csv);
     return nested_data;
 }
-function compareCSV(dataA, dataB, dataC, field) {
+function getDummy_EJPD(csv, name){
+    var nested_data=d3.nest()
+        .key(function(d){return d[name]})
+        .key(function(d){return d.dept})
+        .rollup(function(v) { return{
+            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+        };})
+        .entries(csv);
+    return nested_data;
+}
+function compareCSV(dataA, dataB, dataC,dataD, field) {
     var mrow = [];
     for (var i = 0; i < dataA.length; i++) {
         for (var j = 0; j < dataB.length; j++) {
             if (dataA[i][field] == dataB[j][field]) {
                 for (var k = 0; k < dataC.length; k++) {
                     if (dataA[i][field] == dataC[k][field])
-                        if (mrow.length < 3){
-                            mrow.push(dataA[i][field]);
-                        }
-                        else{
-                            if (checkexistRow(mrow, dataA[i][field]))
-                                mrow.push(dataA[i][field]);
+                        for (var l = 0; l < dataD.length; l++) {
+                            if (dataA[i][field] == dataD[l][field]){
+                                if (mrow.length < 4){
+                                    mrow.push(dataA[i][field]);
+                                }
+                                else{
+                                    if (checkexistRow(mrow, dataA[i][field]))
+                                        mrow.push(dataA[i][field]);
+                                }
+                            }
                         }
                 }
             }
         }
     }
-    console.log("Result:compare CSV");
+    console.log("***********Result:compare CSV");
+    console.log("***********"+field);
     for (var i = 0; i < mrow.length; i++)
         console.log(mrow[i]);
 }
@@ -324,7 +371,8 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
          modul._supplier.pop();
     createSupplierList(DataEDI_EDA,Names_sumsEDA_EDI_BK );
 
-    console.log("matrix_DummyALL");
+    console.log(modul._error_counter+" matrix_EDI_EDA");
+    modul._error_counter++;
     return supplier;
 }
 
@@ -333,7 +381,15 @@ function createSupplierList(dataRows, supplier_field){
     modul._error_counter++;
     var v_Supplier=supplier_field.length;
     var i=0;
-    var end=v_Supplier*2;
+    var end;
+    if (v_Supplier==4){
+        end=v_Supplier*3;
+    }
+    else{
+        end=v_Supplier*2;
+    }
+
+
     console.log("createSupplierList:"+end);
 
     //first dept
@@ -349,13 +405,23 @@ function createSupplierList(dataRows, supplier_field){
             i=i+v_Supplier;
         }
     }
+    else if (end==12){
+        while( i<=end){
+            modul._supplier.push(dataRows[i].values[0]);
+            i=i+v_Supplier;
+        }
+    }
+
+    console.log(modul._error_counter+" createSupplierList "+"dept");
+    modul._error_counter++;
 
     //second supplier
-    for (var i=0;i<v_Supplier; i++)
-        modul._supplier.push("Exists supplier:"+dataRows[i])
-    console.log("createSupplierList");
+    for (var i=0;i<v_Supplier; i++){
+        modul._supplier.push(dataRows[i]);
+    }
+    console.log(modul._error_counter+" createSupplierList "+"supplier");
+    modul._error_counter++;
 }
-
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname summ of each Department
     if (nameValue.length==2) {
@@ -415,7 +481,7 @@ function getMatrixValue(row,nameValue, counter){
                 case 11:
                 case 12:
                 case 13:
-                    depName=nameValue[2];
+                    depName=nameValue[3];
                     break;
                 default:
             }
@@ -487,6 +553,16 @@ function getSupplier_BK(csv, name) {
         };})
         .entries(csv);
     console.log("getSupplier_BK");
+    return nested_data;
+}
+function getSupplier_EJPD(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_EJPD");
     return nested_data;
 }
 function mergingFiles(csvFiles) {

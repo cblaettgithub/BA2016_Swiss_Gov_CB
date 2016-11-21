@@ -73,7 +73,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     var _currentcsv="CSV/EDA-2012.csv";
     var _currentcsv_B="CSV/EDI-2012.csv";
     var _currentcsv_C="CSV/BK-2012.csv";
-    var _currentcsv_D="CSV/EJPD - 2012.csv";
+    var _currentcsv_D="CSV/EJPD - 2011.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");
@@ -678,8 +678,6 @@ function createSupplierList(dataRows, supplier_field){
     else{
         end=v_Supplier*2;
     }
-
-
     console.log("createSupplierList:"+end);
 
     //first dept
@@ -689,13 +687,7 @@ function createSupplierList(dataRows, supplier_field){
             i=i+v_Supplier;
         }
     }
-    else if (end==6){
-        while( i<=end){
-            modul._supplier.push(dataRows[i].values[0]);
-            i=i+v_Supplier;
-        }
-    }
-    else if (end==12){
+    else if (end==6 || end==12){
         while( i<=end){
             modul._supplier.push(dataRows[i].values[0]);
             i=i+v_Supplier;
@@ -761,16 +753,16 @@ function getMatrixValue(row,nameValue, counter){
                 case 7:
                     depName=nameValue[1];
                     break;
-                case 6:
-                case 7:
                 case 8:
                 case 9:
-                    depName=nameValue[2];
-                    break;
                 case 10:
                 case 11:
+                    depName=nameValue[2];
+                    break;
                 case 12:
                 case 13:
+                case 14:
+                case 15:
                     depName=nameValue[3];
                     break;
                 default:
@@ -849,7 +841,8 @@ function getSupplier_EJPD(csv, name) {
     var nested_data = d3.nest()
         .key(function(d) { return d.supplier; })
         .rollup(function(v) { return{
-            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+            sumBFM: d3.sum(v, function(d) { return d["ISC-EJPD"]+d["ESBK"]+d["GS-EJPD"]+d["BJ"]
+                +d["fedpol"]+d["SIR"]+d["METAS"]+d["BFM"]; })
         };})
         .entries(csv);
     console.log("getSupplier_EJPD");
@@ -1252,7 +1245,7 @@ function startingwithQuery(content){
             break;
 
         case  "BK_EDA_EDI_EJPD_Cat":
-            startprocessglobal("BK - 2012.csv","EDA - 2014.csv","EDI - 2012.csv", "BK_EDA_EDI_EJPD_Cat");
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_EJPD_Cat");
             break;
         default:
     }

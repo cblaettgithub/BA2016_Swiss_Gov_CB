@@ -4,7 +4,7 @@
     var _currentcsv="CSV/EDA-2012.csv";
     var _currentcsv_B="CSV/EDI-2012.csv";
     var _currentcsv_C="CSV/BK-2012.csv";
-    var _currentcsv_D="CSV/EJPD - 2012.csv";
+    var _currentcsv_D="CSV/EJPD - 2011.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");

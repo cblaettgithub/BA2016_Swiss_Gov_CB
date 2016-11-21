@@ -287,7 +287,7 @@ function startingwithQuery(content){
             break;
 
         case  "BK_EDA_EDI_EJPD_Cat":
-            startprocessglobal("BK - 2012.csv","EDA - 2014.csv","EDI - 2012.csv", "BK_EDA_EDI_EJPD_Cat");
+            startprocessglobal("BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "BK_EDA_EDI_EJPD_Cat");
             break;
         default:
     }

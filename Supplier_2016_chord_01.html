@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="d3-slider-master/d3.slider.css" />
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #circle circle {
+            fill: none;
+            pointer-events: all;
+        }
+        .group path {
+            fill-opacity: .5;
+        }
+        path.chord {
+            stroke: #000;
+            stroke-width: .25px;
+        }
+        #circle:hover path.fade {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<table border="1">
+    <tr >
+        <td>Dept EDA-EDI</td>
+        <td id="EDA_EDI_2011">2011</td>
+        <td id="EDA_EDI_2012">2012</td>
+        <td id="EDA_EDI_2013">2013</td>
+        <td id="EDA_EDI_2014">2014</td>
+        <td id="Dummy">EDI_EDA_Dummy</td>
+    </tr>
+    <tr >
+        <td>Dept BK-EDI</td>
+        <td id="BK_EDI_2011">2011</td>
+        <td id="BK_EDI_2012">2012</td>
+        <td id="BK_EDI_2013">2013</td>
+        <td id="BK_EDI_2014">2014</td>
+        <td id="BK_EDI_All">Cumulation BK_EDI</td>
+    </tr>
+    <tr >
+        <td>Dept BK-EDA-EDI</td>
+        <td id="BK_EDA_EDI_2011">2011</td>
+        <td id="BK_EDA_EDI_2012">2012</td>
+        <td id="BK_EDA_EDI_2013">2013</td>
+        <td id="BK_EDA_EDI_2014">2014</td>
+        <td id="EDI_ALL"></td>
+    </tr>  <tr >
+    <td>Dept BK-EDA-EDI Tri</td>
+    <td id="BK_EDA_EDI_2011_Tri">2011</td>
+    <td id="BK_EDA_EDI_2012_Tri">2012</td>
+    <td id="BK_EDA_EDI_2013_Tri">2013</td>
+    <td id="BK_EDA_EDI_2014_Tri">2014</td>
+    <td id="EDI_ALL_Tri"></td>
+</tr>
+
+    <tr >
+        <td>Cat BK-EDA-EDI</td>
+        <td id="BK_EDA_EDI_2011_Cat">2011</td>
+        <td id="BK_EDA_EDI_2012_Cat">2012</td>
+        <td id="BK_EDA_EDI_2013_Cat">2013</td>
+        <td id="BK_EDA_EDI_2014_Cat">2014</td>
+        <td id="EDI_ALL_Cat"></td>
+    </tr>
+    <tr >
+        <td>Cat 2 BK-EDA-EDI_2</td>
+        <td id="BK_EDA_EDI_2011_Cat_2">2011</td>
+        <td id="BK_EDA_EDI_2012_Cat_2">2012</td>
+        <td id="BK_EDA_EDI_2013_Cat_2">2013</td>
+        <td id="BK_EDA_EDI_2014_Cat_2">2014</td>
+        <td id="EDI_ALL_Cat_2"></td>
+    </tr>
+    <tr >
+        <td>Cat 3 BK-EDA-EDI_3</td>
+        <td id="BK_EDA_EDI_2011_Cat_3">2011</td>
+        <td id="BK_EDA_EDI_2012_Cat_3">2012</td>
+        <td id="BK_EDA_EDI_2013_Cat_3">2013</td>
+        <td id="BK_EDA_EDI_2014_Cat_3">2014</td>
+        <td id="EDI_ALL_Cat_3"></td>
+    </tr>
+    <tr >
+        <td>BK EDI BK EJPD</td>
+        <td id="searching">2011</td>
+        <td id="Creating_Link">Creating Link</td>
+        <td id="placeLink" colspan="3"></td>
+    </tr>
+
+    <tr>
+        <td id="Design">Design</td>
+        <td id="Chords_Breite">Breite<select id="breite">
+            <option value="50">50 px</option>
+            <option value="100">100 px</option>
+            <option value="150">150 px</option>
+            <option value="200">200 px</option>
+            <option value="250">250 px</option>
+            <option value="300">300 px</option>
+            <option value="350">350 px</option>
+            <option value="400">400 px</option>
+            <option value="450">450 px</option>
+            <option value="500">500 px</option>
+            <option value="550">550 px</option>
+            <option value="600">600 px</option>
+            <option value="650">650 px</option>
+            <option value="700">700 px</option>
+            <option value="750">750 px</option>
+        </select></td>
+        <td id="Chords_Höhe">Höhe<select id="hohe">
+            <option value="400">400 px</option>
+            <option value="450">450 px</option>
+            <option value="500">500 px</option>
+            <option value="550">550 px</option>
+            <option value="600">600 px</option>
+            <option value="650">650 px</option>
+            <option value="700">700 px</option>
+            <option value="750">750 px</option>
+        </select></td>
+        <td id="Chords_Farbe">Farbe</td>
+        <td id="Chords_Radius_i">(Radius i)<select id="radius_i">
+            <option value="1">1 cm</option>
+            <option value="2">2 cm</option>
+            <option value="3">3 cm</option>
+            <option value="4">4 cm</option>
+            <option value="5">5 cm</option>
+            <option value="6">6 cm</option>
+            <option value="7">7 cm</option>
+            <option value="8">8 cm</option>
+            <option value="9">9 cm</option>
+        </select></td>
+        <td id="Chords_Radius_o">**Radius o<select id="radius_o">
+            <option value="0">0 cm</option>
+            <option value="11">11 cm</option>
+            <option value="12">12 cm</option>
+            <option value="13">13 cm</option>
+            <option value="14">14 cm</option>
+            <option value="15">15 cm</option>
+            <option value="16">16 cm</option>
+            <option value="17">17 cm</option>
+            <option value="18">18 cm</option>
+            <option value="19">19 cm</option>
+        </select></td>
+    </tr>
+</table>
+<div id="slider6" style="width: 400px">
+</div>
+<svg width="960" height="20"></svg>
+<script src="https://d3js.org/d3.v3.js"></script>
+
+<script src="https://d3js.org/d3-queue.v3.min.js"></script>
+<script src="d3-slider-master/d3.slider.js"></script>
+<script src="bundle.js"></script>
+<script>
+    //slider
+    d3.select('#slider6').call(d3.slider().axis(true).min(2011).max(2014).step(1).
+    on("slide", function(evt, value) {
+        d3.select('#output').text(value);
+    }));
+
+    var params = {data: "data.csv", width:1400,height:800};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    var p;
+    vars.forEach(function(v) {
+         p = v.split("=");
+        params[p[0]]=p[1]
+    });
+
+    //startwithLink(p[0],p[1],p[2]);
+    startwithLink(p[0],p[1],"");
+
+
+
+    //dummy
+    d3.select("#Dummy").on("click", function() {
+        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
+    });
+
+    /*EDA ***EDI*/
+    d3.select("#EDA_EDI_2011").on("click", function() {
+        settingCSVFiles("EDA_EDI_2011");
+    });
+    d3.select("#EDA_EDI_2012").on("click", function() {
+        settingCSVFiles("EDA_EDI_2012");
+    });
+    d3.select("#EDA_EDI_2013").on("click", function() {
+        settingCSVFiles("EDA_EDI_2013");
+    });
+    d3.select("#EDA_EDI_2014").on("click", function() {
+        settingCSVFiles("EDA_EDI_2014");
+    });
+
+    /*BK *** EDA*/
+    d3.select("#BK_EDI_2011").on("click", function() {
+        settingCSVFiles("BK_EDI_2011");
+    });
+    d3.select("#BK_EDI_2012").on("click", function() {
+        settingCSVFiles("BK_EDI_2012");
+    });
+    d3.select("#BK_EDI_2013").on("click", function() {
+        settingCSVFiles("BK_EDI_2013");
+    });
+    d3.select("#BK_EDI_2014").on("click", function() {
+        settingCSVFiles("BK_EDI_2014");
+    });
+    d3.select("#BK_EDI_All").on("click", function() {
+        settingCSVFiles("BK_EDI_All");
+    });
+
+    /*BK *** EDA***EDI*/
+    d3.select("#BK_EDA_EDI_2011").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011");
+    });
+    d3.select("#BK_EDA_EDI_2012").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012");
+    });
+    d3.select("#BK_EDA_EDI_2013").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013");
+    });
+    d3.select("#BK_EDA_EDI_2014").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014");
+    });
+
+    /*BK *** EDA***EDI*Trivadis*/
+    d3.select("#BK_EDA_EDI_2011_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2012_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2013_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Tri");
+    });
+    d3.select("#BK_EDA_EDI_2014_Tri").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Tri");
+    });
+
+    /*BK *** EDA***EDI****_Cat*/
+    d3.select("#BK_EDA_EDI_2011_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Cat");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Cat");
+    });
+
+    /*BK *** EDA***EDI****_Cat   2*/
+    d3.select("#BK_EDA_EDI_2011_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Cat_2");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat_2").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Cat_2");
+    });
+
+    /*BK *** EDA***EDI****_Cat   3*/
+    d3.select("#BK_EDA_EDI_2011_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2011_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2012_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2012_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2013_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2013_Cat_3");
+    });
+    d3.select("#BK_EDA_EDI_2014_Cat_3").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_2014_Cat_3");
+    });
+    // 4 category
+    d3.select("#searching").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EJPD_Cat");
+    });
+
+    //creatingLink
+    d3.select("#Creating_Link").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#Creating_Link").style("color", "red");
+        d3.select("#placeLink").text(startcreatinglink());
+    });
+
+    /*EDI*/
+    function settingCSVFiles(nameTop){
+        d3.selectAll("td").style("color", "black");
+        d3.select("#"+nameTop).style("color", "red");
+        startwithLink("manual", nameTop);
+
+    }
+    d3.select("#Design").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#Design").style("color", "red");
+        startprocessDesign("EDA - 2011.csv", "Design",
+                d3.select("#breite").property("value"),
+                d3.select("#hohe").property("value"),
+                0,
+                d3.select("#radius_o").property("value")
+        );
+    })
+</script>
+</body>
+</html>

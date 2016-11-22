@@ -86,7 +86,6 @@
         <td id="Creating_Link">Creating Link</td>
         <td id="placeLink" colspan="3"></td>
     </tr>
-
     <tr>
         <td id="Design">Design</td>
         <td id="Chords_Breite">Breite<select id="breite">
@@ -142,8 +141,10 @@
         </select></td>
     </tr>
 </table>
+<span id="output">0</span>
 <div id="slider6" style="width: 400px">
 </div>
+
 <svg width="960" height="20"></svg>
 <script src="https://d3js.org/d3.v3.js"></script>
 
@@ -151,11 +152,7 @@
 <script src="d3-slider-master/d3.slider.js"></script>
 <script src="bundle.js"></script>
 <script>
-    //slider
-    d3.select('#slider6').call(d3.slider().axis(true).min(2011).max(2014).step(1).
-    on("slide", function(evt, value) {
-        d3.select('#output').text(value);
-    }));
+
 
     var params = {data: "data.csv", width:1400,height:800};
     var query = window.location.search.substring(1);
@@ -169,7 +166,11 @@
     //startwithLink(p[0],p[1],p[2]);
     startwithLink(p[0],p[1],"");
 
-
+    //slider
+    d3.select('#slider6').call(d3.slider().axis(true).min(2011).max(2014).step(1).
+    on("slide", function(evt, value) {
+        d3.select('#output').text(value);
+    }));
 
     //dummy
     d3.select("#Dummy").on("click", function() {

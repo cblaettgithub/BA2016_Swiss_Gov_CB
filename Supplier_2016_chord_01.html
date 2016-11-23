@@ -120,6 +120,7 @@
 <script src="d3-slider-master/d3.slider.js"></script>
 <script src="bundle.js"></script>
 <script>
+
     var params = {data: "data.csv", width:1400,height:800};
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -134,7 +135,7 @@
     //startwithLink(p[0],p[1],p[2]);
     startwithLink(p[0],p[1],"");
 
-    //slider
+       //slider
     d3.select('#slider_EDA_EDI').call(d3.slider().axis(true).min(vmin).max(vmax).step(1).
     on("slide", function(evt, value) {
         d3.select("svg").remove();
@@ -185,9 +186,6 @@
         settingCSVFiles("BK_EDA_EDI_EJPD_"+value+"_Cat");
     }));
 
-    function helpslider(value){
-        d3.select("svg").remove();
-        d3.select('#output').text(value);    }
 
     //dummy
     d3.select("#Dummy").on("click", function() {

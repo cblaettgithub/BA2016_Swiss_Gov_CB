@@ -14,8 +14,8 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
     var supplier;
     var csvall;
     var filtercontent;
-    console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C,data_D, "fullCategory");
+    console.log(modul._error_counter+" " +modul._v_choice);
+    //compareCSV(data, data_B,data_C,data_D, "fullCategory");
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -550,13 +550,14 @@ function getSupplier_EJPD(csv, name) {
     return nested_data;
 }
 function mergingFiles(csvFiles) {
-    console.log("merging files");
+    console.log(modul._error_counter  +" merging files");
     var results = [];
     var output;
     for (var i = 0; i < csvFiles.length; i++) {
         results.push(csvFiles[i]);
     }
     output = d3.merge(results);
+    modul._error_counter++;
     return output;
 }
 

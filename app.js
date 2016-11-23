@@ -14,8 +14,11 @@
     var q;
 
 global.startwithLink=function(choice, content, choice_C){
+    console.log("svg.remove()");
+    d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
+    modul._error_counter=0;
     console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
     modul._error_counter++;
     startingwithQuery(content);
@@ -34,7 +37,6 @@ global.startprocessglobal = function(content, content_B,content_C,content_D, cho
     modul._error_counter++;
     modul._currentcsv="";
     modul._v_choice=choice;
-    console.log("process:start"+content, content_B,content_C,content_D);
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
     process(content, content_B,content_C,content_D);
 }
@@ -58,7 +60,7 @@ function process(filename, filename_B, filename_C, filename_D) {
     //default
     modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
-    if (filename_C!=0){
+    if (filename_C!=0){     //lösung immer 4 files mitgeben*/
         modul._currentcsv_C="csv/"+filename_C;
         modul._countDep=2;
     }
@@ -66,7 +68,7 @@ function process(filename, filename_B, filename_C, filename_D) {
         modul._currentcsv_D="csv/"+filename_D;
         modul._countDep=3;
     }
-    console.log("csv/"+filename);
+    console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);
     SettingLayout.createArc();
     SettingLayout.layout();
     SettingLayout.path();
@@ -194,7 +196,7 @@ function startingwithQuery(content){
             startprocessglobal("EDA - 2013.csv","EDI - 2013.csv",0, 0,"EDA_EDI_2013");
             break;
         case 'EDA_EDI_2014':
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv",0,0, "EDA_EDI_2014");
+            startprocessglobal("EDA - 2014.csv","EDA - 2014.csv",0,0, "EDA_EDI_2014");
             break;
 
             //BK EDI 2011 - 2014

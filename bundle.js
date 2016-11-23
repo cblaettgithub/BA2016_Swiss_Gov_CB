@@ -237,7 +237,6 @@ function groupText() {//den länderbogen beschriften
             // modul._ds_supplier[i].values[0].values = 20000(summe)
 
     function groupTicks(d) {
-
         var k = (d.endAngle - d.startAngle) / d.value;
         return d3.range(0, d.value, 1000000).map(function (v, i) {
             return {
@@ -319,8 +318,8 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
     var supplier;
     var csvall;
     var filtercontent;
-    console.log(modul._v_choice);
-    compareCSV(data, data_B,data_C,data_D, "fullCategory");
+    console.log(modul._error_counter+" " +modul._v_choice);
+    //compareCSV(data, data_B,data_C,data_D, "fullCategory");
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -855,13 +854,14 @@ function getSupplier_EJPD(csv, name) {
     return nested_data;
 }
 function mergingFiles(csvFiles) {
-    console.log("merging files");
+    console.log(modul._error_counter  +" merging files");
     var results = [];
     var output;
     for (var i = 0; i < csvFiles.length; i++) {
         results.push(csvFiles[i]);
     }
     output = d3.merge(results);
+    modul._error_counter++;
     return output;
 }
 
@@ -978,8 +978,11 @@ module.exports={
     var q;
 
 global.startwithLink=function(choice, content, choice_C){
+    console.log("svg.remove()");
+    d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
+    modul._error_counter=0;
     console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
     modul._error_counter++;
     startingwithQuery(content);
@@ -998,8 +1001,7 @@ global.startprocessglobal = function(content, content_B,content_C,content_D, cho
     modul._error_counter++;
     modul._currentcsv="";
     modul._v_choice=choice;
-    console.log("process:start"+content, content_B,content_C,content_D);
-    settingParam(0, 0, 720, 720, 50, 15, 0, 0);
+    settingParam(0, 0, 720, 720, 6, 15, 0, 0);
     process(content, content_B,content_C,content_D);
 }
 
@@ -1022,7 +1024,7 @@ function process(filename, filename_B, filename_C, filename_D) {
     //default
     modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
-    if (filename_C!=0){
+    if (filename_C!=0){     //lösung immer 4 files mitgeben*/
         modul._currentcsv_C="csv/"+filename_C;
         modul._countDep=2;
     }
@@ -1030,7 +1032,7 @@ function process(filename, filename_B, filename_C, filename_D) {
         modul._currentcsv_D="csv/"+filename_D;
         modul._countDep=3;
     }
-    console.log("csv/"+filename);
+    console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);
     SettingLayout.createArc();
     SettingLayout.layout();
     SettingLayout.path();
@@ -1158,7 +1160,7 @@ function startingwithQuery(content){
             startprocessglobal("EDA - 2013.csv","EDI - 2013.csv",0, 0,"EDA_EDI_2013");
             break;
         case 'EDA_EDI_2014':
-            startprocessglobal("BK - 2014.csv","EDA - 2014.csv",0,0, "EDA_EDI_2014");
+            startprocessglobal("EDA - 2014.csv","EDA - 2014.csv",0,0, "EDA_EDI_2014");
             break;
 
             //BK EDI 2011 - 2014

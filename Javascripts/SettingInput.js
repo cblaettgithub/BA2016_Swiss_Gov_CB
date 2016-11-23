@@ -122,7 +122,10 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
-        case "BK_EDA_EDI_EJPD_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_EJPD_2011_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_EJPD_2012_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_EJPD_2013_Cat"://EDA 2014, EDI 2011, BK 2011
+        case "BK_EDA_EDI_EJPD_2014_Cat"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
                 "Hardware","Postdienste"];
             data =filter(data, filtercontent, "fullCategory");

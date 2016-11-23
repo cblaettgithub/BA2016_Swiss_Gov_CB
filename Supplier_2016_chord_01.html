@@ -30,9 +30,9 @@
         <td id="EDA_EDI_2012">2012</td>
         <td id="EDA_EDI_2013">2013</td>
         <td id="EDA_EDI_2014">2014</td>
-        <td id="Dummy">EDI_EDA_Dummy</td>
-        <td id="xx"><span id="output">0</span>
-            <div id="slider_EDA_EDI" style="width: 400px">
+        <td id="Dummy">EDI_EDA</td>
+        <td id="xx">
+            <div id="slider_EDA_EDI" style="width: 200px">
             </div>
         </td>
     </tr>
@@ -42,8 +42,8 @@
         <td id="BK_EDI_2012">2012</td>
         <td id="BK_EDI_2013">2013</td>
         <td id="BK_EDI_2014">2014</td>
-        <td id="BK_EDI_All">Cumulation BK_EDI</td>
-        <td><div id="slider_BK_EDI" style="width: 400px">
+        <td id="BK_EDI_All">Cum. BK_EDI</td>
+        <td><div id="slider_BK_EDI" style="width: 200px">
         </div></td>
     </tr>
     <tr >
@@ -53,7 +53,7 @@
         <td id="BK_EDA_EDI_2013">2013</td>
         <td id="BK_EDA_EDI_2014">2014</td>
         <td id="EDI_ALL"></td>
-        <td><div id="slider_BK_EDA_EDI" style="width: 400px">
+        <td><div id="slider_BK_EDA_EDI" style="width: 200px">
         </div></td>
     </tr>  <tr >
     <td>Dept BK-EDA-EDI Tri</td>
@@ -62,7 +62,7 @@
     <td id="BK_EDA_EDI_2013_Tri">2013</td>
     <td id="BK_EDA_EDI_2014_Tri">2014</td>
     <td id="EDI_ALL_Tri"></td>
-    <td><div id="slider_BK_EDA_EDI_Tri" style="width: 400px">
+    <td><div id="slider_BK_EDA_EDI_Tri" style="width: 200px">
     </div></td>
 </tr>
 
@@ -73,7 +73,7 @@
         <td id="BK_EDA_EDI_2013_Cat">2013</td>
         <td id="BK_EDA_EDI_2014_Cat">2014</td>
         <td id="EDI_ALL_Cat"></td>
-        <td><div id="slider_Cat_BK_EDA_EDI" style="width: 400px">
+        <td><div id="slider_Cat_BK_EDA_EDI" style="width: 200px">
         </div></td>
     </tr>
     <tr >
@@ -83,7 +83,7 @@
         <td id="BK_EDA_EDI_2013_Cat_2">2013</td>
         <td id="BK_EDA_EDI_2014_Cat_2">2014</td>
         <td id="EDI_ALL_Cat_2"></td>
-        <td><div id="slider_Cat_2_BK_EDA_EDI" style="width: 400px">
+        <td><div id="slider_Cat_2_BK_EDA_EDI" style="width: 200px">
         </div></td>
     </tr>
     <tr >
@@ -93,14 +93,22 @@
         <td id="BK_EDA_EDI_2013_Cat_3">2013</td>
         <td id="BK_EDA_EDI_2014_Cat_3">2014</td>
         <td id="EDI_ALL_Cat_3"></td>
-        <td><div id="slider_Cat_3_BK_EDA_EDI" style="width: 400px">
+        <td><div id="slider_Cat_3_BK_EDA_EDI" style="width: 200px">
         </div></td>
     </tr>
     <tr >
-        <td>BK EDI BK EJPD</td>
-        <td id="searching">4Dept/Cat</td>
+        <td>BK_EDA_EDI_EJPD</td>
+        <td id="BK_EDA_EDI_EJPD_2011_Cat">2011</td>
+        <td id="BK_EDA_EDI_EJPD_2012_Cat">2012</td>
+        <td id="BK_EDA_EDI_EJPD_2013_Cat">2013</td>
+        <td id="BK_EDA_EDI_EJPD_2014_Cat">2014</td>
+        <td ><span id="output">0</span></td>
+        <td><div id="slider_BK_EDA_EDI_EJPD_Cat" style="width: 200px">
+        </div></td>
+    </tr>
+    <tr >
         <td id="Creating_Link">Creating Link</td>
-        <td id="placeLink" colspan="4"></td>
+        <td id="placeLink" colspan="6"></td>
     </tr>
 
 </table>
@@ -170,9 +178,20 @@
         settingCSVFiles("BK_EDA_EDI_"+value+"_Cat_3");
     }));
 
+    d3.select('#slider_BK_EDA_EDI_EJPD_Cat').call(d3.slider().axis(true).min(vmin).max(vmax).step(1).
+    on("slide", function(evt, value) {
+        d3.select("svg").remove();
+        d3.select('#output').text(value);
+        settingCSVFiles("BK_EDA_EDI_EJPD_"+value+"_Cat");
+    }));
+
+    function helpslider(value){
+        d3.select("svg").remove();
+        d3.select('#output').text(value);    }
+
     //dummy
     d3.select("#Dummy").on("click", function() {
-        settingCSVFiles("Dummy_EDA.csv","Dummy_EDI.csv",0, "Dummy");
+        settingCSVFiles("Dummy");
     });
 
     /*EDA ***EDI*/
@@ -275,10 +294,21 @@
     d3.select("#BK_EDA_EDI_2014_Cat_3").on("click", function() {
         settingCSVFiles("BK_EDA_EDI_2014_Cat_3");
     });
-    // 4 category
-    d3.select("#searching").on("click", function() {
-        settingCSVFiles("BK_EDA_EDI_EJPD_Cat");
+
+    /*BK *** EDA***EDI****_Cat   3*/
+    d3.select("#BK_EDA_EDI_EJPD_2011_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EJPD_2011_Cat");
     });
+    d3.select("#BK_EDA_EDI_EJPD_2012_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EJPD_2012_Cat");
+    });
+    d3.select("#BK_EDA_EDI_EJPD_2013_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EJPD_2013_Cat");
+    });
+    d3.select("#BK_EDA_EDI_EJPD_2014_Cat").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EJPD_2014_Cat");
+    });
+
 
     //creatingLink
     d3.select("#Creating_Link").on("click", function() {

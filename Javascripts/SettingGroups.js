@@ -59,8 +59,8 @@ function groupText() {//den länderbogen beschriften
         return d3.range(0, d.value, 1000000).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
-                label: i % 3 != 0 ? null : v / 1000000 + "m"
-            };
+                label: i % modul._countDep != 0 ? null : v / 1000000 + "m"
+            };//3//
         });
     }
     var g = modul._svg.selectAll("g.group")

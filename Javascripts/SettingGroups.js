@@ -56,10 +56,10 @@ function groupText() {//den länderbogen beschriften
 
     function groupTicks(d) {
         var k = (d.endAngle - d.startAngle) / d.value;
-        return d3.range(0, d.value, 500000000).map(function (v, i) {
+        return d3.range(0, d.value, 1000000).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
-                label: i % 10 != 0 ? null : v / 500000000 + " Fr"
+                label: i % 3 != 0 ? null : v / 1000000 + "m"
             };
         });
     }
@@ -80,7 +80,7 @@ function groupText() {//den länderbogen beschriften
         .style("stroke", "#000");
 
     ticks.append("text")
-        .attr("x", 8)
+        .attr("x", 6)
         .attr("dy", ".35em")
         .attr("transform", function(d) {
             return d.angle > Math.PI ?

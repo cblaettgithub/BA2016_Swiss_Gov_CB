@@ -104,7 +104,7 @@ function setParam(year, dept, supplier, total_EDI, total_EDA, width, height)
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
     var _ds_supplier_EJPD;
-    var _v_choice="BK_EDA_EDI_2012";//default
+    var _v_choice="EDA_EDI_2011";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     var _vmodus="default";
     var _error_counter=0;
@@ -913,7 +913,6 @@ function path(){
 }
 //5
 function setSVG(){
-    //modul._svg=_svg.selectAll("*").remove();
     modul._svg = d3.select("body").append("svg")
         .attr("width", modul._width)
         .attr("height",modul._height)
@@ -921,6 +920,8 @@ function setSVG(){
         .attr("id", "circle")
         .attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")");
 }
+
+
 //6
 function appendCircle(){
     modul._svg.append("circle")
@@ -985,7 +986,9 @@ global.startwithLink=function(choice, content, choice_C){
     modul._error_counter=0;
     console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
     modul._error_counter++;
-    startingwithQuery(content);
+    if (content !=null)
+        modul._v_choice=content;
+    startingwithQuery(modul._v_choice);
 }
 
     // CreateLink
@@ -1036,7 +1039,7 @@ function process(filename, filename_B, filename_C, filename_D) {
     SettingLayout.createArc();
     SettingLayout.layout();
     SettingLayout.path();
-    SettingLayout.setSVG();
+     SettingLayout.setSVG();
     //SettingLayout.movesvg();
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);

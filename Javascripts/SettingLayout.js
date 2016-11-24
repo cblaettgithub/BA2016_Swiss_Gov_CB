@@ -35,7 +35,6 @@ function path(){
 }
 //5
 function setSVG(){
-    //modul._svg=_svg.selectAll("*").remove();
     modul._svg = d3.select("body").append("svg")
         .attr("width", modul._width)
         .attr("height",modul._height)
@@ -43,6 +42,8 @@ function setSVG(){
         .attr("id", "circle")
         .attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")");
 }
+
+
 //6
 function appendCircle(){
     modul._svg.append("circle")

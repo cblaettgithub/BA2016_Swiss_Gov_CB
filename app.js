@@ -21,7 +21,9 @@ global.startwithLink=function(choice, content, choice_C){
     modul._error_counter=0;
     console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
     modul._error_counter++;
-    startingwithQuery(content);
+    if (content !=null)
+        modul._v_choice=content;
+    startingwithQuery(modul._v_choice);
 }
 
     // CreateLink
@@ -72,7 +74,7 @@ function process(filename, filename_B, filename_C, filename_D) {
     SettingLayout.createArc();
     SettingLayout.layout();
     SettingLayout.path();
-    SettingLayout.setSVG();
+     SettingLayout.setSVG();
     //SettingLayout.movesvg();
     SettingLayout.appendCircle();
     console.log("process:defer:"+modul._currentcsv);

@@ -35,7 +35,7 @@
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
     var _ds_supplier_EJPD;
-    var _v_choice="BK_EDA_EDI_2012";//default
+    var _v_choice="EDA_EDI_2011";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     var _vmodus="default";
     var _error_counter=0;

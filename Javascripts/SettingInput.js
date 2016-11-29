@@ -3,12 +3,13 @@
  */
 
 modul =   require('./Modul');
+DataManager = require('./DataManager');
 
 module.exports={
     readcsv:readcsv
 }
 
-function readcsv(data, data_B,data_C,data_D, matrix)  {
+function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix)  {
     console.log(modul._error_counter+" readcsv");
     modul._error_counter++;
     var supplier;
@@ -24,8 +25,8 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
-            modul._ds_supplier_EDA= getDummy_EDA(data, "supplier");
-            modul._ds_supplier_EDI= getDummy_EDI(data_B, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_B, "supplier");
             csvall=mergingFiles([modul._ds_supplier_EDA,modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI", ["sumEDA","sumEDI"]);
             break;
@@ -36,8 +37,8 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
-            modul._ds_supplier_EDI= getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
             csvall=mergingFiles([modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumEDA","sumBundeskanzelt"]);
             break;
@@ -51,9 +52,9 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_B =filter(data_B,filtercontent, "supplier");
             data_C =filter(data_C,filtercontent, "supplier");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
@@ -67,9 +68,9 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_B =filter(data_B,filtercontent, "supplier");
             data_C =filter(data_C,filtercontent, "supplier");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "supplier");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
@@ -83,9 +84,9 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
@@ -100,9 +101,9 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
@@ -116,9 +117,9 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI"]);
             break;
@@ -133,33 +134,61 @@ function readcsv(data, data_B,data_C,data_D, matrix)  {
             data_C =filter(data_C,filtercontent, "fullCategory");
             data_D =filter(data_D,filtercontent, "fullCategory");
             console.log("filter created");
-            modul._ds_supplier_BK= getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= getDummy_EDI(data_C, "fullCategory");
-            modul._ds_supplier_EJPD= getDummy_EJPD(data_D, "fullCategory");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_D, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI,modul._ds_supplier_EJPD]);
             modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt", ["sumBundeskanzelt","sumEDA","sumEDI", "sumBFM"]);
+            break;
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011":
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+                "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
+            ];
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            data_D =filter(data_D,filtercontent, "supplier");
+            data_E =filter(data_E, filtercontent, "supplier");
+            data_F=filter(data_F,filtercontent, "supplier");
+            data_G =filter(data_G,filtercontent, "supplier");
+            data_H =filter(data_H,filtercontent, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_E, "supplier");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_D, "supplier");
+            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
+            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
+            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
+                modul._ds_supplier_EJPD, modul._ds_supplier_UVEK, modul._ds_supplier_VBS, modul._ds_supplier_WBF,
+            ]);
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt",
+                ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
+                    "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
         case "csv/EDA - 2011.csv":
         case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
-            modul._ds_supplier_EDA= getSupplier_EDA(modul._supplier, "supplier");
+            modul._ds_supplier_EDA= DataManager.getSupplier_EDA(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
             modul._supplier= modul._ds_supplier_EDA;
             break;
         case "Dummy":
-            var dummyEDA=getDummy_EDA(data, "supplier");
-            var dummyEDI=getDummy_EDI(data_B, "supplier");
+            var dummyEDA=DataManager.getDummy_EDA(data, "supplier");
+            var dummyEDI=DataManager.getDummy_EDI(data_B, "supplier");
             csvall=mergingFiles([dummyEDA, dummyEDI]);
             //modul._ds_supplier = matrix_dummay_All(csvall);
             modul._ds_supplier=matrix_EDI_EDA(csvall,"sumEDA", "sumEDI", ["sumEDA","sumEDI"]);
             break;
         default:
             console.log("readcsv:default");
-            modul._ds_supplier    = getSupplier(modul._supplier, "supplier");//nest
+            modul._ds_supplier    = DataManager.getSupplier(modul._supplier, "supplier");//nest
             supplier = matrix_Supplier(data);
-            modul._ds_dept        = getDep(modul._supplier, "dept");
-            modul._ds_cost        = getCost(modul._supplier, "EDA_1006");
+            modul._ds_dept        = DataManager.getDep(modul._supplier, "dept");
+            modul._ds_cost        = DataManager.getCost(modul._supplier, "EDA_1006");
             modul._matrix = matrix;
     }
     console.log("setmatrix");
@@ -241,46 +270,7 @@ function matrix_Supplier_EDI(data, end) {
     modul._matrix = matrix;
     return supplier;
 }
-function getDummy_EDI(csv, name){
-    var nested_data=d3.nest()
-        .key(function(d){return d[name]})
-        .key(function(d){return d.dept})
-        .rollup(function(v){return{
-            sumEDI: d3.sum(v, function(d){return d["BAG"]})
-        };})
-        .entries(csv);
-    return nested_data;
-}
-function getDummy_EDA(csv, name){
-    var nested_data=d3.nest()
-        .key(function(d){return d[name]})
-        .key(function(d){return d.dept})
-        .rollup(function(v){return{
-            sumEDA: d3.sum(v, function(d){return d["1005 EDA"]})
-        };})
-        .entries(csv);
-    return nested_data;
-}
-function getDummy_BK(csv, name){
-    var nested_data=d3.nest()
-        .key(function(d){return d[name]})
-        .key(function(d){return d.dept})
-        .rollup(function(v){return{
-            sumBundeskanzelt: d3.sum(v, function(d){return d["Bundeskanzlei"]})
-        };})
-        .entries(csv);
-    return nested_data;
-}
-function getDummy_EJPD(csv, name){
-    var nested_data=d3.nest()
-        .key(function(d){return d[name]})
-        .key(function(d){return d.dept})
-        .rollup(function(v) { return{
-            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
-        };})
-        .entries(csv);
-    return nested_data;
-}
+
 function compareCSV(dataA, dataB, dataC,dataD, field) {
     var mrow = [];
     for (var i = 0; i < dataA.length; i++) {
@@ -394,6 +384,11 @@ function createSupplierList(dataRows, supplier_field){
             i=i+v_Supplier;
         }
     }
+    else{//test
+        while( i<8){
+            modul._supplier.push(dataRows[i].values[0]);
+            i=i+3;}
+    }
 
     console.log(modul._error_counter+" createSupplierList "+"dept");
     modul._error_counter++;
@@ -406,7 +401,8 @@ function createSupplierList(dataRows, supplier_field){
     modul._error_counter++;
 }
 function getMatrixValue(row,nameValue, counter){
-    var depName;    //get Fieldname summ of each Department
+    var depName;    //get Fieldname sum of each Department
+    var result;
     if (nameValue.length==2) {
         switch (counter) {//2 Supplier
             case 0:
@@ -469,28 +465,40 @@ function getMatrixValue(row,nameValue, counter){
                 default:
             }
         }
-       return d3.round(row.values[0].values[depName]);
-}
+        else if (nameValue.length==8){
+          if (counter <8){
+              depName=nameValue[0];
+          }
+          else if (counter < 16){
+              depName=nameValue[1];
+          }
+          else if (counter < 24){
+              depName=nameValue[2];
+          }
+          else if (counter < 32){
+              depName=nameValue[3];
+          }
+          else if (counter < 40){
+              depName=nameValue[4];
+          }
+          else if (counter < 48){
+              depName=nameValue[5];
+          }
+          else if (counter < 56){
+              depName=nameValue[6];
+          }
+          else{
+              depName=nameValue[7];
+          }
 
-function getSupplier_EDI(csv, name) {
-    var nested_data = d3.nest()
-        .key(function(d) { return d.supplier; })
-        .rollup(function(v) { return{
-            sumGSEDI: d3.sum(v, function(d) { return d["GS-EDI"]; }),
-            sumEBG: d3.sum(v, function(d) { return d["EBG"]; }),
-            sumBAR: d3.sum(v, function(d) { return d["BAR"]; }),
-            sumBAK: d3.sum(v, function(d) { return d["BAK"]; }),
-            sumMeteoCH: d3.sum(v, function(d) {return d["MeteoSchweiz"]; }),
-            sumBAG: d3.sum(v, function(d) { return d["BAG"]; }),
-            sumBFS: d3.sum(v, function(d) { return d["BFS"]; }),
-            sumBSV: d3.sum(v, function(d) {  return d["BSV"]; }),
-            sumSBF: d3.sum(v, function(d) { return d["SBF"]; }),
-            sumNB: d3.sum(v, function(d) { return d["NB"]; })
-        };})
-        .entries(csv);
-
-    console.log(" getSupplier_EDI");
-    return nested_data;
+    }
+        if (row.values[0].values[depName]==null){
+            result=0;
+        }
+        else{
+            result=d3.round(row.values[0].values[depName]);
+        }
+       return result;
 }
 function matrix_Supplier_EDA(data, end) {
     //Fill Matrix EDA
@@ -515,40 +523,7 @@ function matrix_Supplier_EDA(data, end) {
     console.log("matrix_Supplier_EDI");
     return supplier;
 }
-function getSupplier_EDA(csv, name) {
-    var nested_data = d3.nest()
-        .key(function(d) { return d.supplier; })
-        .rollup(function(v) { return{
-            sumEDA1005: d3.sum(v, function(d) { return d["1005 EDA"]; }),
-            sumEDA1006: d3.sum(v, function(d) { return d["1006 EDA"]; }),
-            sum1097: d3.sum(v, function(d) { return d["1097 Informatik EDA"]; }),
-            sum1112: d3.sum(v, function(d) { return d["1112 BRZ"]; })
-        };})
-        .entries(csv);
-    console.log("getSupplier_EDA");
-    return nested_data;
-}
-function getSupplier_BK(csv, name) {
-    var nested_data = d3.nest()
-        .key(function(d) { return d.supplier; })
-        .rollup(function(v) { return{
-            sumBundeskanzelt: d3.sum(v, function(d) { return d["Bundeskanzlei"]; })
-        };})
-        .entries(csv);
-    console.log("getSupplier_BK");
-    return nested_data;
-}
-function getSupplier_EJPD(csv, name) {
-    var nested_data = d3.nest()
-        .key(function(d) { return d.supplier; })
-        .rollup(function(v) { return{
-            sumBFM: d3.sum(v, function(d) { return d["ISC-EJPD"]+d["ESBK"]+d["GS-EJPD"]+d["BJ"]
-                +d["fedpol"]+d["SIR"]+d["METAS"]+d["BFM"]; })
-        };})
-        .entries(csv);
-    console.log("getSupplier_EJPD");
-    return nested_data;
-}
+
 function mergingFiles(csvFiles) {
     console.log(modul._error_counter  +" merging files");
     var results = [];
@@ -561,12 +536,3 @@ function mergingFiles(csvFiles) {
     return output;
 }
 
-function getSupplier(csv, name) {
-    var nested_data = d3.nest()
-        .key(function(d) { return d.supplier; })
-        .key(function(d) { return d.dept; })
-        .rollup(function(v) { return d3.sum(v, function(d) { return d["1006 EDA"]; }); })
-        .entries(csv);
-    console.log("getSupplier");
-    return nested_data;
-}

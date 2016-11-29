@@ -40,7 +40,7 @@ function groupText() {//den länderbogen beschriften
         .attr("class", "supplier")
         .attr("dy", modul._group_dy);//bro15
 
-    /*if (modul._currentcsv = "csv/" + "Dummy_EDA.csv") {*/
+    /*if (modul._EDA_csv_ = "csv/" + "Dummy_EDA.csv") {*/
         modul._groupText.append("svg:textPath")
             .attr("xlink:href", function (d, i) {
                 return "#group" + d.index;

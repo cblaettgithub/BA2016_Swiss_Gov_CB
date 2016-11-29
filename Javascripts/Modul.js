@@ -1,10 +1,14 @@
     /**
      * Created by chris on 24.10.2016.
      */
-    var _currentcsv="CSV/EDA - 2012.csv";
-    var _currentcsv_B="CSV/EDI - 2012.csv";
+    var _currentcsv="CSV/BK - 2011.csv";
+    var _currentcsv_B="CSV/EDA - 2011.csv";
     var _currentcsv_C="CSV/EDI - 2012.csv";
-    var _currentcsv_D="CSV/EDI - 2012.csv";
+    var _currentcsv_D="CSV/EFD - 2011.csv";
+    var _currentcsv_E="CSV/EJPD - 2011.csv";
+    var _currentcsv_F="CSV/UVEK - 2011.csv";
+    var _currentcsv_G="CSV/VBS - 2011.csv";
+    var _currentcsv_H="CSV/WBF - 2011.csv";
     var _currentjson="CSV/matrix.json";
     var _currentcolor="CSV/Color.csv";
     var _svg;// = d3.select("svg");
@@ -35,6 +39,10 @@
     var _ds_supplier_EDA;
     var _ds_supplier_BK;
     var _ds_supplier_EJPD;
+    var _ds_supplier_EFD;
+    var _ds_supplier_UVEK;
+    var _ds_supplier_VBS;
+    var _ds_supplier_WBF;
     var _v_choice="EDA_EDI_2011";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
     var _vmodus="default";
@@ -47,6 +55,10 @@
         _currentcsv_B:_currentcsv_B,
         _currentcsv_C:_currentcsv_C,
         _currentcsv_D:_currentcsv_D,
+        _currentcsv_E:_currentcsv_E,
+        _currentcsv_F:_currentcsv_F,
+        _currentcsv_G:_currentcsv_G,
+        _currentcsv_H:_currentcsv_H,
         _currentjson:_currentjson,
         _currentcolor:_currentcolor,
         _svg:_svg,
@@ -74,10 +86,14 @@
         _ds_supplier:_ds_supplier,
         _ds_dept:_ds_dept,
         _ds_cost:_ds_cost,
-        _ds_supplier_EDI:_ds_supplier_EDI,
-        _ds_supplier_EDA:_ds_supplier_EDA,
-        _ds_supplier_BK:_ds_supplier_BK,
-        _ds_supplier_EJPD:_ds_supplier_EJPD,
+        _ds_supplier_EDI    :_ds_supplier_EDI,
+        _ds_supplier_EDA    :_ds_supplier_EDA,
+        _ds_supplier_BK     :_ds_supplier_BK,
+        _ds_supplier_EJPD   :_ds_supplier_EJPD,
+        _ds_supplier_EFD    :_ds_supplier_EFD,
+        _ds_supplier_UVEK   :_ds_supplier_UVEK,
+        _ds_supplier_VBS    :_ds_supplier_VBS,
+        _ds_supplier_WBF    :_ds_supplier_WBF,
         _v_choice:_v_choice,
         _vhttp:_vhttp,
         _vmodus:_vmodus,

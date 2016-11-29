@@ -150,5 +150,72 @@ function getYearSupplier(csv){
     return csvdata;
 }
 
+function getSupplier_EDA(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumEDA1005: d3.sum(v, function(d) { return d["1005 EDA"]; }),
+            sumEDA1006: d3.sum(v, function(d) { return d["1006 EDA"]; }),
+            sum1097: d3.sum(v, function(d) { return d["1097 Informatik EDA"]; }),
+            sum1112: d3.sum(v, function(d) { return d["1112 BRZ"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_EDA");
+    return nested_data;
+}
+function getSupplier_BK(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumBundeskanzelt: d3.sum(v, function(d) { return d["Bundeskanzlei"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_BK");
+    return nested_data;
+}
+function getSupplier_EJPD(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumBFM: d3.sum(v, function(d) { return d["ISC-EJPD"]+d["ESBK"]+d["GS-EJPD"]+d["BJ"]
+                +d["fedpol"]+d["SIR"]+d["METAS"]+d["BFM"]; })
+        };})
+        .entries(csv);
+    console.log("getSupplier_EJPD");
+    return nested_data;
+}
+
+function getSupplier(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .key(function(d) { return d.dept; })
+        .rollup(function(v) { return d3.sum(v, function(d) { return d["1006 EDA"]; }); })
+        .entries(csv);
+    console.log("getSupplier");
+    return nested_data;
+}
+
+function getSupplier_EDI(csv, name) {
+    var nested_data = d3.nest()
+        .key(function(d) { return d.supplier; })
+        .rollup(function(v) { return{
+            sumGSEDI: d3.sum(v, function(d) { return d["GS-EDI"]; }),
+            sumEBG: d3.sum(v, function(d) { return d["EBG"]; }),
+            sumBAR: d3.sum(v, function(d) { return d["BAR"]; }),
+            sumBAK: d3.sum(v, function(d) { return d["BAK"]; }),
+            sumMeteoCH: d3.sum(v, function(d) {return d["MeteoSchweiz"]; }),
+            sumBAG: d3.sum(v, function(d) { return d["BAG"]; }),
+            sumBFS: d3.sum(v, function(d) { return d["BFS"]; }),
+            sumBSV: d3.sum(v, function(d) {  return d["BSV"]; }),
+            sumSBF: d3.sum(v, function(d) { return d["SBF"]; }),
+            sumNB: d3.sum(v, function(d) { return d["NB"]; })
+        };})
+        .entries(csv);
+
+    console.log(" getSupplier_EDI");
+    return nested_data;
+}
+
+
 
 

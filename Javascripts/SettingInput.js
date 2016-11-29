@@ -128,7 +128,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_EJPD_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_EJPD_2014_Cat"://EDA 2014, EDI 2011, BK 2011
             filtercontent=["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
-                "Hardware","Postdienste"];
+                "Hardware","Postdienste"]; //jedes data ein departement, mindesten 4 pro dept
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -157,11 +157,12 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
             modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
             modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
-            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_E, "supplier");
-            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_D, "supplier");
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, "supplier");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, "supplier");
             modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
             modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
             modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
                 modul._ds_supplier_EJPD, modul._ds_supplier_UVEK, modul._ds_supplier_VBS, modul._ds_supplier_WBF,
             ]);
@@ -241,6 +242,30 @@ function matrix_Supplier(data) {
         modul._matrix = matrix;
         return supplier;
     }
+
+function checkCountRowsSupplier( ){
+    console.log("method:checkCountRowsSupplier");
+    var diff=0;
+    var countdept=8;
+
+    var supplierarray=[modul._ds_supplier_BK,
+    modul._ds_supplier_EDA,
+    modul._ds_supplier_EDI,
+    modul._ds_supplier_EFD,
+    modul._ds_supplier_EJPD,
+    modul._ds_supplier_UVEK,
+    modul._ds_supplier_VBS,
+    modul._ds_supplier_WBF];
+
+    supplierarray.forEach(function(rows) {
+      if (rows.length   < countdept){
+          diff=countdept-(rows.length);
+          for (var i=0;i<diff;i++){
+              rows.push(rows.values[0]);
+          }
+      }
+    });
+}
 
 function matrix_Supplier_EDI(data, end) {
     //Fill Matrix EDA
@@ -323,6 +348,10 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
     var totallength = (length/(Names_sumsEDA_EDI_BK.length))*2;
     var middle= d3.round(length/Names_sumsEDA_EDI_BK.length);
     var vobjectid=0;
+    if (Names_sumsEDA_EDI_BK.length==8){
+        totallength=16;
+        middle=totallength/2;
+    };
 
     //Array filtern
     for (var i=0;i<totallength;i++ ){
@@ -375,7 +404,11 @@ function createSupplierList(dataRows, supplier_field){
     if (end==4){
         while( i<end){
             modul._supplier.push(dataRows[i].values[0]);
-            i=i+v_Supplier;
+            i=i+v_Supplier;//+4
+        }
+        //second supplier
+        for (var i=0;i<v_Supplier; i++){
+            modul._supplier.push(dataRows[i]);
         }
     }
     else if (end==6 || end==12){
@@ -383,22 +416,37 @@ function createSupplierList(dataRows, supplier_field){
             modul._supplier.push(dataRows[i].values[0]);
             i=i+v_Supplier;
         }
+        //second supplier
+        for (var i=0;i<v_Supplier; i++){
+            modul._supplier.push(dataRows[i]);
+        }
     }
     else{//test
-        while( i<8){
-            modul._supplier.push(dataRows[i].values[0]);
-            i=i+3;}
+        supplierlabel();
     }
 
-    console.log(modul._error_counter+" createSupplierList "+"dept");
-    modul._error_counter++;
-
-    //second supplier
-    for (var i=0;i<v_Supplier; i++){
-        modul._supplier.push(dataRows[i]);
-    }
+    //8 depte
     console.log(modul._error_counter+" createSupplierList "+"supplier");
     modul._error_counter++;
+}
+function supplierlabel(){
+
+     var filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+        "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+        "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
+    ];
+    var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
+
+   //dept
+    for (var i=0;i<8;i++){
+        elements={"key":dept[i], "values":[dept[i], 20]};
+        modul._supplier.push(elements);
+    };
+
+    //supplier
+    for (var i=0;i<8;i++){
+        modul._supplier.push(filtercontent[i]);
+    }
 }
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname sum of each Department
@@ -492,11 +540,11 @@ function getMatrixValue(row,nameValue, counter){
           }
 
     }
-        if (row.values[0].values[depName]==null){
+        if (row==0){
             result=0;
         }
         else{
-            result=d3.round(row.values[0].values[depName]);
+             result=d3.round(row.values[0].values[depName]);
         }
        return result;
 }

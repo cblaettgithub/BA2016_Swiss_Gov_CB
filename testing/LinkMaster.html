@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <tr >
+        <td>Dept EDA-EDI</td>
+        <td id="EDA_EDI_2011">2011</td>
+        <td id="EDA_EDI_2012">2012</td>
+        <td id="EDA_EDI_2013">2013</td>
+        <td id="EDA_EDI_2014">2014</td>
+        <td id="Dummy">EDI_EDA</td>
+        <td id="xx">
+            <div id="slider_EDA_EDI" style="width: 400px">
+            </div>
+        </td>
+    </tr>
+</table>
+<script src="https://d3js.org/d3.v3.js"></script>
+<script src="https://d3js.org/d3-request.v1.min.js"></script>
+<script src="https://d3js.org/d3-queue.v3.min.js"></script>
+<script>
+    /*EDA ***EDI*/
+    d3.select("#EDA_EDI_2011").on("click", function() {
+    settingCSVFiles("EDA_EDI_2011");
+    });
+    d3.select("#EDA_EDI_2012").on("click", function() {
+    settingCSVFiles("EDA_EDI_2012");
+    });
+    d3.select("#EDA_EDI_2013").on("click", function() {
+    settingCSVFiles("EDA_EDI_2013");
+    });
+    d3.select("#EDA_EDI_2014").on("click", function() {
+    settingCSVFiles("EDA_EDI_2014");
+    });
+
+    function settingCSVFiles(nameTop){
+        d3.selectAll("td").style("color", "black");
+        d3.select("#"+nameTop).style("color", "red");
+        linkMaster(nameTop);
+    }
+
+    function linkMaster(nameTop){
+        //window.location.search = "?name="+nameTop;
+        var url="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/LinkMaster.html";
+        d3.xhr(url)
+            .send("POST", "hello");
+
+    }
+
+</script>
+</body>
+
+</html>

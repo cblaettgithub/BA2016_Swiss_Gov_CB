@@ -166,7 +166,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
                 modul._ds_supplier_EJPD, modul._ds_supplier_UVEK, modul._ds_supplier_VBS, modul._ds_supplier_WBF,
             ]);
-            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumEDA", "sumBundeskanzelt",
+            modul._ds_supplier=matrix_EDI_EDA(csvall, "sumBundeskanzelt", "sumEDA",
                 ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
                     "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
@@ -258,10 +258,17 @@ function checkCountRowsSupplier( ){
     modul._ds_supplier_WBF];
 
     supplierarray.forEach(function(rows) {
-      if (rows.length   < countdept){
+        var keyzahl=100;
+        var nodeName ="nodename";
+        var newGroup = 100;
+
+        if (rows.length   < countdept){
           diff=countdept-(rows.length);
           for (var i=0;i<diff;i++){
-              rows.push(rows.values[0]);
+              keyzahl+=i;
+              //rows.push({key:keyzahl, values:["null"]});
+              //rows.push( {"values":{"name":nodeName,"group":newGroup}});
+              rows.push({key:keyzahl, values:[{key:"null"}]});//objekt mit einem array wo ein objekt ist
           }
       }
     });
@@ -450,7 +457,7 @@ function supplierlabel(){
 }
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname sum of each Department
-    var result;
+    var result=0;
     if (nameValue.length==2) {
         switch (counter) {//2 Supplier
             case 0:
@@ -538,15 +545,11 @@ function getMatrixValue(row,nameValue, counter){
           else{
               depName=nameValue[7];
           }
-
     }
-        if (row==0){
-            result=0;
+       if (row.values[0].key!="null"){
+            result=d3.round(row.values[0].values[depName]);
         }
-        else{
-             result=d3.round(row.values[0].values[depName]);
-        }
-       return result;
+     return result;
 }
 function matrix_Supplier_EDA(data, end) {
     //Fill Matrix EDA

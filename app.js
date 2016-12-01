@@ -13,6 +13,11 @@
     var CreatingLinks = require('./Javascripts/CreatingLinks');
     var DataManager = require('./Javascripts/DataManager');
     var q;
+    var fs = require('fs');
+    var http = require('http');
+    var url = require('url') ;
+    var URL = require('url-parse');
+
 
 global.startwithLink=function(choice, content, choice_C){
     console.log("svg.remove()");
@@ -25,7 +30,21 @@ global.startwithLink=function(choice, content, choice_C){
     if (content !=null)
         modul._v_choice=content;
     startingwithQuery(modul._v_choice);
-}
+};
+global.starturlmodus=function(){
+    var url1 = new URL('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
+    url1.hostname.set("test");
+
+    parsed.set('hostname', 'yahoo.com');
+    console.log(parsed.href);
+    http.createServer(function (req, res) {
+        var queryObject = url.parse(req.url,true).query;
+        console.log(queryObject);
+
+        res.writeHead(200);
+        res.end('Feel free to add query parameters to the end of the url');
+    })
+};
 
     // CreateLink
 global.startcreatinglink=function(){
@@ -42,7 +61,7 @@ global.startprocessglobal = function(choice,content, content_B,content_C,content
     modul._v_choice=choice;
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
     process(content, content_B,content_C,content_D);
-}
+};
 
 //changing width, height, outer radius per html
 global.startprocessDesign=function(content, name, width, height, radius_i, radius_o){

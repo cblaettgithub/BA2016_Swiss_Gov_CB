@@ -121,6 +121,10 @@
         <td id="Creating_Link">Creating Link</td>
         <td id="placeLink" colspan="6"></td>
     </tr>
+    <tr >
+        <td id="urlLink">url</td>
+        <td colspan="6"></td>
+    </tr>
 
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
@@ -143,6 +147,13 @@
     });
     //startwithLink(p[0],p[1],p[2]);
     startwithLink(p[0],p[1],"");
+
+    //url modus
+    d3.select('#urlLink').on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#url_Link").style("color", "red");
+        starturlmodus();
+    });
 
        //slider
     d3.select('#slider_EDA_EDI').call(d3.slider().axis(true).min(vmin).max(vmax).step(1).
@@ -331,6 +342,7 @@
         d3.selectAll("td").style("color", "black");
         d3.select("#Creating_Link").style("color", "red");
         d3.select("#placeLink").text(startcreatinglink());
+        starturlmodus();
     });
 
     /*EDI*/
@@ -349,7 +361,9 @@
                 0,
                 d3.select("#radius_o").property("value")
         );
-    })
+    });
+
+
 </script>
 </body>
 </html>

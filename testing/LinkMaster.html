@@ -21,9 +21,15 @@
     </tr>
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
-<script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script>
+     var myurl="LinkMaster.html";
+     var myurl2="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/testing/LinkMaster.html";
+     function callback(){};
+
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {
     settingCSVFiles("EDA_EDI_2011");
@@ -45,10 +51,20 @@
     }
 
     function linkMaster(nameTop){
-        //window.location.search = "?name="+nameTop;
-        var url="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/LinkMaster.html";
-        d3.xhr(url)
-            .send("POST", "hello");
+        console.log("linkMaster1");
+        var loc =window.location;
+
+        /*d3.text(myurl, function(error, text) {
+            if (error) throw error;
+            console.log(text); // Hello, world!
+        });
+        console.log("linkMaster2");*/
+
+        d3.request(myurl2)
+            .header("X-Requested-With", "XMLHttpRequest")
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .get("a=2&b=3", callback);
+        console.log("linkMaster3");
 
     }
 

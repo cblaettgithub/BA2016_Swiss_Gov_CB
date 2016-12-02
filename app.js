@@ -14,12 +14,13 @@
     var DataManager = require('./Javascripts/DataManager');
     var q;
     var fs = require('fs');
-    var http = require('http');
+    const  http = require('http');
     var url = require('url') ;
-    var URL = require('url-parse');
+    var parse = require('url-parse');
+    var myquerystring = require('querystring');
+    var req=require('request');
 
-
-global.startwithLink=function(choice, content, choice_C){
+global.startwithLink=function(choice, content, choice_C, loc){
     console.log("svg.remove()");
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
@@ -31,19 +32,58 @@ global.startwithLink=function(choice, content, choice_C){
         modul._v_choice=content;
     startingwithQuery(modul._v_choice);
 };
-global.starturlmodus=function(){
-    var url1 = new URL('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
-    url1.hostname.set("test");
-
+global.starturlmodus=function(loc){
+    var parsed =parse(loc);
     parsed.set('hostname', 'yahoo.com');
-    console.log(parsed.href);
-    http.createServer(function (req, res) {
-        var queryObject = url.parse(req.url,true).query;
-        console.log(queryObject);
+    var temp = req;
+    temp.request(parsed)
+        .header("Accept-Language", "en-US")
+        .header("X-Requested-With", "XMLHttpRequest")
+        .get(callback);
 
-        res.writeHead(200);
-        res.end('Feel free to add query parameters to the end of the url');
-    })
+    /*d3.request(parsed)
+        .header("Accept-Language", "en-US")
+        .header("X-Requested-With", "XMLHttpRequest")
+        .get(callback);*/
+
+    console.log("Location"+loc);
+    console.log("Parsed"+parsed);
+
+    /* var server = http.createServer( (request, response) {
+         var queryData = url.parse(request.url, true).query;
+         response.writeHead(200, {"Content-Type": "text/plain"});
+         if (queryData.name) {
+             // user told us their name in the GET request, ex: http://host:8000/?name=Tom
+             response.end('Hello ' + queryData.name + '\n');
+
+         } else {
+             response.end("Hello World\n");
+         }
+     });
+         /*d3.request("/path/to/resource")
+             .header("X-Requested-With", "XMLHttpRequest")
+             .header("Content-Type", "application/x-www-form-urlencoded")
+             .post("a=2&b=3", callback);*/
+
+    /*var http = require('http'),
+        queryString = require('querystring');
+    http.createServer(function (oRequest, oResponse) {
+        var oQueryParams;
+        // get query params as object
+        if (oRequest.url.indexOf('?') >= 0) {
+            oQueryParams = queryString.parse(oRequest.url.replace(/^.*\?/, ''));
+            // do stuff
+            console.log(oQueryParams);
+        }
+
+        oResponse.writeHead(200, {'Content-Type': 'text/plain'});
+        oResponse.end('Hello world.');
+
+    }).listen(1337, '127.0.0.1');
+    */
+    /*var url1 = new URL('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
+    var parsed =parse('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
+*/
 };
 
     // CreateLink
@@ -51,7 +91,7 @@ global.startcreatinglink=function(){
     console.log(modul._error_counter+" start creatinglink");
     modul._error_counter++;
     return modul._vhttp+"?choice="+modul._v_choice;
-}
+};
 
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {

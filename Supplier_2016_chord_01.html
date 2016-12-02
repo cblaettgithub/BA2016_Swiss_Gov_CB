@@ -125,17 +125,17 @@
         <td id="urlLink">url</td>
         <td colspan="6"></td>
     </tr>
-
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
-
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src="d3-slider-master/d3.slider.js"></script>
+
 <script src="bundle.js"></script>
 <script>
 
     var params = {data: "data.csv", width:1400,height:800};
     var query = window.location.search.substring(1);
+    var loc = window.location;
     var vars = query.split("&");
     var p;
     var vmin=2011;
@@ -146,7 +146,14 @@
         params[p[0]]=p[1]
     });
     //startwithLink(p[0],p[1],p[2]);
-    startwithLink(p[0],p[1],"");
+    startwithLink(p[0],p[1],"", loc);
+    //var myurl="/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
+
+    /*d3.request(myurl)
+        .header("X-Requested-With", "XMLHttpRequest")
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .post("a=2&b=3", callback);
+    function callback(){};*/
 
     //url modus
     d3.select('#urlLink').on("click", function() {
@@ -342,7 +349,7 @@
         d3.selectAll("td").style("color", "black");
         d3.select("#Creating_Link").style("color", "red");
         d3.select("#placeLink").text(startcreatinglink());
-        starturlmodus();
+        starturlmodus(loc);
     });
 
     /*EDI*/
@@ -362,8 +369,6 @@
                 d3.select("#radius_o").property("value")
         );
     });
-
-
 </script>
 </body>
 </html>

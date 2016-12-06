@@ -22,27 +22,36 @@ var _height;
 var _currentURL="Supplier_2016_chord.html";
 var _ArrayParams;
 var _queryOutput="";
+var _ArrayCounter=0;
+var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
 
 var params =
 {   year:      "data.csv",dept: "data.csv",     supplier: "data.csv",
     total_EDI: "data.csv",total_EDA: "data.csv",width: "data.csv",
     height:    "data.csv",currentURL: "data.csv"
 };
-var paramsdept=
+var depts=
 {
-    dept1:"", dept2:"", dept3:"", dept4:""
 };
-
 function setCurrentUrl(startUrl){
     _currentURL=startUrl
-}
+};
+
 
 function setParam(dept, supplier, category, year)
 {
+    console.log("setparam");
+    var name="";
     for (var i=0;i<dept.length;i++){
-        paramsdept[i]=dept[i];
+        name="de";
+        name+=i;
+        depts[name]=dept[i];
+        console.log("dept:"+depts[i]);
+        name="";
+        _ArrayCounter++;
     }
 
+    console.log("l:"+_ArrayCounter);
     if (supplier=0){
         _supplier=0;
        _category=category;
@@ -53,7 +62,6 @@ function setParam(dept, supplier, category, year)
     }
     _year=year;
 }
-
     /*
     _year=year;
     _supplier=supplier;
@@ -72,19 +80,28 @@ function setParam(dept, supplier, category, year)
 }
 */
 function createLink(){
+    console.log("createLink");
 
     var startappend="?";
     var seperator="=";
     var appender="&";
+    var name="";
 
-    _queryOutput=_currentURL;
-    _queryOutput=_currentURL+startappend;
+    _queryOutput=myurl;
+    _queryOutput+=startappend;
 
-    paramsdept.forEach(function(item){
-        _queryOutput=_queryOutput+item.name +seperator+item;
-    });
-    _queryOutput+=appender+"supplier="+_supplier;
+    for(var i=0;i<_ArrayCounter;i++){
+        name="de";
+        name+=i;
+        _queryOutput+="depts"+seperator+depts[name]+appender;
+        console.log("query:"+_queryOutput);
+        name="";
+    }
+
+    _queryOutput+="supplier="+_supplier;
     _queryOutput+=appender+"cat="+_category;
     _queryOutput+=appender+"year="+_year;
+
     modul._http_query=_queryOutput;
+    console.log(_queryOutput);
 }

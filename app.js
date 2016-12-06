@@ -13,12 +13,9 @@
     var CreatingLinks = require('./Javascripts/CreatingLinks');
     var DataManager = require('./Javascripts/DataManager');
     var q;
-    var fs = require('fs');
-    const  http = require('http');
     var url = require('url') ;
     var parse = require('url-parse');
-    var myquerystring = require('querystring');
-
+    //var myquerystring = require('querystring');
 
 global.startwithLink=function(choice, content, choice_C, loc){
     console.log("svg.remove()");
@@ -32,7 +29,7 @@ global.startwithLink=function(choice, content, choice_C, loc){
         modul._v_choice=content;
     startingwithQuery(modul._v_choice);
 };
-global.starturlmodus=function(loc){
+/*global.starturlmodus=function(loc){
     var parsed =parse(loc);
     var parts=url.parse("'"+loc+"'", true);
     parsed.set('hostname', 'yahoo.com');
@@ -45,19 +42,22 @@ global.starturlmodus=function(loc){
     console.log(queryObject);
     create_choicevariable(queryObject);
     //erstellt den vchoice string
-};
+};*/
 function create_choicevariable(queryobjects){
+    //'EDA_EDI_2011':
+    var temp;
 
-    modul._vchoice="";
+    //modul._vchoice="";
 }
     // CreateLink
 global.startcreatinglink=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglink");
+    CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParam(dept,supplier, category, year);
     CreatingLinks.createLink();
 
-    return modul._http_query;
-    return modul._vhttp+"?choice="+modul._v_choice;
+    //return modul._http_query;
+    //return modul._vhttp+"?choice="+modul._v_choice;
 };
 
 //starting with choiced csv-fils
@@ -238,7 +238,7 @@ function startingwithQuery(content){
         modul._vmodus="BK_EDI_cumulation";
     else
         modul._vmodus="default";
-    CreatingLinks.setCurrentUrl("hostname");
+
     switch(content) {//EDA-EDI 2011- 2014
         case 'EDA_EDI_2011':
             startprocessglobal("EDA_EDI_2011","EDA - 2011.csv","EDI - 2011.csv", 0,0);
@@ -321,7 +321,7 @@ function startingwithQuery(content){
             break;
         case  "BK_EDA_EDI_2013_Cat_2":
             startprocessglobal("BK_EDA_EDI_2013_Cat_2","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;;
+            break;
         case  "BK_EDA_EDI_2014_Cat_2":
             startprocessglobal("BK_EDA_EDI_2014_Cat_2","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
             break;

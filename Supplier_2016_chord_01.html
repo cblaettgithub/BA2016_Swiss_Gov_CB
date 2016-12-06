@@ -152,11 +152,11 @@
     var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
 
     //url modus
-    d3.select('#urlLink').on("click", function() {
+    /*d3.select('#urlLink').on("click", function() {
         d3.selectAll("td").style("color", "black");
-        d3.select("#url_Link").style("color", "red");
+        d3.select("#urlLink").style("color", "red");
         starturlmodus();
-    });
+    });*/
 
        //slider
     d3.select('#slider_EDA_EDI').call(d3.slider().axis(true).min(vmin).max(vmax).step(1).
@@ -224,16 +224,11 @@
         console.log("#EDA_EDI_2011");
         //Rückgabwert von app querystring
         //window.open(startcreatinglink("#EDA_EDI_2011"));
-        window.open(startcreatinglink(["EDA, EDI"],"All", 0, 2011));
+        window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
         //window.open(myurl+"?choice=BK_EDI_2012","_self");
+        settingCSVFiles("EDA_EDI_2011");
     });
-    function callback()
-    {
-        d3.selectAll("td").style("color", "black");
-        d3.select("#EDA_EDI_2011").style("color", "red");
-        d3.select("svg").remove();
-        startwithLink("manual", "#EDA_EDI_2011");
-    }
+
     d3.select("#EDA_EDI_2012").on("click", function() {
         settingCSVFiles("EDA_EDI_2012");
     });

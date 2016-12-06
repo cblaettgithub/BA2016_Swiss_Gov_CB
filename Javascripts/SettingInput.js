@@ -547,7 +547,7 @@ function getMatrixValue(row,nameValue, counter){
           }
     }
        if (row.values[0].key!="null"){
-            result=d3.round(row.values[0].values[depName]);
+            result=d3.round(row.values[0].value[depName]);
         }
      return result;
 }

@@ -101,4 +101,4 @@
         _error_counter:_error_counter,
         _countDep:_countDep,
         _http_query:_http_query
-    }
+    };

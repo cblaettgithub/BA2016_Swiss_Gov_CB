@@ -129,10 +129,12 @@
 <script src="https://d3js.org/d3.v3.js"></script>
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src="d3-slider-master/d3.slider.js"></script>
-
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <script>
-
     var params = {data: "data.csv", width:1400,height:800};
     var query = window.location.search.substring(1);
     var loc = window.location;
@@ -147,13 +149,7 @@
     });
     //startwithLink(p[0],p[1],p[2]);
     startwithLink(p[0],p[1],"", loc);
-    //var myurl="/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
-
-    /*d3.request(myurl)
-        .header("X-Requested-With", "XMLHttpRequest")
-        .header("Content-Type", "application/x-www-form-urlencoded")
-        .post("a=2&b=3", callback);
-    function callback(){};*/
+    var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
 
     //url modus
     d3.select('#urlLink').on("click", function() {
@@ -218,7 +214,6 @@
         settingCSVFiles("BK_EDA_EDI_EJPD_"+value+"_Cat");
     }));
 
-
     //dummy
     d3.select("#Dummy").on("click", function() {
         settingCSVFiles("Dummy");
@@ -226,8 +221,19 @@
 
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {
-        settingCSVFiles("EDA_EDI_2011");
+        console.log("#EDA_EDI_2011");
+        //Rückgabwert von app querystring
+        //window.open(startcreatinglink("#EDA_EDI_2011"));
+        window.open(startcreatinglink(["EDA, EDI"],"All", 0, 2011));
+        //window.open(myurl+"?choice=BK_EDI_2012","_self");
     });
+    function callback()
+    {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#EDA_EDI_2011").style("color", "red");
+        d3.select("svg").remove();
+        startwithLink("manual", "#EDA_EDI_2011");
+    }
     d3.select("#EDA_EDI_2012").on("click", function() {
         settingCSVFiles("EDA_EDI_2012");
     });
@@ -343,15 +349,13 @@
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011").on("click", function() {
         settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011");
     });
-
     //creatingLink
     d3.select("#Creating_Link").on("click", function() {
         d3.selectAll("td").style("color", "black");
         d3.select("#Creating_Link").style("color", "red");
         d3.select("#placeLink").text(startcreatinglink());
-        starturlmodus(loc);
+        starturlmodus(loc+"&test=1");
     });
-
     /*EDI*/
     function settingCSVFiles(nameTop){
         d3.selectAll("td").style("color", "black");

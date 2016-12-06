@@ -18,7 +18,7 @@
     var url = require('url') ;
     var parse = require('url-parse');
     var myquerystring = require('querystring');
-    var req=require('request');
+
 
 global.startwithLink=function(choice, content, choice_C, loc){
     console.log("svg.remove()");
@@ -34,69 +34,35 @@ global.startwithLink=function(choice, content, choice_C, loc){
 };
 global.starturlmodus=function(loc){
     var parsed =parse(loc);
+    var parts=url.parse("'"+loc+"'", true);
     parsed.set('hostname', 'yahoo.com');
-    var temp = req;
-    temp.request(parsed)
-        .header("Accept-Language", "en-US")
-        .header("X-Requested-With", "XMLHttpRequest")
-        .get(callback);
 
-    /*d3.request(parsed)
-        .header("Accept-Language", "en-US")
-        .header("X-Requested-With", "XMLHttpRequest")
-        .get(callback);*/
+    console.log("Location "+loc);
+    console.log("Parsed "+parsed);
+    console.log("Url formats"+url.format(parts));
 
-    console.log("Location"+loc);
-    console.log("Parsed"+parsed);
-
-    /* var server = http.createServer( (request, response) {
-         var queryData = url.parse(request.url, true).query;
-         response.writeHead(200, {"Content-Type": "text/plain"});
-         if (queryData.name) {
-             // user told us their name in the GET request, ex: http://host:8000/?name=Tom
-             response.end('Hello ' + queryData.name + '\n');
-
-         } else {
-             response.end("Hello World\n");
-         }
-     });
-         /*d3.request("/path/to/resource")
-             .header("X-Requested-With", "XMLHttpRequest")
-             .header("Content-Type", "application/x-www-form-urlencoded")
-             .post("a=2&b=3", callback);*/
-
-    /*var http = require('http'),
-        queryString = require('querystring');
-    http.createServer(function (oRequest, oResponse) {
-        var oQueryParams;
-        // get query params as object
-        if (oRequest.url.indexOf('?') >= 0) {
-            oQueryParams = queryString.parse(oRequest.url.replace(/^.*\?/, ''));
-            // do stuff
-            console.log(oQueryParams);
-        }
-
-        oResponse.writeHead(200, {'Content-Type': 'text/plain'});
-        oResponse.end('Hello world.');
-
-    }).listen(1337, '127.0.0.1');
-    */
-    /*var url1 = new URL('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
-    var parsed =parse('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
-*/
+    var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
+    console.log(queryObject);
+    create_choicevariable(queryObject);
+    //erstellt den vchoice string
 };
+function create_choicevariable(queryobjects){
 
+    modul._vchoice="";
+}
     // CreateLink
-global.startcreatinglink=function(){
+global.startcreatinglink=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglink");
-    modul._error_counter++;
+    CreatingLinks.setParam(dept,supplier, category, year);
+    CreatingLinks.createLink();
+
+    return modul._http_query;
     return modul._vhttp+"?choice="+modul._v_choice;
 };
 
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
     console.log(modul._error_counter+" startprocessglobal");
-    modul._error_counter++;
     modul._currentcsv="";
     modul._v_choice=choice;
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
@@ -139,7 +105,6 @@ function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filena
         modul._countDep=8;
     }
 }
-
 function process(filename, filename_B, filename_C, filename_D) {
     modul._svg=d3.select("svg").remove();
     modul._svg = d3.select("svg");
@@ -199,7 +164,6 @@ function process(filename, filename_B, filename_C, filename_D) {
             .await(settingsC)
     }
 }
-
 function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
                    m_supplier_E,  m_supplier_F, m_supplier_G,m_supplier_H,
                    matrix, color)
@@ -233,8 +197,6 @@ function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_su
     //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
     Setting_theMethods();
 }
-
-
 function Setting_theMethods()
 {
     SettingGroups.neighborhood();
@@ -267,7 +229,7 @@ function settingParam(trans_width, trans_height, width, height,
     modul._group_dy = group_dy;
 }
 function get_requestParam(csvfile,  dep){
-    Querystring
+
 }
 function startingwithQuery(content){
     console.log(modul._error_counter+" starting with Query");
@@ -276,6 +238,7 @@ function startingwithQuery(content){
         modul._vmodus="BK_EDI_cumulation";
     else
         modul._vmodus="default";
+    CreatingLinks.setCurrentUrl("hostname");
     switch(content) {//EDA-EDI 2011- 2014
         case 'EDA_EDI_2011':
             startprocessglobal("EDA_EDI_2011","EDA - 2011.csv","EDI - 2011.csv", 0,0);
@@ -402,13 +365,12 @@ function startingwithQuery(content){
             startprocessglobal
             ("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
              "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
-
             );
             break;
     }
 }
 function mergingFiles(csvFiles) {
-    console.log(modul._error_counter+" merging files");
+    console.log(modul._error_counter + " merging files");
     modul._error_counter++;
     var results = [];
     var output;
@@ -418,4 +380,3 @@ function mergingFiles(csvFiles) {
     output = d3.merge(results);
     return output;
 }
-

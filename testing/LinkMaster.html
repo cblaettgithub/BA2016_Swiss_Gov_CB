@@ -27,13 +27,45 @@
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script>
      var myurl="LinkMaster.html";
-     var myurl2="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/testing/LinkMaster.html";
-     function callback(){};
+     var myurl2="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/testing/slider_test_ba.html";
+     var myurl3="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/testing/LinkMaster.html";
 
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {
-    settingCSVFiles("EDA_EDI_2011");
+        console.log(myurl2);
+        window.open(myurl3+"?id=5","_self");
+
+
+
+
+       /* d3.xhr(myurl2)
+            .header("Content-type", "application/x-www-form-urlencoded")
+            .get("a=1&b=2&c=3")
+            .on(localAddress)
+            .on(error)
+
+       /* d3.text(myurl2)
+            .header("Content-type", "application/x-www-form-urlencoded")
+            .post("a=1&b=2&c=3", function(error, text) { console.log(text); });
+        /*d3.xhr(myurl2)
+            .header("Content-Type", "application/json")
+            .post(
+                JSON.stringify({year: "2012", customer: "type1"}),
+                function(err, rawData){
+                    var data = JSON.parse(rawData);
+                    console.log("got response", data);
+                }
+            );
+
+        /*d3.request(myurl)
+            .get("a=2&b=3", callback);*/
     });
+    function callback(){
+        console.log("callback");
+        d3.selectAll("td").style("color", "black");
+        d3.select("#EDA_EDI_2011").style("color", "red");
+    };
+
     d3.select("#EDA_EDI_2012").on("click", function() {
     settingCSVFiles("EDA_EDI_2012");
     });
@@ -59,16 +91,8 @@
             console.log(text); // Hello, world!
         });
         console.log("linkMaster2");*/
-
-        d3.request(myurl2)
-            .header("X-Requested-With", "XMLHttpRequest")
-            .header("Content-Type", "application/x-www-form-urlencoded")
-            .get("a=2&b=3", callback);
-        console.log("linkMaster3");
-
     }
 
 </script>
 </body>
-
 </html>

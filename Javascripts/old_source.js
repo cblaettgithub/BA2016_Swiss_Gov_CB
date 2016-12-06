@@ -214,8 +214,66 @@ function getSupplier_EDI(csv, name) {
 
     console.log(" getSupplier_EDI");
     return nested_data;
-}
+};
 
+var server = http.createServer(request, response)
+{
+     var queryData = url.parse(request.url, true).query;
+     response.writeHead(200, {"Content-Type": "text/plain"});
+     if (queryData.name) {
+     // user told us their name in the GET request, ex: http://host:8000/?name=Tom
+     response.end('Hello ' + queryData.name + '\n');
+     } else {
+         response.end("Hello World\n");
+     }
+ };
+
+ d3.request("/path/to/resource")
+ .header("X-Requested-With", "XMLHttpRequest")
+ .header("Content-Type", "application/x-www-form-urlencoded")
+ .post("a=2&b=3", callback);
+
+var http = require('http'),
+ queryString = require('querystring');
+ http.createServer(function (oRequest, oResponse) {
+ var oQueryParams;
+ // get query params as object
+ if (oRequest.url.indexOf('?') >= 0) {
+ oQueryParams = queryString.parse(oRequest.url.replace(/^.*\?/, ''));
+ // do stuff
+ console.log(oQueryParams);
+ }
+
+ oResponse.writeHead(200, {'Content-Type': 'text/plain'});
+ oResponse.end('Hello world.');
+
+ }).listen(1337, '127.0.0.1');
+
+var url1 = new URL('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
+ var parsed =parse('http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html');
+
+d3.request(parsed)
+ .header("Accept-Language", "en-US")
+ .header("X-Requested-With", "XMLHttpRequest")
+ .get(callback);
+
+d3.request(myurl)
+ .header("X-Requested-With", "XMLHttpRequest")
+ .header("Content-Type", "application/x-www-form-urlencoded")
+ .post("a=2&b=3", callback);
+ function callback(){};
+
+d3.html("http:www.bluewin.ch", callback());
+settingCSVFiles("EDA_EDI_2011");
+//Request//->function ->function back<-
+ d3.request(myurl)
+ .header("X-Requested-With", "XMLHttpRequest")
+ .header("Content-Type", "application/x-www-form-urlencoded")
+ .get("?a=2&b=3", settingCSVFiles("EDA_EDI_2011"));
+
+d3.request(myurl)
+.header("X-Requested-With", "XMLHttpRequest")
+ .post("choice=BK_EDI_2012", callback);
 
 
 

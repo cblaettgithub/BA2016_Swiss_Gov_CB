@@ -360,7 +360,6 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
         middle=totallength/2;
     };
 
-    //Array filtern
     for (var i=0;i<totallength;i++ ){
         var mrow=[];
         if (i==middle)
@@ -437,12 +436,13 @@ function createSupplierList(dataRows, supplier_field){
     modul._error_counter++;
 }
 function supplierlabel(){
-
+    console.log("supplierlabel");
      var filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
         "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
         "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
     ];
     var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
+    var elements;
 
    //dept
     for (var i=0;i<8;i++){
@@ -452,8 +452,10 @@ function supplierlabel(){
 
     //supplier
     for (var i=0;i<8;i++){
-        modul._supplier.push(filtercontent[i]);
+        elements={"key":filtercontent[i], "values":[dept[i], 20]};
+        modul._supplier.push(elements);
     }
+    modul._countDep=7;
 }
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname sum of each Department

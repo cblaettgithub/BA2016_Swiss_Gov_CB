@@ -17,15 +17,16 @@
     var parse = require('url-parse');
     //var myquerystring = require('querystring');
 
-global.startwithLink=function(loc){
+global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
     modul._error_counter=0;
     modul._error_counter++;
-    console.log("'"+loc+"'");
-    startingwithQuery("EDA_EDI_2011");
+    modul._vchoice=choice;
+    console.log("'"+ modul._vchoice+"'");
+    startingwithQuery( modul._vchoice);
 };
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");

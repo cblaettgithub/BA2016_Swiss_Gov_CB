@@ -1573,7 +1573,7 @@ module.exports={
     getDummy_EDI:getDummy_EDI,
     getDummy_EFD:getDummy_EFD,
     getDummy_EJPD:getDummy_EJPD,
-    getDummy_UVEK:getDummy_EJPD,
+    getDummy_UVEK:getDummy_UVEK,
     getDummy_VBS:getDummy_VBS,
     getDummy_WBF:getDummy_WBF,
     getSupplier:getSupplier
@@ -1856,7 +1856,7 @@ function groupText() {//den länderbogen beschriften
             .text(function (d, i) {
                 console.log(modul._supplier[i].key);
                 return modul._supplier[i].key;
-            })
+            });
 
             //return modul._ds_supplier[i].key;//Spaltenüberschriften
          // modul._ds_supplier[i].values[0].key ="EDA"
@@ -2290,7 +2290,6 @@ function matrix_EDI_EDA(DataEDI_EDA, Name_sumEDA, Name_sumEDI, Names_sumsEDA_EDI
         middle=totallength/2;
     };
 
-    //Array filtern
     for (var i=0;i<totallength;i++ ){
         var mrow=[];
         if (i==middle)
@@ -2367,12 +2366,13 @@ function createSupplierList(dataRows, supplier_field){
     modul._error_counter++;
 }
 function supplierlabel(){
-
+    console.log("supplierlabel");
      var filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
         "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
         "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
     ];
     var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
+    var elements;
 
    //dept
     for (var i=0;i<8;i++){
@@ -2382,8 +2382,10 @@ function supplierlabel(){
 
     //supplier
     for (var i=0;i<8;i++){
-        modul._supplier.push(filtercontent[i]);
+        elements={"key":filtercontent[i], "values":[dept[i], 20]};
+        modul._supplier.push(elements);
     }
+    modul._countDep=7;
 }
 function getMatrixValue(row,nameValue, counter){
     var depName;    //get Fieldname sum of each Department
@@ -2625,15 +2627,16 @@ module.exports={
     var parse = require('url-parse');
     //var myquerystring = require('querystring');
 
-global.startwithLink=function(loc){
+global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
     modul._error_counter=0;
     modul._error_counter++;
-    console.log("'"+loc+"'");
-    startingwithQuery("EDA_EDI_2011");
+    modul._vchoice=choice;
+    console.log("'"+ modul._vchoice+"'");
+    startingwithQuery( modul._vchoice);
 };
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");

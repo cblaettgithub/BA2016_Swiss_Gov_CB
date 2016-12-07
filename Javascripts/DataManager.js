@@ -10,7 +10,7 @@ module.exports={
     getDummy_EDI:getDummy_EDI,
     getDummy_EFD:getDummy_EFD,
     getDummy_EJPD:getDummy_EJPD,
-    getDummy_UVEK:getDummy_EJPD,
+    getDummy_UVEK:getDummy_UVEK,
     getDummy_VBS:getDummy_VBS,
     getDummy_WBF:getDummy_WBF,
     getSupplier:getSupplier

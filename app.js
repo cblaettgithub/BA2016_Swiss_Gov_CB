@@ -17,37 +17,36 @@
     var parse = require('url-parse');
     //var myquerystring = require('querystring');
 
-global.startwithLink=function(choice, content, choice_C, loc){
+global.startwithLink=function(loc){
     console.log("svg.remove()");
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
     modul._error_counter=0;
-    console.log(modul._error_counter+" start with Link:"+choice+" "+content+" "+choice_C);
     modul._error_counter++;
-    if (content !=null)
-        modul._v_choice=content;
-    startingwithQuery(modul._v_choice);
+    console.log("'"+loc+"'");
+    startingwithQuery("EDA_EDI_2011");
 };
-/*global.starturlmodus=function(loc){
-    var parsed =parse(loc);
-    var parts=url.parse("'"+loc+"'", true);
-    parsed.set('hostname', 'yahoo.com');
-
-    console.log("Location "+loc);
-    console.log("Parsed "+parsed);
-    console.log("Url formats"+url.format(parts));
-
+global.starturlmodus=function(loc){
+    console.log("starturlmodus1:"+"'"+loc+"'");
     var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
-    console.log(queryObject);
     create_choicevariable(queryObject);
-    //erstellt den vchoice string
-};*/
-function create_choicevariable(queryobjects){
+};
+function create_choicevariable(queryObject){
     //'EDA_EDI_2011':
-    var temp;
+    var choice;
+    console.log("create_choicevariable:"+queryObject.cat);
+    console.log("create_choicevariable:"+queryObject.supplier);
+    console.log("create_choicevariable:"+queryObject.year);
 
-    //modul._vchoice="";
+    for (var i=0;i<queryObject.depts.length;i++){
+        console.log(queryObject.depts[i]);
+    }
+    console.log("end:");
+    choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
+
+    console.log(choice);
+    //startingwithQuery(choice);
 }
     // CreateLink
 global.startcreatinglink=function(dept, supplier, category, year){
@@ -57,7 +56,6 @@ global.startcreatinglink=function(dept, supplier, category, year){
     CreatingLinks.createLink();
 
     //return modul._http_query;
-    //return modul._vhttp+"?choice="+modul._v_choice;
 };
 
 //starting with choiced csv-fils
@@ -166,17 +164,21 @@ function process(filename, filename_B, filename_C, filename_D) {
 }
 function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
                    m_supplier_E,  m_supplier_F, m_supplier_G,m_supplier_H,
-                   matrix, color)
-{
-    console.log(modul._error_counter+" SettingsB");
-    modul._error_counter++;
-    modul._supplier=m_supplier;//Länderbogennamenn setzen
-    SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C,m_supplier_D,
-    m_supplier_E,  m_supplier_F, m_supplier_G,m_supplier_H,matrix);//Fill DS-Supplier + DS-Dept, Matrix
-    modul._layout.matrix(modul._matrix);
-    modul._color=color;
-    //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
-    Setting_theMethods();
+                   matrix, color){
+    if (error){
+        console.log(error);
+    }
+    else {
+        console.log(modul._error_counter + " SettingsB");
+        modul._error_counter++;
+        modul._supplier = m_supplier;//Länderbogennamenn setzen
+        SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,
+            m_supplier_E, m_supplier_F, m_supplier_G, m_supplier_H, matrix);//Fill DS-Supplier + DS-Dept, Matrix
+        modul._layout.matrix(modul._matrix);
+        modul._color = color;
+        //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);
+        Setting_theMethods();
+    }
 }
 
 function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014,

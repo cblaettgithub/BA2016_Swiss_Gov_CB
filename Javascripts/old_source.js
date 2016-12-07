@@ -275,5 +275,13 @@ d3.request(myurl)
 .header("X-Requested-With", "XMLHttpRequest")
  .post("choice=BK_EDI_2012", callback);
 
+var parsed =parse(loc);
+var parts=url.parse("'"+loc+"'", true);
+parsed.set('hostname', 'yahoo.com');
+
+console.log("Location "+loc);
+console.log("Parsed "+parsed);
+console.log("Url formats"+url.format(parts));
+
 
 

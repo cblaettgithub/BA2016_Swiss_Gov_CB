@@ -8,8 +8,9 @@ module.exports = {
     setParam:      setParam,
     _currentURL:   _currentURL,
     _queryOutput:  _queryOutput,
+    depts:       depts,
     createLink:createLink
-}
+};
 
 var _year;
 var _dept;
@@ -37,7 +38,6 @@ function setCurrentUrl(startUrl){
     _currentURL=startUrl
 };
 
-
 function setParam(dept, supplier, category, year)
 {
     console.log("setparam");
@@ -62,23 +62,7 @@ function setParam(dept, supplier, category, year)
     }
     _year=year;
 }
-    /*
-    _year=year;
-    _supplier=supplier;
-    _total_EDI=total_EDI;
-    _total_EDA=total_EDA;
-    _width=width;
-    _height=height;
 
-    params[0]=_year;//params für dept und supplier
-    params[1]=_dept;
-    params[2]=_supplier;
-    params[3]=_total_EDI;
-    params[4]=_total_EDA;
-    params[5]=_width;
-    params[6]=_height;
-}
-*/
 function createLink(){
     console.log("createLink");
 
@@ -97,7 +81,6 @@ function createLink(){
         console.log("query:"+_queryOutput);
         name="";
     }
-
     _queryOutput+="supplier="+_supplier;
     _queryOutput+=appender+"cat="+_category;
     _queryOutput+=appender+"year="+_year;
@@ -105,3 +88,5 @@ function createLink(){
     modul._http_query=_queryOutput;
     console.log(_queryOutput);
 }
+
+

@@ -135,28 +135,29 @@
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <script>
-    var params = {data: "data.csv", width:1400,height:800};
+    var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
     var query = window.location.search.substring(1);
     var loc = window.location;
-    var vars = query.split("&");
-    var p;
     var vmin=2011;
     var vmax=2014;
 
-    vars.forEach(function(v) {
-         p = v.split("=");
-        params[p[0]]=p[1]
-    });
-    //startwithLink(p[0],p[1],p[2]);
-    startwithLink(p[0],p[1],"", loc);
-    var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
+    startwithLink(loc);
 
     //url modus
-    /*d3.select('#urlLink').on("click", function() {
+    d3.select('#urlLink').on("click", function() {
         d3.selectAll("td").style("color", "black");
         d3.select("#urlLink").style("color", "red");
-        starturlmodus();
-    });*/
+        starturlmodus(loc+"?depts=EDA&depts=EDI&supplier=0&cat=0&year=2011");
+    });
+
+    /*EDA ***EDI*/
+    d3.select("#EDA_EDI_2011").on("click", function() {
+        console.log("#EDA_EDI_2011");
+        //Rückgabwert von app querystring
+        window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
+        //window.open(myurl+"?choice=BK_EDI_2012","_self");
+        settingCSVFiles("EDA_EDI_2011");
+    });
 
        //slider
     d3.select('#slider_EDA_EDI').call(d3.slider().axis(true).min(vmin).max(vmax).step(1).
@@ -219,15 +220,7 @@
         settingCSVFiles("Dummy");
     });
 
-    /*EDA ***EDI*/
-    d3.select("#EDA_EDI_2011").on("click", function() {
-        console.log("#EDA_EDI_2011");
-        //Rückgabwert von app querystring
-        //window.open(startcreatinglink("#EDA_EDI_2011"));
-        window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
-        //window.open(myurl+"?choice=BK_EDI_2012","_self");
-        settingCSVFiles("EDA_EDI_2011");
-    });
+
 
     d3.select("#EDA_EDI_2012").on("click", function() {
         settingCSVFiles("EDA_EDI_2012");

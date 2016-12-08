@@ -63,33 +63,37 @@ function groupText() {//den länderbogen beschriften
             };//3//
         });
     }
-    var g = modul._svg.selectAll("g.group")
-    var ticks =g.selectAll("g")
-        .data(groupTicks)
-        .enter().append("g")
-        .attr("transform", function (d) {
-            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-                + "translate(" + modul._outerRadius + ",0)";
-        });
+   if (modul._countDep!=7) {
+       var g = modul._svg.selectAll("g.group")
+       var ticks = g.selectAll("g")
+           .data(groupTicks)
+           .enter().append("g")
+           .attr("transform", function (d) {
+               return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+                   + "translate(" + modul._outerRadius + ",0)";
+           });
 
-    ticks.append("line")
-        .attr("x1", 1)
-        .attr("y1", 0)
-        .attr("x2", 5)
-        .attr("y2", 0)
-        .style("stroke", "#000");
+       ticks.append("line")
+           .attr("x1", 1)
+           .attr("y1", 0)
+           .attr("x2", 5)
+           .attr("y2", 0)
+           .style("stroke", "#000");
 
-    ticks.append("text")
-        .attr("x", 6)
-        .attr("dy", ".35em")
-        .attr("transform", function(d) {
-            return d.angle > Math.PI ?
-                "rotate(180)translate(-16)" : null;
-        })
-        .style("text-anchor", function(d) {
-            return d.angle > Math.PI ? "end" : null;
-        })
-        .text(function(d) { return d.label; });
+       ticks.append("text")
+           .attr("x", 6)
+           .attr("dy", ".35em")
+           .attr("transform", function (d) {
+               return d.angle > Math.PI ?
+                   "rotate(180)translate(-16)" : null;
+           })
+           .style("text-anchor", function (d) {
+               return d.angle > Math.PI ? "end" : null;
+           })
+           .text(function (d) {
+               return d.label;
+           });
+   }
 }
 
 function grouptextFilter() {

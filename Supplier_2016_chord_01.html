@@ -125,6 +125,15 @@
         <td id="urlLink">url</td>
         <td colspan="6"></td>
     </tr>
+    <tr >
+        <td>BK </td>
+        <td id="BK_2011">2011</td>
+        <td id="BK_2012">2012</td>
+        <td id="BK_2013">2013</td>
+        <td id="BK_2014t">2014</td>
+        <td>BK </td>
+        <td>BK </td>
+    </tr>
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
@@ -154,7 +163,7 @@
     d3.select("#EDA_EDI_2011").on("click", function() {
         console.log("#EDA_EDI_2011");
         //Rückgabwert von app querystring
-        window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
+        //window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
         //window.open(myurl+"?choice=BK_EDI_2012","_self");
         settingCSVFiles("EDA_EDI_2011");
     });
@@ -219,7 +228,19 @@
     d3.select("#Dummy").on("click", function() {
         settingCSVFiles("Dummy");
     });
-
+    ///only one
+    d3.select("#BK_2011").on("click", function() {
+        settingCSVFiles("BK_2011");
+    });
+    d3.select("#BK_2012").on("click", function() {
+        settingCSVFiles("BK_2012");
+    });
+    d3.select("#BK_2013").on("click", function() {
+        settingCSVFiles("BK_2013");
+    });
+    d3.select("#BK_2014").on("click", function() {
+        settingCSVFiles("BK_2014");
+    });
 
 
     d3.select("#EDA_EDI_2012").on("click", function() {

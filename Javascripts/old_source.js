@@ -283,5 +283,81 @@ console.log("Location "+loc);
 console.log("Parsed "+parsed);
 console.log("Url formats"+url.format(parts));
 
+function matrix_Supplier_EDA(data, end) {
+    //Fill Matrix EDA
+    var matrix = [];
+    var counter=0;
+    var supplier = d3.keys(data[0]);
+
+    //Spaltenüberschriften
+    data.forEach(function (row) {
+        if (counter < end) {
+            var mrow = [];
+            mrow.push(row.values["sumEDA1005"]);
+            mrow.push(row.values["sumEDA1006"]);
+            mrow.push(row.values["sum1097"]);
+            mrow.push(row.values["sum1112"]);
+            counter++;
+            matrix.push(mrow);
+            console.log("push");
+        }
+    });
+    modul._matrix = matrix;
+    console.log("matrix_Supplier_EDI");
+    return supplier;
+}
+
+function matrix_Supplier_EDI(data, end) {
+    //Fill Matrix EDA
+    var matrix = [];
+    var counter=0;
+    var supplier = d3.keys(data[0]);
+    //Spaltenüberschriften
+    data.forEach(function (row) {
+        if (counter < end) {
+            var mrow = [];
+            mrow.push(row.values["sumGSEDI"]);
+            mrow.push(row.values["sumEBG"]);
+            mrow.push(row.values["sumBAR"]);
+            mrow.push(row.values["sumBAK"]);
+            mrow.push(row.values["sumMeteoCH"]);
+            mrow.push(row.values["sumBAG"]);
+            mrow.push(row.values["sumBFS"]);
+            mrow.push(row.values["sumBSV"]);
+            mrow.push(row.values["sumSBF"]);
+            mrow.push(row.values["sumNB"]);
+            counter++;
+            matrix.push(mrow);
+            console.log("push");
+        }
+    });
+    console.log("matrix_Supplier_EDA");
+    modul._matrix = matrix;
+    return supplier;
+}
+
+function matrix_Supplier(data) {
+    var matrix = [];
+    var counter=0;
+    //modul._ds_supplier[i].values[0].key ="EDA"
+    var supplier = d3.keys(data[0]).slice(1);
+    //Spaltenüberschriften
+    data.forEach(function (row) {
+        if (counter < 2) {
+            var mrow = [];
+            supplier.forEach(function (c) {
+                if (c == "1005 EDA")
+                    mrow.push(Number(row[c]));
+                if (c == "1006 EDA")
+                    mrow.push(Number(row[c]))
+            });
+            counter++;
+            matrix.push(mrow);
+            console.log("push");
+        }
+    });
+    modul._matrix = matrix;
+    return supplier;
+}
 
 

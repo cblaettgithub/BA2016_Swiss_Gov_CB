@@ -243,6 +243,19 @@ function startingwithQuery(content){
         modul._vmodus="default";
 
     switch(content) {//EDA-EDI 2011- 2014
+        case 'BK_2011':
+            startprocessglobal("BK_2011","BK - 2011.csv","EDI - 2011.csv", 0,0);
+            break;
+        case 'BK_2012':
+            startprocessglobal("BK_2012","BK - 2012.csv","EDI - 2011.csv", 0,0);
+            break;
+        case 'BK_2013':
+            startprocessglobal("BK_2013","BK - 2013.csv","EDI - 2011.csv", 0,0);
+            break;
+        case 'BK_2014':
+            startprocessglobal("BK_2014","BK - 2014.csv","EDI - 2011.csv", 0,0);
+            break;
+
         case 'EDA_EDI_2011':
             startprocessglobal("EDA_EDI_2011","EDA - 2011.csv","EDI - 2011.csv", 0,0);
             break;

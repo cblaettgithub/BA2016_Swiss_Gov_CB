@@ -94,7 +94,8 @@ function getDummy_WBF(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
-            sumWBF: d3.sum(v, function(d) { return d["GS-WBF"]+d["BLW"]+d["Agroscope"]; })
+            //sumWBF: d3.sum(v, function(d) { return d["GS-WBF"]+d["BLW"]+d["Agroscope"]; })
+            sumWBF: d3.sum(v, function(d) { return d["GS-WBF"]+d["BLW"]; })
         };})
         .entries(csv);
     return nested_data;

@@ -4,18 +4,18 @@
 //start file//
 "use strict";
     var modul =   require('./Javascripts/Modul');
-//var SettingData = require('./Javascripts/SettingData');
     var SettingLayout = require('./Javascripts/SettingLayout');
     var SettingChords = require('./Javascripts/SettingChords');
-    var SettingInput  = require('./Javascripts/SettingInput');
     var SettingGroups = require('./Javascripts/SettingGroups');
     var SettingTitle = require('./Javascripts/SettingTitle');
     var CreatingLinks = require('./Javascripts/CreatingLinks');
     var DataManager = require('./Javascripts/DataManager');
+    var Config_start = require('./Javascripts/Config_start');
+    var Config_Process = require('./Javascripts/Config_Process');
+    var MatrixCreatorX =require('./Javascripts/MatrixCreatorX');
     var q;
     var url = require('url') ;
     var parse = require('url-parse');
-    //var myquerystring = require('querystring');
 
 global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
@@ -26,7 +26,7 @@ global.startwithLink=function(kind, choice){
     modul._error_counter++;
     modul._vchoice=choice;
     console.log("'"+ modul._vchoice+"'");
-    startingwithQuery( modul._vchoice);
+    Config_start.startingwithQuery( modul._vchoice);
 };
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
@@ -89,19 +89,19 @@ function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filena
     }
     if (filename_E!=0){     //lösung immer 4 files mitgeben*/
         modul._currentcsv_E="csv/"+filename_E;
-        modul._countDep=8;
+        modul._countDep=7;
     }
     if (filename_F!=0){
         modul._currentcsv_F="csv/"+filename_F;
-        modul._countDep=8;
+        modul._countDep=7;
     }
     if (filename_G!=0){     //lösung immer 4 files mitgeben*/
         modul._currentcsv_G="csv/"+filename_G;
-        modul._countDep=8;
+        modul._countDep=7;
     }
     if (filename_H!=0){
         modul._currentcsv_H="csv/"+filename_H;
-        modul._countDep=8;
+        modul._countDep=7;
     }
 }
 function process(filename, filename_B, filename_C, filename_D) {
@@ -173,7 +173,7 @@ function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
         console.log(modul._error_counter + " SettingsB");
         modul._error_counter++;
         modul._supplier = m_supplier;//Länderbogennamenn setzen
-        SettingInput.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,
+        Config_Process.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,
             m_supplier_E, m_supplier_F, m_supplier_G, m_supplier_H, matrix);//Fill DS-Supplier + DS-Dept, Matrix
         modul._layout.matrix(modul._matrix);
         modul._color = color;
@@ -191,7 +191,7 @@ function settingsC(error, m_supplier_2011, m_supplier_2012, m_supplier_2013,m_su
     //Merging 2011 - 2014
 
     //test only 2012/2013
-    SettingInput.readcsv(mergingFiles([m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014]),
+    Config_Process.readcsv(mergingFiles([m_supplier_2011, m_supplier_2012, m_supplier_2013,m_supplier_2014]),
     mergingFiles([m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014]),
         mergingFiles([m_supplier_B_2011, m_supplier_B_2012, m_supplier_B_2013, m_supplier_B_2014])
     ,matrix);
@@ -230,160 +230,6 @@ function settingParam(trans_width, trans_height, width, height,
     //seeting inpu
     modul._group_x = group_x;
     modul._group_dy = group_dy;
-}
-function get_requestParam(csvfile,  dep){
-
-}
-function startingwithQuery(content){
-    console.log(modul._error_counter+" starting with Query");
-    modul._error_counter++;
-    if (content=="BK_EDI_All")
-        modul._vmodus="BK_EDI_cumulation";
-    else
-        modul._vmodus="default";
-
-    switch(content) {//EDA-EDI 2011- 2014
-        case 'BK_2011':
-            startprocessglobal("BK_2011","BK - 2011.csv","EDI - 2011.csv", 0,0);
-            break;
-        case 'BK_2012':
-            startprocessglobal("BK_2012","BK - 2012.csv","EDI - 2011.csv", 0,0);
-            break;
-        case 'BK_2013':
-            startprocessglobal("BK_2013","BK - 2013.csv","EDI - 2011.csv", 0,0);
-            break;
-        case 'BK_2014':
-            startprocessglobal("BK_2014","BK - 2014.csv","EDI - 2011.csv", 0,0);
-            break;
-
-        case 'EDA_EDI_2011':
-            startprocessglobal("EDA_EDI_2011","EDA - 2011.csv","EDI - 2011.csv", 0,0);
-            break;
-        case 'EDA_EDI_2012':
-            startprocessglobal("EDA_EDI_2012","EDA - 2012.csv","EDI - 2012.csv", 0,0);
-            break;
-        case 'EDA_EDI_2013':
-            startprocessglobal("EDA_EDI_2013","EDA - 2013.csv","EDI - 2013.csv",0, 0);
-            break;
-        case 'EDA_EDI_2014':
-            startprocessglobal("EDA_EDI_2014","EDA - 2014.csv","EDA - 2014.csv",0,0);
-            break;
-
-            //BK EDI 2011 - 2014
-        case 'BK_EDI_2011':
-            startprocessglobal("BK_EDI_2011","BK - 2011.csv","EDA - 2011.csv",0,0);
-            break;
-        case 'BK_EDI_2012':
-            startprocessglobal("BK_EDI_2012","BK - 2012.csv","EDA - 2012.csv",0,0);
-            break;
-        case 'BK_EDI_2013':
-            startprocessglobal("BK_EDI_2013","BK - 2013.csv","EDA - 2013.csv",0,0);
-            break;
-        case 'BK_EDI_2014':
-            startprocessglobal("BK_EDI_2014","BK - 2014.csv","EDA - 2014.csv",0,0);
-            break;
-        case 'BK_EDI_All':
-            startprocessglobal("BK_EDI_2014","BK - 2014.csv","EDA - 2014.csv",0,0);
-            break;
-
-            //BK EDA EDI 2011 - 2014
-        case  "BK_EDA_EDI_2011":
-            startprocessglobal("BK_EDA_EDI_2011","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", 0);
-            break;
-        case  "BK_EDA_EDI_2012":
-            startprocessglobal("BK_EDA_EDI_2012","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv",0);
-            break;
-        case  "BK_EDA_EDI_2013":
-            startprocessglobal("BK_EDA_EDI_2013","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;
-        case  "BK_EDA_EDI_2014":
-            startprocessglobal("BK_EDA_EDI_2014","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
-            break;
-
-        //BK EDA EDI 2011 - 2014 Tri
-        case  "BK_EDA_EDI_2011_Tri":
-            startprocessglobal("BK_EDA_EDI_2011_Tri","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv",0);
-            break;
-        case  "BK_EDA_EDI_2012_Tri":
-            startprocessglobal("BK_EDA_EDI_2012_Tri","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv",0);
-            break;
-        case  "BK_EDA_EDI_2013_Tri":
-            startprocessglobal("BK_EDA_EDI_2013_Tri","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;
-        case  "BK_EDA_EDI_2014_Tri":
-            startprocessglobal("BK_EDA_EDI_2014_Tri","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
-            break;
-
-            //Cat BK EDA EDI 2011 - 2014
-        case  "BK_EDA_EDI_2011_Cat":
-            startprocessglobal("BK_EDA_EDI_2011_Cat","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv",0);
-            break;
-        case  "BK_EDA_EDI_2012_Cat":
-            startprocessglobal("BK_EDA_EDI_2012_Cat","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv",0);
-            break;
-        case  "BK_EDA_EDI_2013_Cat":
-            startprocessglobal("BK_EDA_EDI_2013_Cat","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;
-        case  "BK_EDA_EDI_2014_Cat":
-            startprocessglobal("BK_EDA_EDI_2014_Cat","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
-            break;
-
-        //Cat BK EDA EDI 2011 - 2014 2
-        case  "BK_EDA_EDI_2011_Cat_2":
-            startprocessglobal("BK_EDA_EDI_2011_Cat_2","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv",0);
-            break;
-        case  "BK_EDA_EDI_2012_Cat_2":
-            startprocessglobal("BK_EDA_EDI_2012_Cat_2","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv",0);
-            break;
-        case  "BK_EDA_EDI_2013_Cat_2":
-            startprocessglobal("BK_EDA_EDI_2013_Cat_2","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;
-        case  "BK_EDA_EDI_2014_Cat_2":
-            startprocessglobal("BK_EDA_EDI_2014_Cat_2","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
-            break;
-
-        //Cat BK EDA EDI 2011 - 2014 3
-        case  "BK_EDA_EDI_2011_Cat_3":
-            startprocessglobal("BK_EDA_EDI_2011_Cat_3","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv",0);
-            break;
-        case  "BK_EDA_EDI_2012_Cat_3":
-            startprocessglobal("BK_EDA_EDI_2012_Cat_3","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv",0);
-            break;
-        case  "BK_EDA_EDI_2013_Cat_3":
-            startprocessglobal("BK_EDA_EDI_2013_Cat_3","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv",0);
-            break;
-        case  "BK_EDA_EDI_2014_Cat_3":
-            startprocessglobal("BK_EDA_EDI_2014_Cat_3","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv",0);
-            break;
-
-            //dummy
-        case  "Dummy":
-            startprocessglobal("Dummy","Dummy_EDA.csv","Dummy_EDI.csv",0,0);
-            break;
-
-        //Cat BK EDA EDI EJPD 2011 - 2014
-        case  "BK_EDA_EDI_EJPD_2011_Cat":
-            startprocessglobal("BK_EDA_EDI_EJPD_2011_Cat","BK - 2011.csv","EDA - 2011.csv","EDI - 2011.csv", "EJPD - 2011.csv");
-            break;
-        case  "BK_EDA_EDI_EJPD_2012_Cat":
-            startprocessglobal("BK_EDA_EDI_EJPD_2012_Cat","BK - 2012.csv","EDA - 2012.csv","EDI - 2012.csv", "EJPD - 2012.csv");
-            break;
-        case  "BK_EDA_EDI_EJPD_2013_Cat":
-            startprocessglobal("BK_EDA_EDI_EJPD_2013_Cat","BK - 2013.csv","EDA - 2013.csv","EDI - 2013.csv", "EJPD - 2013.csv");
-            break;
-        case  "BK_EDA_EDI_EJPD_2014_Cat":
-            startprocessglobal("BK_EDA_EDI_EJPD_2014_Cat","BK - 2014.csv","EDA - 2014.csv","EDI - 2014.csv", "EJPD - 2014.csv");
-            break;
-        default:
-
-        //BK EDA EDI EFD EJPD UVEK VBS WBF 2011
-        case  "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011":
-            startprocessglobal
-            ("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
-             "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
-            );
-            break;
-    }
 }
 function mergingFiles(csvFiles) {
     console.log(modul._error_counter + " merging files");

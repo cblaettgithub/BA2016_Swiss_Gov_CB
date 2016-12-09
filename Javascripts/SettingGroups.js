@@ -60,7 +60,7 @@ function groupText() {//den länderbogen beschriften
             return {
                 angle: v * k + d.startAngle,
                 label: i % modul._countDep != 0 ? null : v / 1000000 + "m"
-            };//3//
+            };//3// ///
         });
     }
    if (modul._countDep!=7) {

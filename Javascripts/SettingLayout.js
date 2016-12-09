@@ -42,8 +42,6 @@ function setSVG(){
         .attr("id", "circle")
         .attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")");
 }
-
-
 //6
 function appendCircle(){
     modul._svg.append("circle")

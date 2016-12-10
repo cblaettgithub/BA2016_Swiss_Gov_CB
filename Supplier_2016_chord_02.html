@@ -114,6 +114,15 @@
         <td></td>
     </tr>
     <tr >
+        <td>BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF</td>
+        <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7">2011_7</td>
+        <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012_6">2012_6</td>
+        <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013_5">2013_5</td>
+        <td id="">2014</td>
+        <td ></td>
+        <td></td>
+    </tr>
+    <tr >
         <td id="Creating_Link">Creating Link</td>
         <td id="placeLink" colspan="6"></td>
     </tr>
@@ -219,6 +228,23 @@
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014").on("click", function() {
         settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014");
     });
+    // 7 elemente
+    d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7");
+    });
+    // 6 elemente
+    //BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011
+    d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6");
+    });
+    // 5 elemente
+    d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5").on("click", function() {
+        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5");
+    });
+
+
+
+
     ///only one
     d3.select("#BK_2011").on("click", function() {
         window.open(startcreatinglink(["BK","BK"],"All", 0, 2011),"_self");

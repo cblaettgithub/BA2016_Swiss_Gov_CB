@@ -222,6 +222,26 @@ function startingApplication(content){
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
             break;
+            // 7, 6, 5 elements
+        case  "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7":
+            startprocessglobal
+            ("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
+                "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
+            );
+            break;
+        case  "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6":
+            startprocessglobal
+            ("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
+                "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
+            );
+            break;
+        case  "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5":
+            startprocessglobal
+            ("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
+                "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
+            );
+            break;
+
         default:
     }
 }

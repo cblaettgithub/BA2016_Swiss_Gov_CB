@@ -202,6 +202,106 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
                 "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
+            //7 elements
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7":
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+                "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG"
+            ];
+            modul._filterSupplier=filtercontent;
+            var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS"];
+            modul._filterFullCategory=dept;
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            data_D =filter(data_D,filtercontent, "supplier");
+            data_E =filter(data_E, filtercontent, "supplier");
+            data_F=filter(data_F,filtercontent, "supplier");
+            data_G =filter(data_G,filtercontent, "supplier");
+            data_H =filter(data_H,filtercontent, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, "supplier");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, "supplier");
+            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
+            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
+            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
+                modul._ds_supplier_EJPD, modul._ds_supplier_UVEK, modul._ds_supplier_VBS
+            ]);
+            csvsort=sortingFiles(csvall, filtercontent);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
+                "sumBFM", "sumUVEK", "sumVBS"]);
+            break;
+        //6 elements
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6":
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+                "Universal-Job AG","Dell SA"
+            ];
+            modul._filterSupplier=filtercontent;
+            var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK"];
+            modul._filterFullCategory=dept;
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            data_D =filter(data_D,filtercontent, "supplier");
+            data_E =filter(data_E, filtercontent, "supplier");
+            data_F=filter(data_F,filtercontent, "supplier");
+            data_G =filter(data_G,filtercontent, "supplier");
+            data_H =filter(data_H,filtercontent, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, "supplier");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, "supplier");
+            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
+            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
+            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
+                modul._ds_supplier_EJPD, modul._ds_supplier_UVEK,
+            ]);
+            csvsort=sortingFiles(csvall, filtercontent);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
+                "sumBFM", "sumUVEK"]);
+            break;
+        //5 elements
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5":
+            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+                "Universal-Job AG"
+            ];
+            modul._filterSupplier=filtercontent;
+            var dept=["BK", "EDI","EDA","EFD","EJPD"];
+            modul._filterFullCategory=dept;
+            data =filter(data, filtercontent, "supplier");
+            data_B =filter(data_B,filtercontent, "supplier");
+            data_C =filter(data_C,filtercontent, "supplier");
+            data_D =filter(data_D,filtercontent, "supplier");
+            data_E =filter(data_E, filtercontent, "supplier");
+            data_F=filter(data_F,filtercontent, "supplier");
+            data_G =filter(data_G,filtercontent, "supplier");
+            data_H =filter(data_H,filtercontent, "supplier");
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, "supplier");
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, "supplier");
+            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
+            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
+            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
+            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
+                modul._ds_supplier_EJPD
+            ]);
+            csvsort=sortingFiles(csvall, filtercontent);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
+                "sumBFM"]);
+            break;
+
         case "csv/EDA - 2011.csv":        case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= DataManager.getSupplier_EDA(modul._supplier, "supplier");

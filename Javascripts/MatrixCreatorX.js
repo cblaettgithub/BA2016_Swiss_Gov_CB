@@ -94,12 +94,10 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
     if (nameValue.length==2) {
         if (dep_sup){
             switch (counter) {//dept
-                case 0:
-                case 1:
+                case 0: case 1:
                     depName = nameValue[0];
                     break;
-                case 2:
-                case 3:
+                case 2:case 3:
                     depName = nameValue[1];
                     break;
                 default:
@@ -126,19 +124,13 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
     else if (nameValue.length==3){
         if (dep_sup){
             switch(counter){//3 Supplier
-                case 0:
-                case 1:
-                case 2:
+                case 0: case 1:  case 2:
                     depName=nameValue[0];
                     break;
-                case 3:
-                case 4:
-                case 5:
+                case 3:case 4: case 5:
                     depName=nameValue[1];
                     break;
-                case 6:
-                case 7:
-                case 8:
+                case 6: case 7: case 8:
                     depName=nameValue[2];
                     break;
                 default:
@@ -179,34 +171,87 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
     }
     else if(nameValue.length==4)        {
         switch(counter){//4 Supplier
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0: case 1: case 2: case 3:
                 depName=nameValue[0];
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4: case 5: case 6: case 7:
                 depName=nameValue[1];
                 break;
-            case 8:
-            case 9:
-            case 10:
-            case 11:
+            case 8:  case 9: case 10: case 11:
                 depName=nameValue[2];
                 break;
-            case 12:
-            case 13:
-            case 14:
-            case 15:
+            case 12:case 13:  case 14:  case 15:
                 depName=nameValue[3];
                 break;
             default:
         }
     }
+    else if(nameValue.length==5) {
+        modul._countDep=4;
+        if (counter <5){
+            depName=nameValue[0];
+        }
+        else if (counter < 10){
+            depName=nameValue[1];
+        }
+        else if (counter < 15){
+            depName=nameValue[2];
+        }
+        else if (counter < 20){
+            depName=nameValue[3];
+        }
+        else  {
+            depName=nameValue[4];
+        }
+    }
+    else if(nameValue.length==6) {
+        modul._countDep=5;
+        if (counter <6){
+            depName=nameValue[0];
+        }
+        else if (counter < 12){
+            depName=nameValue[1];
+        }
+        else if (counter < 18){
+            depName=nameValue[2];
+        }
+        else if (counter < 24){
+            depName=nameValue[3];
+        }
+        else if (counter < 30){
+            depName=nameValue[4];
+        }
+        else {
+            depName=nameValue[5];
+        }
+    }
+    else if(nameValue.length==7)  {
+        modul._countDep=6;
+        if (counter <7){
+            depName=nameValue[0];
+        }
+        else if (counter < 14){
+            depName=nameValue[1];
+        }
+        else if (counter < 21){
+            depName=nameValue[2];
+        }
+        else if (counter < 28){
+            depName=nameValue[3];
+        }
+        else if (counter < 35){
+            depName=nameValue[4];
+        }
+        else if (counter < 42){
+            depName=nameValue[5];
+        }
+        else {
+            depName=nameValue[6];
+        }
+
+    }
     else if (nameValue.length==8){
+        modul._countDep=7;
         if (counter <8){
             depName=nameValue[0];
         }
@@ -295,13 +340,8 @@ function createSupplierList(dataRows, supplier_field){
 
 function supplierlabel(){
     console.log("supplierlabel");
-    var filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-        "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-        "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
-    ];
-
-    var dept=modul._filterFullCategory;
     var elements;
+    var dept=modul._filterFullCategory;
     filtercontent=modul._filterSupplier;
 
     //dept
@@ -315,10 +355,9 @@ function supplierlabel(){
         elements={"key":filtercontent[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     }
-    modul._countDep=7;
+
 }
 function setMaxNumber(currentValue){
     if (currentValue > modul._maxnumber)
         modul._maxnumber=currentValue;
 }
-

@@ -24,7 +24,7 @@ var _currentURL="Supplier_2016_chord.html";
 var _ArrayParams;
 var _queryOutput="";
 var _ArrayCounter=0;
-var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
+var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
 
 var params =
 {   year:      "data.csv",dept: "data.csv",     supplier: "data.csv",

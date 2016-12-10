@@ -306,13 +306,13 @@ function supplierlabel(){
 
     //dept
     for (var i=0;i<8;i++){
-        elements={"key":dept[i], "values":[dept[i], 20]};
+        elements={"key":dept[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     };
 
     //supplier
     for (var i=0;i<8;i++){
-        elements={"key":filtercontent[i].substr(0,20), "values":[dept[i], 20]};
+        elements={"key":filtercontent[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     }
     modul._countDep=7;

@@ -42,7 +42,7 @@ function getDummy_EDI(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v){return{
-            sumEDI: d3.sum(v, function(d){return d["BAG"]})
+            sumEDI: d3.sum(v, function(d){return d["BAG"]+d["BFS"]})
         };})
         .entries(csv);
     return nested_data;
@@ -52,7 +52,8 @@ function getDummy_EFD(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
-            sumEFD: d3.sum(v, function(d) { return d["EZF"]+ d["BIT"]+ d["BBL"]; })
+            //sumEFD: d3.sum(v, function(d) { return d["EZF"]+ d["BIT"]+ d["BBL"]; })
+            sumEFD: d3.sum(v, function(d) { return d["BIT"]+d["EFK"]+d["EPA"];})
         };})
         .entries(csv);
     return nested_data;
@@ -62,7 +63,10 @@ function getDummy_EJPD(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
-            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+            sumBFM: d3.sum(v, function(d) {
+               /* if (d["ISC-EJPD"]=="")
+                    d["ISC-EJPD"]="0";*/
+                return d["BFM"]; })
         };})
         .entries(csv);
     return nested_data;

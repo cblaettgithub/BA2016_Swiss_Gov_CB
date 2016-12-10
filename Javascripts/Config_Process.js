@@ -20,6 +20,21 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
     var filtercontentB;
     var ds_supplier_x=[];
 
+    filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
+        "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",
+        "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
+        "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
+        "SRG SSR idÃ©e suisse Media Services"] ;
+    modul._filterSupplier=filtercontent;
+    filtercontentB=["Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+        "Sprach- und Ãœbersetzungsdienstleistungen",
+        "Informatik-DL exkl. Personalverleih im Bereich IKT",
+        "SW-Pflege und HW Wartung",
+        "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+        "Informationsarbeit",
+        "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
+        "DL im Zusammenhang mit Personentransporten, Hotels, usw."];
+
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -187,8 +202,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
                 "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
-        case "csv/EDA - 2011.csv":
-        case "csv/EDA - 2013.csv":
+        case "csv/EDA - 2011.csv":        case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= DataManager.getSupplier_EDA(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
@@ -201,24 +215,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             //modul._ds_supplier = matrix_dummay_All(csvall);
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,["sumEDA","sumEDI"]);
             break;
-        case "BK_2011"://only BK
-        case "BK_2012"://only BK
-        case "BK_2013"://only BK
-        case "BK_2014"://only BK
-            filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
-                "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",
-                "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
-                "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
-                "SRG SSR idÃ©e suisse Media Services"] ;
-            modul._filterSupplier=filtercontent;
-            filtercontentB=["Informationsarbeit",
-                "Sprach- und Ãœbersetzungsdienstleistungen",
-                "Informatik-DL exkl. Personalverleih im Bereich IKT",
-                "SW-Pflege und HW Wartung",
-                "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-                "Informationsarbeit",
-                "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
-                "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"]      ;
+        case "BK_BK_2011":        case "BK_BK_2012":
+        case "BK_BK_2013":        case "BK_BK_2014":
             modul._filterFullCategory=filtercontentB;
             for (var i=0;i<8;i++){
                 ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
@@ -230,9 +228,64 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
                 "sumBundeskanzelt","sumBundeskanzelt","sumBundeskanzelt","sumBundeskanzelt",
                 "sumBundeskanzelt","sumBundeskanzelt"]);
             break;
+        case "EDA_EDA_2011":        case "EDA_EDA_2012":
+        case "EDA_EDA_2013":        case "EDA_EDA_2014":
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDA","sumEDA",
+            "sumEDA","sumEDA","sumEDA","sumEDA",
+            "sumEDA","sumEDA"]);
+        break;
+        case "EDI_EDI_2011":        case "EDI_EDI_2012":
+        case "EDI_EDI_2013":        case "EDI_EDI_2014":
+            modul._filterFullCategory=filtercontentB;
+            for (var i=0;i<8;i++){
+                ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+                ds_supplier_x[i]=DataManager.getDummy_EDI(ds_supplier_x[i], "supplier");
+                ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            }
+            csvall=mergingFiles( ds_supplier_x);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDI","sumEDI",
+                "sumEDI","sumEDI","sumEDI","sumEDI",
+                "sumEDI","sumEDI"]);
+            break;
+        case "EFD_EFD_2011":        case "EFD_EFD_2012":
+        case "EFD_EFD_2013":        case "EFD_EFD_2014":
+        console.log("----EFD");
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEFD","sumEFD",
+            "sumEFD","sumEFD","sumEFD","sumEFD",
+            "sumEFD","sumEFD"]);
+        console.log("EFD-----");
+        break;
+        case "EJPD_EJPD_2011":        case "EJPD_EJPD_2012":
+        case "EJPD_EJPD_2013":        case "EJPD_EJPD_2014":
+        console.log("----EJPD");
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EJPD(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBFM","sumBFM",
+            "sumBFM","sumBFM","sumBFM","sumBFM",
+            "sumBFM","sumBFM"]);
+        console.log("sumBFM-----");
+        break;
         default:
     }
-    console.log("setmatrix");
 }
 
 function filter(data, param, filtername){

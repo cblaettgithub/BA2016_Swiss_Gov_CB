@@ -1489,6 +1489,21 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
     var filtercontentB;
     var ds_supplier_x=[];
 
+    filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
+        "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",
+        "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
+        "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
+        "SRG SSR idÃ©e suisse Media Services"] ;
+    modul._filterSupplier=filtercontent;
+    filtercontentB=["Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+        "Sprach- und Ãœbersetzungsdienstleistungen",
+        "Informatik-DL exkl. Personalverleih im Bereich IKT",
+        "SW-Pflege und HW Wartung",
+        "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+        "Informationsarbeit",
+        "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
+        "DL im Zusammenhang mit Personentransporten, Hotels, usw."];
+
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
@@ -1656,8 +1671,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
                 "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
-        case "csv/EDA - 2011.csv":
-        case "csv/EDA - 2013.csv":
+        case "csv/EDA - 2011.csv":        case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= DataManager.getSupplier_EDA(modul._supplier, "supplier");
             supplier = matrix_Supplier_EDA(modul._ds_supplier_EDA, 4);
@@ -1670,24 +1684,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             //modul._ds_supplier = matrix_dummay_All(csvall);
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,["sumEDA","sumEDI"]);
             break;
-        case "BK_2011"://only BK
-        case "BK_2012"://only BK
-        case "BK_2013"://only BK
-        case "BK_2014"://only BK
-            filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
-                "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",
-                "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
-                "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
-                "SRG SSR idÃ©e suisse Media Services"] ;
-            modul._filterSupplier=filtercontent;
-            filtercontentB=["Informationsarbeit",
-                "Sprach- und Ãœbersetzungsdienstleistungen",
-                "Informatik-DL exkl. Personalverleih im Bereich IKT",
-                "SW-Pflege und HW Wartung",
-                "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-                "Informationsarbeit",
-                "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
-                "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"]      ;
+        case "BK_BK_2011":        case "BK_BK_2012":
+        case "BK_BK_2013":        case "BK_BK_2014":
             modul._filterFullCategory=filtercontentB;
             for (var i=0;i<8;i++){
                 ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
@@ -1699,9 +1697,64 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
                 "sumBundeskanzelt","sumBundeskanzelt","sumBundeskanzelt","sumBundeskanzelt",
                 "sumBundeskanzelt","sumBundeskanzelt"]);
             break;
+        case "EDA_EDA_2011":        case "EDA_EDA_2012":
+        case "EDA_EDA_2013":        case "EDA_EDA_2014":
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDA","sumEDA",
+            "sumEDA","sumEDA","sumEDA","sumEDA",
+            "sumEDA","sumEDA"]);
+        break;
+        case "EDI_EDI_2011":        case "EDI_EDI_2012":
+        case "EDI_EDI_2013":        case "EDI_EDI_2014":
+            modul._filterFullCategory=filtercontentB;
+            for (var i=0;i<8;i++){
+                ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+                ds_supplier_x[i]=DataManager.getDummy_EDI(ds_supplier_x[i], "supplier");
+                ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            }
+            csvall=mergingFiles( ds_supplier_x);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDI","sumEDI",
+                "sumEDI","sumEDI","sumEDI","sumEDI",
+                "sumEDI","sumEDI"]);
+            break;
+        case "EFD_EFD_2011":        case "EFD_EFD_2012":
+        case "EFD_EFD_2013":        case "EFD_EFD_2014":
+        console.log("----EFD");
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEFD","sumEFD",
+            "sumEFD","sumEFD","sumEFD","sumEFD",
+            "sumEFD","sumEFD"]);
+        console.log("EFD-----");
+        break;
+        case "EJPD_EJPD_2011":        case "EJPD_EJPD_2012":
+        case "EJPD_EJPD_2013":        case "EJPD_EJPD_2014":
+        console.log("----EJPD");
+        modul._filterFullCategory=filtercontentB;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+            ds_supplier_x[i]=DataManager.getDummy_EJPD(ds_supplier_x[i], "supplier");
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBFM","sumBFM",
+            "sumBFM","sumBFM","sumBFM","sumBFM",
+            "sumBFM","sumBFM"]);
+        console.log("sumBFM-----");
+        break;
         default:
     }
-    console.log("setmatrix");
 }
 
 function filter(data, param, filtername){
@@ -1842,17 +1895,69 @@ function startingwithQuery(content){
         modul._vmodus="default";
 
     switch(content) {//EDA-EDI 2011- 2014
-        case 'BK_2011':
-            startprocessglobal("BK_2011","BK - 2011.csv","EDI - 2011.csv", 0,0);
+        case 'BK_BK_2011':
+            startprocessglobal("BK_BK_2011","BK - 2011.csv","BK - 2011.csv", 0,0);
             break;
-        case 'BK_2012':
-            startprocessglobal("BK_2012","BK - 2012.csv","EDI - 2011.csv", 0,0);
+        case 'BK_BK_2012':
+            startprocessglobal("BK_BK_2012","BK - 2012.csv","BK - 2012.csv", 0,0);
             break;
-        case 'BK_2013':
-            startprocessglobal("BK_2013","BK - 2013.csv","EDI - 2011.csv", 0,0);
+        case 'BK_BK_2013':
+            startprocessglobal("BK_BK_2013","BK - 2013.csv","BK - 2013.csv", 0,0);
             break;
-        case 'BK_2014':
-            startprocessglobal("BK_2014","BK - 2014.csv","EDI - 2011.csv", 0,0);
+        case 'BK_BK_2014':
+            startprocessglobal("BK_BK_2014","BK - 2014.csv","BK - 2014.csv", 0,0);
+            break;
+
+        case 'EDA_EDA_2011':
+            startprocessglobal("EDA_EDA_2011","EDA - 2011.csv","EDA - 2011.csv", 0,0);
+            break;
+        case 'EDA_EDA_2012':
+            startprocessglobal("EDA_EDA_2012","EDA - 2012.csv","EDA - 2012.csv", 0,0);
+            break;
+        case 'EDA_EDA_2013':
+            startprocessglobal("EDA_EDA_2013","EDA - 2013.csv","EDA - 2013.csv", 0,0);
+            break;
+        case 'EDA_EDA_2014':
+            startprocessglobal("EDA_EDA_2014","EDA - 2014.csv","EDA - 2014.csv", 0,0);
+            break;
+
+        case 'EDI_EDI_2011':
+            startprocessglobal("EDI_EDI_2011","EDI - 2011.csv","EDI - 2011.csv", 0,0);
+            break;
+        case 'EDI_EDI_2012':
+            startprocessglobal("EDI_EDI_2012","EDI - 2012.csv","EDI - 2012.csv", 0,0);
+            break;
+        case 'EDI_EDI_2013':
+            startprocessglobal("EDI_EDI_2013","EDI - 2013.csv","EDI - 2013.csv", 0,0);
+            break;
+        case 'EDI_EDI_2014':
+            startprocessglobal("EDI_EDI_2014","EDI - 2014.csv","EDI - 2014.csv", 0,0);
+            break;
+
+        case 'EFD_EFD_2011':
+            startprocessglobal("EFD_EFD_2011","EFD - 2011.csv","EFD - 2011.csv", 0,0);
+            break;
+        case 'EFD_EFD_2012':
+            startprocessglobal("EFD_EFD_2012","EFD - 2012.csv","EFD - 2012.csv", 0,0);
+            break;
+        case 'EFD_EFD_2013':
+            startprocessglobal("EFD_EFD_2013","EFD - 2013.csv","EFD - 2013.csv", 0,0);
+            break;
+        case 'EFD_EFD_2014':
+            startprocessglobal("EFD_EFD_2014","EFD - 2014.csv","EFD - 2014.csv", 0,0);
+            break;
+
+        case 'EJPD_EJPD_2011':
+            startprocessglobal("EJPD_EJPD_2011","EJPD - 2011.csv","EJPD - 2011.csv", 0,0);
+            break;
+        case 'EJPD_EJPD_2012':
+            startprocessglobal("EJPD_EJPD_2012","EJPD - 2012.csv","EJPD - 2012.csv", 0,0);
+            break;
+        case 'EJPD_EJPD_2013':
+            startprocessglobal("EJPD_EJPD_2013","EJPD - 2013.csv","EJPD - 2013.csv", 0,0);
+            break;
+        case 'EJPD_EJPD_2014':
+            startprocessglobal("EJPD_EJPD_2014","EJPD - 2014.csv","EJPD - 2014.csv", 0,0);
             break;
 
         case 'EDA_EDI_2011':
@@ -2028,7 +2133,7 @@ var _currentURL="Supplier_2016_chord.html";
 var _ArrayParams;
 var _queryOutput="";
 var _ArrayCounter=0;
-var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_01.html";
+var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
 
 var params =
 {   year:      "data.csv",dept: "data.csv",     supplier: "data.csv",
@@ -2140,7 +2245,7 @@ function getDummy_EDI(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v){return{
-            sumEDI: d3.sum(v, function(d){return d["BAG"]})
+            sumEDI: d3.sum(v, function(d){return d["BAG"]+d["BFS"]})
         };})
         .entries(csv);
     return nested_data;
@@ -2150,7 +2255,8 @@ function getDummy_EFD(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
-            sumEFD: d3.sum(v, function(d) { return d["EZF"]+ d["BIT"]+ d["BBL"]; })
+            //sumEFD: d3.sum(v, function(d) { return d["EZF"]+ d["BIT"]+ d["BBL"]; })
+            sumEFD: d3.sum(v, function(d) { return d["BIT"]+d["EFK"]+d["EPA"];})
         };})
         .entries(csv);
     return nested_data;
@@ -2160,7 +2266,10 @@ function getDummy_EJPD(csv, name){
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
-            sumBFM: d3.sum(v, function(d) { return d["BFM"]; })
+            sumBFM: d3.sum(v, function(d) {
+               /* if (d["ISC-EJPD"]=="")
+                    d["ISC-EJPD"]="0";*/
+                return d["BFM"]; })
         };})
         .entries(csv);
     return nested_data;
@@ -2519,13 +2628,13 @@ function supplierlabel(){
 
     //dept
     for (var i=0;i<8;i++){
-        elements={"key":dept[i], "values":[dept[i], 20]};
+        elements={"key":dept[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     };
 
     //supplier
     for (var i=0;i<8;i++){
-        elements={"key":filtercontent[i].substr(0,20), "values":[dept[i], 20]};
+        elements={"key":filtercontent[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     }
     modul._countDep=7;
@@ -2584,7 +2693,7 @@ function setMaxNumber(currentValue){
     var _ds_supplier_WBF;
     var _ds_supplier_itself;
     var _v_choice="EDA_EDI_2011";//default
-    var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
+    var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
     var _http_query="";
     var _vmodus="default";
     var _error_counter=0;
@@ -2911,20 +3020,23 @@ global.startwithLink=function(kind, choice){
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
-    modul._error_counter=0;
-    modul._error_counter++;
     modul._vchoice=choice;
     console.log("'"+ modul._vchoice+"'");
     Config_start.startingwithQuery( modul._vchoice);
 };
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
-    var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
-    create_choicevariable(queryObject);
+    if (loc.search==""){
+        Config_start.startingwithQuery("BK_2011");
+    }
+    else{
+        var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
+        create_choicevariable(queryObject);
+    }
 };
 function create_choicevariable(queryObject){
     //'EDA_EDI_2011':
-    var choice;
+    var choice="";
     console.log("create_choicevariable:"+queryObject.cat);
     console.log("create_choicevariable:"+queryObject.supplier);
     console.log("create_choicevariable:"+queryObject.year);
@@ -2932,11 +3044,12 @@ function create_choicevariable(queryObject){
     for (var i=0;i<queryObject.depts.length;i++){
         console.log(queryObject.depts[i]);
     }
-    console.log("end:");
-    choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
-
-    console.log(choice);
-    //startingwithQuery(choice);
+    for (var i=0;i<queryObject.depts.length;i++)
+        choice+=queryObject.depts[i]+"_";
+    //choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
+    choice+=queryObject.year.substr(0,4);
+    console.log("create_choicevariable:"+choice);
+    Config_start.startingwithQuery(choice);
 }
     // CreateLink
 global.startcreatinglink=function(dept, supplier, category, year){
@@ -2944,8 +3057,7 @@ global.startcreatinglink=function(dept, supplier, category, year){
     CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParam(dept,supplier, category, year);
     CreatingLinks.createLink();
-
-    //return modul._http_query;
+    return modul._http_query;
 };
 
 //starting with choiced csv-fils

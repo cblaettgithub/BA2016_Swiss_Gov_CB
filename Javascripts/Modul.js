@@ -45,7 +45,7 @@
     var _ds_supplier_WBF;
     var _ds_supplier_itself;
     var _v_choice="EDA_EDI_2011";//default
-    var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord.html";
+    var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
     var _http_query="";
     var _vmodus="default";
     var _error_counter=0;

@@ -22,20 +22,23 @@ global.startwithLink=function(kind, choice){
     d3.select("svg").remove();
     console.log("*****************************************************************************************");
     console.log("");
-    modul._error_counter=0;
-    modul._error_counter++;
     modul._vchoice=choice;
     console.log("'"+ modul._vchoice+"'");
     Config_start.startingwithQuery( modul._vchoice);
 };
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
-    var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
-    create_choicevariable(queryObject);
+    if (loc.search==""){
+        Config_start.startingwithQuery("BK_2011");
+    }
+    else{
+        var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
+        create_choicevariable(queryObject);
+    }
 };
 function create_choicevariable(queryObject){
     //'EDA_EDI_2011':
-    var choice;
+    var choice="";
     console.log("create_choicevariable:"+queryObject.cat);
     console.log("create_choicevariable:"+queryObject.supplier);
     console.log("create_choicevariable:"+queryObject.year);
@@ -43,11 +46,12 @@ function create_choicevariable(queryObject){
     for (var i=0;i<queryObject.depts.length;i++){
         console.log(queryObject.depts[i]);
     }
-    console.log("end:");
-    choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
-
-    console.log(choice);
-    //startingwithQuery(choice);
+    for (var i=0;i<queryObject.depts.length;i++)
+        choice+=queryObject.depts[i]+"_";
+    //choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
+    choice+=queryObject.year.substr(0,4);
+    console.log("create_choicevariable:"+choice);
+    Config_start.startingwithQuery(choice);
 }
     // CreateLink
 global.startcreatinglink=function(dept, supplier, category, year){
@@ -55,8 +59,7 @@ global.startcreatinglink=function(dept, supplier, category, year){
     CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParam(dept,supplier, category, year);
     CreatingLinks.createLink();
-
-    //return modul._http_query;
+    return modul._http_query;
 };
 
 //starting with choiced csv-fils

@@ -171,6 +171,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014":
+            modul._countDep=7;
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
                 "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
@@ -204,6 +205,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             break;
             //7 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7":
+            modul._countDep=6;
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
                 "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG"
@@ -237,6 +239,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             break;
         //6 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6":
+            modul._countDep=5;
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
                 "Universal-Job AG","Dell SA"
@@ -270,6 +273,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             break;
         //5 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5":
+            modul._countDep=4;
             filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
                 "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
                 "Universal-Job AG"
@@ -301,7 +305,6 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumEFD",
                 "sumBFM"]);
             break;
-
         case "csv/EDA - 2011.csv":        case "csv/EDA - 2013.csv":
         case "csv/EDA - 2014.csv":
             modul._ds_supplier_EDA= DataManager.getSupplier_EDA(modul._supplier, "supplier");
@@ -468,7 +471,7 @@ function checkexistRow(mrow, onerow){
 function checkCountRowsSupplier( ){
     console.log("method:checkCountRowsSupplier");
     var diff=0;
-    var countdept=8;
+    var countdept= modul._countDep+1;
 
     var supplierarray=[modul._ds_supplier_BK,
         modul._ds_supplier_EDA,

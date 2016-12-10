@@ -23,6 +23,19 @@ function matrix_Creator(DataEDI_EDA, DataEDI_EDA_Sort, Names_sumsEDA_EDI_BK){
         totallength=16;
         middle=totallength/2;
     };
+    if (Names_sumsEDA_EDI_BK.length==7){
+        totallength=14;
+        middle=totallength/2;
+    };
+    if (Names_sumsEDA_EDI_BK.length==6){
+        totallength=12;
+        middle=totallength/2;
+    };
+    if (Names_sumsEDA_EDI_BK.length==5){
+        totallength=10;
+        middle=totallength/2;
+    };
+
     if (Names_sumsEDA_EDI_BK.length==1){
         totallength=4;
         middle=totallength/2;
@@ -186,8 +199,8 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
             default:
         }
     }
-    else if(nameValue.length==5) {
-        modul._countDep=4;
+    else if(nameValue.length==5)        {
+
         if (counter <5){
             depName=nameValue[0];
         }
@@ -205,7 +218,7 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
         }
     }
     else if(nameValue.length==6) {
-        modul._countDep=5;
+
         if (counter <6){
             depName=nameValue[0];
         }
@@ -226,7 +239,7 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
         }
     }
     else if(nameValue.length==7)  {
-        modul._countDep=6;
+
         if (counter <7){
             depName=nameValue[0];
         }
@@ -251,7 +264,7 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
 
     }
     else if (nameValue.length==8){
-        modul._countDep=7;
+
         if (counter <8){
             depName=nameValue[0];
         }
@@ -303,6 +316,9 @@ function createSupplierList(dataRows, supplier_field){
     if (v_Supplier==4){
         end=v_Supplier*3;
     }
+    else if   (modul._countDep==5){
+        supplierlabel();
+    }
     else{
         end=v_Supplier*2;
     }
@@ -345,13 +361,15 @@ function supplierlabel(){
     filtercontent=modul._filterSupplier;
 
     //dept
-    for (var i=0;i<8;i++){
+    console.log("supplierlabel:dept");
+    for (var i=0;i< filtercontent.length;i++){
         elements={"key":dept[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     };
 
     //supplier
-    for (var i=0;i<8;i++){
+    console.log("supplierlabel:supplier");
+    for (var i=0;i< filtercontent.length;i++){
         elements={"key":filtercontent[i].substr(0,15), "values":[dept[i], 20]};
         modul._supplier.push(elements);
     }

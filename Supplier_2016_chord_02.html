@@ -175,14 +175,12 @@
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <script>
-    var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
+
     var query = window.location.search.substring(1);
     var loc = window.location;
-    var vmin=2011;
-    var vmax=2014;
 
-    //startwithLink(loc);
-    starturlmodus(loc);
+    //starturlmodus(loc); //for querystring
+    starturimodus(loc); //for uri
 
     //url modus
     d3.select('#urlLink').on("click", function() {
@@ -193,7 +191,7 @@
 
     /*EDA ***EDI*/
     d3.select("#EDA_EDI_2011").on("click", function() {
-        window.open(startcreatinglink(["EDA", "EDI"],"All", 0, 2011),"_self");
+        window.open(startcreatinglinkUri(["EDA", "EDI"],"All", 0, 2011),"_self");
     });
 
     d3.select("#EDA_EDI_2012").on("click", function() {

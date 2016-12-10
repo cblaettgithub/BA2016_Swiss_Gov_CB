@@ -1878,15 +1878,15 @@ function checkcountRows(currenttotal, rows){//wenn die Matrix zuwenig Datensätz
     return rows;
 }
 
-},{"./DataManager":10,"./MatrixCreatorX":11,"./Modul":12}],8:[function(require,module,exports){
+},{"./DataManager":11,"./MatrixCreatorX":12,"./Modul":13}],8:[function(require,module,exports){
 /**
  * Created by chris on 09.12.2016.
  */
 module.exports={
-    startingwithQuery:startingwithQuery
+    startingApplication:startingApplication
 };
 
-function startingwithQuery(content){
+function startingApplication(content){
     console.log(modul._error_counter+" starting with Query");
     modul._error_counter++;
     if (content=="BK_EDI_All")
@@ -2118,7 +2118,8 @@ module.exports = {
     _currentURL:   _currentURL,
     _queryOutput:  _queryOutput,
     depts:       depts,
-    createLink:createLink
+    createLink:createLink,
+    create_choicevariable:create_choicevariable
 };
 
 var _year;
@@ -2149,7 +2150,7 @@ function setCurrentUrl(startUrl){
 
 function setParam(dept, supplier, category, year)
 {
-    console.log("setparam");
+    console.log("CreatingLinks:setparam");
     var name="";
     for (var i=0;i<dept.length;i++){
         name="de";
@@ -2198,9 +2199,124 @@ function createLink(){
     console.log(_queryOutput);
 }
 
+function create_choicevariable(queryObject){
+    var choice="";
+    console.log("create_choicevariable:"+queryObject.cat);
+    console.log("create_choicevariable:"+queryObject.supplier);
+    console.log("create_choicevariable:"+queryObject.year);
+
+    for (var i=0;i<queryObject.depts.length;i++){
+        console.log(queryObject.depts[i]);
+    }
+    for (var i=0;i<queryObject.depts.length;i++)
+        choice+=queryObject.depts[i]+"_";
+
+    choice+=queryObject.year.substr(0,4);
+    modul._v_choice=choice;
+}
 
 
-},{"./Modul":12}],10:[function(require,module,exports){
+
+
+
+},{"./Modul":13}],10:[function(require,module,exports){
+/**
+ * Created by chris on 10.12.2016.
+ */
+modul =   require('./Modul');
+
+module.exports = {
+    setCurrentUrl: setCurrentUrl,
+    setParamsUri:setParamsUri,
+    _currentURL:   _currentURL,
+    _UriOutput:_UriOutput,
+    depts:       depts,
+    createUri:  createUri,
+    create_choicevariableUri:create_choicevariableUri
+};
+
+var _year;
+var _dept;
+var _supplier;
+var _category;
+var _currentURL="Supplier_2016_chord.html";
+var _UriOutput="";
+var _ArrayCounter=0;
+var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
+
+var depts={ };
+
+function setCurrentUrl(startUrl){
+    _currentURL=startUrl
+};
+
+function setParamsUri(dept, supplier, category, year){
+    console.log("CreatingUri:setparam");
+    var name="";
+    for (var i=0;i<dept.length;i++){
+        name="de";
+        name+=i;
+        depts[name]=dept[i];
+        name="";
+        _ArrayCounter++;
+    }
+
+    console.log("l:"+_ArrayCounter);
+    if (supplier=0){
+        _supplier=0;
+        _category=category;
+    }
+    else{
+        _supplier=supplier;
+        _category=0;
+    }
+    _year=year;
+}
+function createUri(){
+    console.log("createUri");
+
+    var startappend="/";
+    var seperator="/";
+    var seperatorItem=",";
+    var appender="&";
+    var name="de0";
+
+    _UriOutput=myurl;
+    _UriOutput+=startappend;
+
+    _UriOutput+="dept"+seperator;//dept
+    _UriOutput+=depts[name];//first
+    for(var i=1;i<_ArrayCounter;i++){
+        name="";
+        name="de";
+        name+=i;
+        _UriOutput+=seperatorItem+depts[name];
+    }
+    _UriOutput+=seperator+"supplier"+seperator;//supp
+    _UriOutput+=_supplier;
+
+    _UriOutput+=seperator+"cat"+seperator;//cat
+    _UriOutput+=_category;
+
+    _UriOutput+=seperator+"year"+seperator;//year
+    _UriOutput+=_year+seperator;
+    modul._http_uri=_UriOutput;
+    console.log(_UriOutput);
+}
+//creates the stringname for starting application
+function create_choicevariableUri(queryObject){
+    var choice="";
+    for (var i=0;i<queryObject.depts.length;i++)
+        choice+=queryObject.depts[i]+"_";
+
+    choice+=queryObject.year.substr(0,4);
+    modul._v_choice=choice;
+}
+
+
+
+
+},{"./Modul":13}],11:[function(require,module,exports){
 /**
  * Created by chris on 29.11.2016.
  */
@@ -2319,7 +2435,7 @@ function getSupplier(csv, name) {
 }
 
 
-},{"./Modul":12}],11:[function(require,module,exports){
+},{"./Modul":13}],12:[function(require,module,exports){
 /**
  * Created by chris on 09.12.2016.
  */
@@ -2645,7 +2761,7 @@ function setMaxNumber(currentValue){
 }
 
 
-},{"./Modul":12}],12:[function(require,module,exports){
+},{"./Modul":13}],13:[function(require,module,exports){
     /**
      * Created by chris on 24.10.2016.
      */
@@ -2695,6 +2811,7 @@ function setMaxNumber(currentValue){
     var _v_choice="EDA_EDI_2011";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
     var _http_query="";
+    var _http_uri="";
     var _vmodus="default";
     var _error_counter=0;
     var _countDep=1;
@@ -2754,11 +2871,12 @@ function setMaxNumber(currentValue){
         _error_counter:_error_counter,
         _countDep:_countDep,
         _http_query:_http_query,
+        _http_uri:_http_uri,
         _maxnumber:_maxnumber,
         _filterSupplier:_filterSupplier,
         _filterFullCategory:_filterFullCategory
     };
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Created by chris on 21.10.2016.
  */
@@ -2784,7 +2902,7 @@ function selectchords() {
         })
         .style("opacity", 1);
 }
-},{"./Modul":12}],14:[function(require,module,exports){
+},{"./Modul":13}],15:[function(require,module,exports){
 /**
  * Created by chris on 21.10.2016.
  */
@@ -2910,7 +3028,7 @@ function mouseout(d, i) {
 
 
 
-},{"./Modul":12}],15:[function(require,module,exports){
+},{"./Modul":13}],16:[function(require,module,exports){
 /**
  * Created by chris on 21.10.2016.
  */
@@ -2976,7 +3094,7 @@ function startqueue(csv_name, json_name){
         .defer(d3.json, json_name)
         .await(keepData);//only function name is needed
 }
-},{"./Modul":12}],16:[function(require,module,exports){
+},{"./Modul":13}],17:[function(require,module,exports){
 /**
  * Created by chris on 21.10.2016.
  */
@@ -2994,7 +3112,7 @@ module.exports={
             + ": " +modul._formatPercent(d.target.value);
     });
 }
-},{"./Modul":12}],17:[function(require,module,exports){
+},{"./Modul":13}],18:[function(require,module,exports){
 (function (global){
 /**
  * Created by chris on 25.10.2016.
@@ -3007,6 +3125,7 @@ module.exports={
     var SettingGroups = require('./Javascripts/SettingGroups');
     var SettingTitle = require('./Javascripts/SettingTitle');
     var CreatingLinks = require('./Javascripts/CreatingLinks');
+    var CreatingUri = require('./Javascripts/CreatingUri');
     var DataManager = require('./Javascripts/DataManager');
     var Config_start = require('./Javascripts/Config_start');
     var Config_Process = require('./Javascripts/Config_Process');
@@ -3022,36 +3141,33 @@ global.startwithLink=function(kind, choice){
     console.log("");
     modul._vchoice=choice;
     console.log("'"+ modul._vchoice+"'");
-    Config_start.startingwithQuery( modul._vchoice);
+    Config_start.startingApplication( modul._vchoice);
 };
+//querystring after the click (2)
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
     if (loc.search==""){
-        Config_start.startingwithQuery("BK_2011");
+        Config_start.startingApplication("BK_2011");
     }
     else{
         var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
-        create_choicevariable(queryObject);
+        CreatingLinks.create_choicevariable(queryObject);
+        Config_start.startingApplication( modul._v_choice);
     }
 };
-function create_choicevariable(queryObject){
-    //'EDA_EDI_2011':
-    var choice="";
-    console.log("create_choicevariable:"+queryObject.cat);
-    console.log("create_choicevariable:"+queryObject.supplier);
-    console.log("create_choicevariable:"+queryObject.year);
-
-    for (var i=0;i<queryObject.depts.length;i++){
-        console.log(queryObject.depts[i]);
+//uri after the click (2)
+global.starturimodus=function(loc){
+    console.log("starturi:"+"'"+loc+"'");
+    if (loc.search==""){
+        Config_start.startingApplication("BK_2011");
     }
-    for (var i=0;i<queryObject.depts.length;i++)
-        choice+=queryObject.depts[i]+"_";
-    //choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
-    choice+=queryObject.year.substr(0,4);
-    console.log("create_choicevariable:"+choice);
-    Config_start.startingwithQuery(choice);
-}
-    // CreateLink
+    else{
+        var queryObject = url.parse("'"+loc+"'",true).query;//get uri
+        CreatingUri.create_choicevariableUri(queryObject);
+        Config_start.startingApplication( modul._v_choice);
+    }
+};
+// CreateLink Querystring (0)
 global.startcreatinglink=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglink");
     CreatingLinks.setCurrentUrl("hostname");
@@ -3059,7 +3175,14 @@ global.startcreatinglink=function(dept, supplier, category, year){
     CreatingLinks.createLink();
     return modul._http_query;
 };
-
+// CreateLink Uri ok (0)
+global.startcreatinglinkUri=function(dept, supplier, category, year){
+    console.log(modul._error_counter+" start creatinglinkUri");
+    CreatingUri.setCurrentUrl("hostname");
+    CreatingUri.setParamsUri(dept,supplier, category, year);
+    CreatingUri.createUri();
+    return modul._http_uri;
+};
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
     console.log(modul._error_counter+" startprocessglobal");
@@ -3244,7 +3367,7 @@ function mergingFiles(csvFiles) {
     return output;
 }
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Javascripts/Config_Process":7,"./Javascripts/Config_start":8,"./Javascripts/CreatingLinks":9,"./Javascripts/DataManager":10,"./Javascripts/MatrixCreatorX":11,"./Javascripts/Modul":12,"./Javascripts/SettingChords":13,"./Javascripts/SettingGroups":14,"./Javascripts/SettingLayout":15,"./Javascripts/SettingTitle":16,"url":5,"url-parse":20}],18:[function(require,module,exports){
+},{"./Javascripts/Config_Process":7,"./Javascripts/Config_start":8,"./Javascripts/CreatingLinks":9,"./Javascripts/CreatingUri":10,"./Javascripts/DataManager":11,"./Javascripts/MatrixCreatorX":12,"./Javascripts/Modul":13,"./Javascripts/SettingChords":14,"./Javascripts/SettingGroups":15,"./Javascripts/SettingLayout":16,"./Javascripts/SettingTitle":17,"url":5,"url-parse":21}],19:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty;
@@ -3307,7 +3430,7 @@ function querystringify(obj, prefix) {
 exports.stringify = querystringify;
 exports.parse = querystring;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3347,7 +3470,7 @@ module.exports = function required(port, protocol) {
   return port !== 0;
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 var required = require('requires-port')
@@ -3706,7 +3829,7 @@ URL.qs = qs;
 
 module.exports = URL;
 
-},{"./lolcation":21,"querystringify":18,"requires-port":19}],21:[function(require,module,exports){
+},{"./lolcation":22,"querystringify":19,"requires-port":20}],22:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3763,4 +3886,4 @@ module.exports = function lolcation(loc) {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./":20}]},{},[17]);
+},{"./":21}]},{},[18]);

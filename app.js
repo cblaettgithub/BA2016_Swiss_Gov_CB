@@ -9,6 +9,7 @@
     var SettingGroups = require('./Javascripts/SettingGroups');
     var SettingTitle = require('./Javascripts/SettingTitle');
     var CreatingLinks = require('./Javascripts/CreatingLinks');
+    var CreatingUri = require('./Javascripts/CreatingUri');
     var DataManager = require('./Javascripts/DataManager');
     var Config_start = require('./Javascripts/Config_start');
     var Config_Process = require('./Javascripts/Config_Process');
@@ -24,36 +25,33 @@ global.startwithLink=function(kind, choice){
     console.log("");
     modul._vchoice=choice;
     console.log("'"+ modul._vchoice+"'");
-    Config_start.startingwithQuery( modul._vchoice);
+    Config_start.startingApplication( modul._vchoice);
 };
+//querystring after the click (2)
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
     if (loc.search==""){
-        Config_start.startingwithQuery("BK_2011");
+        Config_start.startingApplication("BK_2011");
     }
     else{
         var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
-        create_choicevariable(queryObject);
+        CreatingLinks.create_choicevariable(queryObject);
+        Config_start.startingApplication( modul._v_choice);
     }
 };
-function create_choicevariable(queryObject){
-    //'EDA_EDI_2011':
-    var choice="";
-    console.log("create_choicevariable:"+queryObject.cat);
-    console.log("create_choicevariable:"+queryObject.supplier);
-    console.log("create_choicevariable:"+queryObject.year);
-
-    for (var i=0;i<queryObject.depts.length;i++){
-        console.log(queryObject.depts[i]);
+//uri after the click (2)
+global.starturimodus=function(loc){
+    console.log("starturi:"+"'"+loc+"'");
+    if (loc.search==""){
+        Config_start.startingApplication("BK_2011");
     }
-    for (var i=0;i<queryObject.depts.length;i++)
-        choice+=queryObject.depts[i]+"_";
-    //choice=queryObject.depts[0]+"_"+queryObject.depts[1]+"_"+queryObject.year.substr(0,4);
-    choice+=queryObject.year.substr(0,4);
-    console.log("create_choicevariable:"+choice);
-    Config_start.startingwithQuery(choice);
-}
-    // CreateLink
+    else{
+        var queryObject = url.parse("'"+loc+"'",true).query;//get uri
+        CreatingUri.create_choicevariableUri(queryObject);
+        Config_start.startingApplication( modul._v_choice);
+    }
+};
+// CreateLink Querystring (0)
 global.startcreatinglink=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglink");
     CreatingLinks.setCurrentUrl("hostname");
@@ -61,7 +59,14 @@ global.startcreatinglink=function(dept, supplier, category, year){
     CreatingLinks.createLink();
     return modul._http_query;
 };
-
+// CreateLink Uri ok (0)
+global.startcreatinglinkUri=function(dept, supplier, category, year){
+    console.log(modul._error_counter+" start creatinglinkUri");
+    CreatingUri.setCurrentUrl("hostname");
+    CreatingUri.setParamsUri(dept,supplier, category, year);
+    CreatingUri.createUri();
+    return modul._http_uri;
+};
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
     console.log(modul._error_counter+" startprocessglobal");

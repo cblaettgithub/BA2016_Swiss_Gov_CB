@@ -9,7 +9,8 @@ module.exports = {
     _currentURL:   _currentURL,
     _queryOutput:  _queryOutput,
     depts:       depts,
-    createLink:createLink
+    createLink:createLink,
+    create_choicevariable:create_choicevariable
 };
 
 var _year;
@@ -40,7 +41,7 @@ function setCurrentUrl(startUrl){
 
 function setParam(dept, supplier, category, year)
 {
-    console.log("setparam");
+    console.log("CreatingLinks:setparam");
     var name="";
     for (var i=0;i<dept.length;i++){
         name="de";
@@ -88,5 +89,23 @@ function createLink(){
     modul._http_query=_queryOutput;
     console.log(_queryOutput);
 }
+
+function create_choicevariable(queryObject){
+    var choice="";
+    console.log("create_choicevariable:"+queryObject.cat);
+    console.log("create_choicevariable:"+queryObject.supplier);
+    console.log("create_choicevariable:"+queryObject.year);
+
+    for (var i=0;i<queryObject.depts.length;i++){
+        console.log(queryObject.depts[i]);
+    }
+    for (var i=0;i<queryObject.depts.length;i++)
+        choice+=queryObject.depts[i]+"_";
+
+    choice+=queryObject.year.substr(0,4);
+    modul._v_choice=choice;
+}
+
+
 
 

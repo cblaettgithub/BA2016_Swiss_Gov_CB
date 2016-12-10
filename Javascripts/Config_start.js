@@ -2,10 +2,10 @@
  * Created by chris on 09.12.2016.
  */
 module.exports={
-    startingwithQuery:startingwithQuery
+    startingApplication:startingApplication
 };
 
-function startingwithQuery(content){
+function startingApplication(content){
     console.log(modul._error_counter+" starting with Query");
     modul._error_counter++;
     if (content=="BK_EDI_All")

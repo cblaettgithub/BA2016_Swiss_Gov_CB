@@ -17,6 +17,7 @@
     var q;
     var url = require('url') ;
     var parse = require('url-parse');
+    //var express = require('express');
 
 global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
@@ -47,6 +48,7 @@ global.starturimodus=function(loc){
     }
     else{
         var queryObject = url.parse("'"+loc+"'",true).query;//get uri
+        console.log("starturimodus:query:"+"'"+queryObject+"'");
         CreatingUri.create_choicevariableUri(queryObject);
         Config_start.startingApplication( modul._v_choice);
     }

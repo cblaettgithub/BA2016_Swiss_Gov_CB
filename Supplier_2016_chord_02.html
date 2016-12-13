@@ -31,10 +31,6 @@
         <td id="EDA_EDI_2013">2013</td>
         <td id="EDA_EDI_2014">2014</td>
         <td id="Dummy">EDI_EDA</td>
-        <td id="xx">
-
-            </div>
-        </td>
     </tr>
     <tr >
         <td>Dept BK-EDI</td>
@@ -43,8 +39,7 @@
         <td id="BK_EDI_2013">2013</td>
         <td id="BK_EDI_2014">2014</td>
         <td id="BK_EDI_All">Cum. BK_EDI</td>
-        <td>
-        </div></td>
+
     </tr>
     <tr >
         <td>Dept BK-EDA-EDI</td>
@@ -53,8 +48,7 @@
         <td id="BK_EDA_EDI_2013">2013</td>
         <td id="BK_EDA_EDI_2014">2014</td>
         <td id="EDI_ALL"></td>
-        <td>
-      </td>
+
     </tr>  <tr >
     <td>Dept BK-EDA-EDI Tri</td>
     <td id="BK_EDA_EDI_2011_Tri">2011</td>
@@ -62,8 +56,7 @@
     <td id="BK_EDA_EDI_2013_Tri">2013</td>
     <td id="BK_EDA_EDI_2014_Tri">2014</td>
     <td id="EDI_ALL_Tri"></td>
-    <td>
-    </td>
+
 </tr>
 
     <tr >
@@ -73,8 +66,7 @@
         <td id="BK_EDA_EDI_2013_Cat">2013</td>
         <td id="BK_EDA_EDI_2014_Cat">2014</td>
         <td id="EDI_ALL_Cat"></td>
-        <td>
-        </td>
+
     </tr>
     <tr >
         <td>Cat 2 BK-EDA-EDI</td>
@@ -83,7 +75,6 @@
         <td id="BK_EDA_EDI_2013_Cat_2">2013</td>
         <td id="BK_EDA_EDI_2014_Cat_2">2014</td>
         <td id="EDI_ALL_Cat_2"></td>
-        <td><</td>
     </tr>
     <tr >
         <td>Cat 3 BK-EDA-EDI</td>
@@ -92,8 +83,6 @@
         <td id="BK_EDA_EDI_2013_Cat_3">2013</td>
         <td id="BK_EDA_EDI_2014_Cat_3">2014</td>
         <td id="EDI_ALL_Cat_3"></td>
-        <td><div id="slider_Cat_3_BK_EDA_EDI" style="width: 400px">
-        </div></td>
     </tr>
     <tr >
         <td>BK_EDA_EDI_EJPD</td>
@@ -102,7 +91,7 @@
         <td id="BK_EDA_EDI_EJPD_2013_Cat">2013</td>
         <td id="BK_EDA_EDI_EJPD_2014_Cat">2014</td>
         <td ><span id="output">0</span></td>
-        <td></td>
+
     </tr>
     <tr >
         <td>BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF</td>
@@ -110,8 +99,8 @@
         <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012">2012</td>
         <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013">2013</td>
         <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014">2014</td>
-        <td ><span id="output_0">0</span></td>
-        <td></td>
+        <td><span id="output_0">0</span></td>
+
     </tr>
     <tr >
         <td>BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF</td>
@@ -120,7 +109,7 @@
         <td id="BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5">2011_5</td>
         <td id="">2014</td>
         <td ></td>
-        <td></td>
+
     </tr>
     <tr >
         <td id="Creating_Link">Creating Link</td>
@@ -137,7 +126,7 @@
     <td id="BK_2013">2013</td>
     <td id="BK_2014">2014</td>
     <td>BK </td>
-    <td>BK </td>
+    </tr>
 </tr>
     <tr >
         <td>EDA </td>
@@ -146,15 +135,12 @@
         <td id="EDA_2013">2013</td>
         <td id="EDA_2014">2014</td>
         <td>BK </td>
-        <td>BK </td>
-    </tr>
     <tr >
         <td>EDI </td>
         <td id="EDI_2011">2011</td>
         <td id="EDI_2012">2012</td>
         <td id="EDI_2013">2013</td>
         <td id="EDI_2014">2014</td>
-        <td>BK </td>
         <td>BK </td>
     </tr>
     <tr >
@@ -164,7 +150,6 @@
         <td id="EFD_2013">2013</td>
         <td id="EFD_2014">2014</td>
         <td>BK </td>
-        <td>BK </td>
     </tr>
     <tr >
         <td>EJPD </td>
@@ -172,7 +157,6 @@
         <td id="EJPD_2012">2012</td>
         <td id="EJPD_2013">2013</td>
         <td id="EJPD_2014">2014</td>
-        <td>BK </td>
         <td>BK </td>
     </tr>
 </table>
@@ -188,8 +172,9 @@
     var query = window.location.search.substring(1);
     var loc = window.location;
 
-    //starturlmodus(loc); //for querystring
-    starturimodus(loc); //for uri
+    starturlmodus(loc); //for querystring
+    console.log("http:"+query);
+    //starturimodus(loc); //for uri
 
     //url modus
     d3.select('#urlLink').on("click", function() {

@@ -15,9 +15,28 @@
     var Config_Process = require('./Javascripts/Config_Process');
     var MatrixCreatorX =require('./Javascripts/MatrixCreatorX');
     var q;
+    //var express    = require('express');
+    //var appmy        = express();
     var url = require('url') ;
     var parse = require('url-parse');
-    //var express = require('express');
+    var d3 = require("d3"),
+    jsdom = require("jsdom");
+    //var urlname='/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html';
+
+//serverkonfiguration
+/*var server = appmy.listen(63342, function () {
+    var host ="BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
+    var port = server.address().port;
+    console.log("Example app listening at http://%s:%s", host, port);
+});
+
+appmy.get(urlname, function (req, res) {
+    console.log(req);
+    console.log(res);
+    console.log(req.path);
+    console.log( "depts and supplier year");
+    serverinput("BK_BK_2011");
+});*/
 
 global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
@@ -28,6 +47,7 @@ global.startwithLink=function(kind, choice){
     console.log("'"+ modul._vchoice+"'");
     Config_start.startingApplication( modul._vchoice);
 };
+
 //querystring after the click (2)
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
@@ -53,6 +73,11 @@ global.starturimodus=function(loc){
         Config_start.startingApplication( modul._v_choice);
     }
 };
+
+global.serverinput=function(value){
+    console.log("serverinput");
+    Config_start.startingApplication(value);
+};
 // CreateLink Querystring (0)
 global.startcreatinglink=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglink");
@@ -64,6 +89,7 @@ global.startcreatinglink=function(dept, supplier, category, year){
 // CreateLink Uri ok (0)
 global.startcreatinglinkUri=function(dept, supplier, category, year){
     console.log(modul._error_counter+" start creatinglinkUri");
+    modul._svg=d3.selection("svg");
     CreatingUri.setCurrentUrl("hostname");
     CreatingUri.setParamsUri(dept,supplier, category, year);
     CreatingUri.createUri();
@@ -115,8 +141,13 @@ function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filena
     }
 }
 function process(filename, filename_B, filename_C, filename_D) {
-    modul._svg=d3.select("svg").remove();
-    modul._svg = d3.select("svg");
+
+    jsdom.env("https://google.com", function(error, window) {
+        if (error) throw error;
+        modul._svg=d3.select("svg").remove();
+        modul._svg = d3.select("svg");
+    });
+
     console.log(modul._error_counter+" process:main");
     modul._error_counter++;
     //default
@@ -125,17 +156,20 @@ function process(filename, filename_B, filename_C, filename_D) {
 
     hasFile(filename, filename_B, filename_C, filename_D, 0, 0, 0, 0);
     console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);
-    SettingLayout.createArc();
-    SettingLayout.layout();
-    SettingLayout.path();
-    SettingLayout.setSVG();
-    //SettingLayout.movesvg();
-    SettingLayout.appendCircle();
+    jsdom.env("https://google.com", function(error, window) {
+        if (error) throw error;
+        SettingLayout.createArc();
+        SettingLayout.layout();
+        SettingLayout.path();
+        SettingLayout.setSVG();
+        //SettingLayout.movesvg();
+        SettingLayout.appendCircle();
+    });
     console.log("process:defer:"+modul._currentcsv);
     var test=0; //0 normal, 1 kummulation
     console.log("choice modus:"+modul._vmodus);
     if (modul._vmodus=="default"){//each year
-        q= d3.queue()
+        q= d3.queue();
         q
             .defer(d3.csv, modul._currentcsv)
             .defer(d3.csv, modul._currentcsv_B)
@@ -181,6 +215,7 @@ function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
     }
     else {
         console.log(modul._error_counter + " SettingsB");
+        console.log(m_supplier.length);
         modul._error_counter++;
         modul._supplier = m_supplier;//Länderbogennamenn setzen
         Config_Process.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,

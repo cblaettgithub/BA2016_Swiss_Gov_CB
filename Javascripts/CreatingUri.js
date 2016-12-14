@@ -20,7 +20,7 @@ var _category;
 var _currentURL="Supplier_2016_chord.html";
 var _UriOutput="";
 var _ArrayCounter=0;
-var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
+var myurl="http://localhost:63343/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
 
 var depts={ };
 

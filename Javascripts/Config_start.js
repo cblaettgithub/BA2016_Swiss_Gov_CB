@@ -6,8 +6,8 @@ module.exports={
 };
 
 function startingApplication(content){
-    console.log(modul._error_counter+" starting with Query");
-    modul._error_counter++;
+    //console.log(modul._error_counter+" starting with Query");
+    //modul._error_counter++;
     if (content=="BK_EDI_All")
         modul._vmodus="BK_EDI_cumulation";
     else

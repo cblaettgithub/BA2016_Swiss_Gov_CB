@@ -19,6 +19,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
     var filtercontent;
     var filtercontentB;
     var ds_supplier_x=[];
+    console.log("Länge:"+data.length);
 
     filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
         "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",

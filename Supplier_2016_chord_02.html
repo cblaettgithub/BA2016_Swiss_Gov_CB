@@ -170,9 +170,9 @@
     var query = window.location.search.substring(1);
     var loc = window.location;
 
-    //starturlmodus(loc); //for querystring
+    starturlmodus(loc); //for querystring
     console.log("http:"+query);
-    starturimodus(loc); //for uri
+    //starturimodus(loc); //for uri
 
     //url modus
     d3.select('#urlLink').on("click", function() {

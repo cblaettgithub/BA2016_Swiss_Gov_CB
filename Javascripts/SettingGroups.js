@@ -11,7 +11,8 @@ module.exports ={
     groupPath:groupPath,
     groupText:groupText,
     grouptextFilter:grouptextFilter,
-    mouseover:mouseover
+    mouseover:mouseover,
+    mouseout:mouseout
 
 }
 function neighborhood() {//Länderbogen
@@ -109,7 +110,7 @@ function mouseover(d, i) {
             && p.target.index != i;
     })
     .transition()
-    .style("opacity", 0.1);
+    .style("opacity", 0.5);
 }
 function mouseout(d, i) {
     modul._chord.classed("fade", function(p) {
@@ -117,7 +118,7 @@ function mouseout(d, i) {
                 && p.target.index != i;
         })
         .transition()
-        .style("opacity", 1);
+        .style("opacity", 0.5);
 }
 
 

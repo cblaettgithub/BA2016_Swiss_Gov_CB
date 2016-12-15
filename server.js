@@ -7,21 +7,13 @@ modul =   require('./Javascripts/Modul');
 var app= require('./app');
 var url="http://localhost:63343";
 var urlname='/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html';
+var urlname_short='/BA2016_Swiss_Gov/chords_ba2016/';
 
 var port = process.env.PORT || 63343;
 var router = express.Router();
 
-router.get('/', function(req, res) {
+router.get(urlname+'/', function(req, res) {
     res.json({ message: 'root! welcome to our api!' });
-});
-
-appmy.get(urlname+'/dept', function (req, res) {
-        console.log( "depts ");
-        res.json({ message: 'depts! welcome to our api!' });
-});
-appmy.get(url+urlname+'/dept/:id', function (req, res) {
-    console.log( "depts ");
-    res.json({ message: 'depts id! welcome to our api!' });
 });
 
 appmy.get(urlname+'/supplier', function (req, res) {
@@ -32,6 +24,15 @@ appmy.get(urlname+'/supplier', function (req, res) {
 appmy.get(urlname+'/cat', function (req, res) {
     console.log( "cat ");
     res.json({ message: 'cat! welcome to our api!' });
+});
+
+appmy.get(urlname+'/dept', function (req, res) {
+        console.log( "depts ");
+        res.json({ message: 'depts! welcome to our api!' });
+});
+appmy.get(url+urlname+'/dept/:id', function (req, res) {
+    console.log( "depts ");
+    res.json({ message: 'depts id! welcome to our api!' });
 });
 
 appmy.get(urlname+'/year', function (req, res) {
@@ -48,12 +49,23 @@ appmy.get(urlname+'/dept/:id/supplier/:id', function (req, res) {
     });
 });
 
+appmy.get(urlname_short, function (req, res) {
+    console.log(req);
+    console.log(res);
+    console.log( "mainpage");
+    res.json({ message: 'mainpage! welcome to our api!',
+        result2: req.path
+    });
+});
+
 appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res) {
+
     console.log(req);
     console.log(res);
     console.log(req.path);
     console.log( "depts and supplier year");
     //res.redirect("http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html");
+    modul._error_counter=0;
     serverinput("BK_BK_2011");
     //starturimodus( req.path);
     /*res.json({ message: 'depts and supplier! welcome to our api!',

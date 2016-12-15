@@ -19,18 +19,17 @@
     //var appmy        = express();
     var url = require('url') ;
     var parse = require('url-parse');
-    var d3 = require("d3"),
-    jsdom = require("jsdom");
-    //var urlname='/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html';
+    var d3 = require("d3"),    jsdom = require("jsdom");
+    /*var urlname='/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html';
 
 //serverkonfiguration
-/*var server = appmy.listen(63342, function () {
+var server = appmy.listen(63343, function () {
     var host ="BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
     var port = server.address().port;
     console.log("Example app listening at http://%s:%s", host, port);
 });
 
-appmy.get(urlname, function (req, res) {
+appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res) {
     console.log(req);
     console.log(res);
     console.log(req.path);
@@ -75,7 +74,7 @@ global.starturimodus=function(loc){
 };
 
 global.serverinput=function(value){
-    console.log("serverinput");
+    console.log("serverinput:"+value);
     Config_start.startingApplication(value);
 };
 // CreateLink Querystring (0)
@@ -97,11 +96,16 @@ global.startcreatinglinkUri=function(dept, supplier, category, year){
 };
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
+
+    //modul._currentcsv="";
+    //var murl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/csv/BK - 2012.csv";
+    //modul._currentcsv=murl;
+    console.log("startprocessglobal");
     console.log(modul._error_counter+" startprocessglobal");
-    modul._currentcsv="";
     modul._v_choice=choice;
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
     process(content, content_B,content_C,content_D);
+    //process(modul._currentcsv, content_B,content_C,content_D);
 };
 
 //changing width, height, outer radius per html
@@ -142,21 +146,24 @@ function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filena
 }
 function process(filename, filename_B, filename_C, filename_D) {
 
-    jsdom.env("https://google.com", function(error, window) {
+    /*jsdom.env("https://google.com", function(error, window) {
         if (error) throw error;
         modul._svg=d3.select("svg").remove();
         modul._svg = d3.select("svg");
-    });
+    });*/
+
+    modul._svg=d3.select("svg").remove();
+    modul._svg = d3.select("svg");
 
     console.log(modul._error_counter+" process:main");
     modul._error_counter++;
     //default
-    modul._currentcsv="csv/"+filename;
+   modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
 
     hasFile(filename, filename_B, filename_C, filename_D, 0, 0, 0, 0);
     console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);
-    jsdom.env("https://google.com", function(error, window) {
+    /*jsdom.env("https://google.com", function(error, window) {
         if (error) throw error;
         SettingLayout.createArc();
         SettingLayout.layout();
@@ -164,7 +171,15 @@ function process(filename, filename_B, filename_C, filename_D) {
         SettingLayout.setSVG();
         //SettingLayout.movesvg();
         SettingLayout.appendCircle();
-    });
+    });*/
+
+    SettingLayout.createArc();
+    SettingLayout.layout();
+    SettingLayout.path();
+    SettingLayout.setSVG();
+    //SettingLayout.movesvg();
+    SettingLayout.appendCircle();
+
     console.log("process:defer:"+modul._currentcsv);
     var test=0; //0 normal, 1 kummulation
     console.log("choice modus:"+modul._vmodus);
@@ -188,7 +203,7 @@ function process(filename, filename_B, filename_C, filename_D) {
         var supplierA=[csv+"BK - 2011.csv",csv+"BK - 2012.csv",csv+"BK - 2013.csv",csv+"BK - 2014.csv"];
         var supplierB=[csv+"EDI - 2011.csv",csv+"EDI - 2012.csv",csv+"EDI - 2013.csv",csv+"EDI - 2014.csv"];
         //var supplierC=[csv+"EDA - 2011.csv",csv+"EDA - 2012.csv",csv+"EDA - 2013.csv",csv+"EDA - 2014.csv"];
-        q= d3.queue()
+        q= d3.queue();
         q
             .defer(d3.csv, supplierA[0])
             .defer(d3.csv, supplierA[1])
@@ -214,8 +229,8 @@ function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
         console.log(error);
     }
     else {
+        console.log("Settings:"+m_supplier[0]);
         console.log(modul._error_counter + " SettingsB");
-        console.log(m_supplier.length);
         modul._error_counter++;
         modul._supplier = m_supplier;//Länderbogennamenn setzen
         Config_Process.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,

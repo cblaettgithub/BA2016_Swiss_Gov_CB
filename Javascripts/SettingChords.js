@@ -21,5 +21,5 @@ function selectchords() {
             //return modul._supplier[d.source.index].color;
             return modul._color[d.source.index].color;
         })
-        .style("opacity", 1);
+        .style("opacity", 0.5 );//1
 }

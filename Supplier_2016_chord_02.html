@@ -43,7 +43,7 @@
         <td id="choice_1">choice_1</td>
         <td id="choice_2">choice_2</td>
         <td id="choice_3">choice_3</td>
-        <td ></td>
+        <td id="name_choice"></td>
         <td ></td>
     </tr>
     <tr >
@@ -217,17 +217,20 @@
 
     d3.select("#choice_1").on("click", function() {
         d3.selectAll("td").style("color", "black");
+        d3.select("#choice_name").text("supp_A");
         d3.select("#choice_1").style("color", "red");
         setchoiceData_Supp("supp_A");
     });
     d3.select("#choice_2").on("click", function() {
         d3.selectAll("td").style("color", "black");
+        document.getElementById('name_choice').innerText="supp_B";
         d3.select("#choice_2").style("color", "red");
         setchoiceData_Supp("supp_B");
     });
 
     d3.select("#choice_3").on("click", function() {
         d3.selectAll("td").style("color", "black");
+        d3.select("#choice_name").text("supp_C");
         d3.select("#choice_3").style("color", "red");
         setchoiceData_Supp("supp_C");
     });
@@ -268,14 +271,17 @@
         //settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011");
     });
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012").on("click", function() {
-        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012");
+        window.open(startcreatinglink(["BK","EDA","EDI","EFD","EJPD","UVEK","VBS","WBF"],"All", 0, 2012),"_self");
+        //settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012");
     });
     //BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013").on("click", function() {
-        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013");
+        window.open(startcreatinglink(["BK","EDA","EDI","EFD","EJPD","UVEK","VBS","WBF"],"All", 0, 2013),"_self");
+        //settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013");
     });
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014").on("click", function() {
-        settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014");
+        window.open(startcreatinglink(["BK","EDA","EDI","EFD","EJPD","UVEK","VBS","WBF"],"All", 0, 2014),"_self");
+        //settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014");
     });
     // 7 elemente
     d3.select("#BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7").on("click", function() {
@@ -291,60 +297,73 @@
         settingCSVFiles("BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5");
     });
 
-
-
-
     ///only one
     d3.select("#BK_2011").on("click", function() {
-        window.open(startcreatinglink(["BK","BK"],"All", 0, 2011),"_self");
+        settingCSVFiles("BK_BK_2011");
+        //window.open(startcreatinglink(["BK","BK"],"All", 0, 2011),"_self");
     });
     d3.select("#BK_2012").on("click", function() {
-        window.open(startcreatinglink(["BK","BK"],"All", 0, 2012),"_self");
+        settingCSVFiles("BK_BK_2012");
+        //window.open(startcreatinglink(["BK","BK"],"All", 0, 2012),"_self");
     });
     d3.select("#BK_2013").on("click", function() {
-        window.open(startcreatinglink(["BK","BK"],"All", 0, 2013),"_self");
+        settingCSVFiles("BK_BK_2013");
+        //window.open(startcreatinglink(["BK","BK"],"All", 0, 2013),"_self");
     });
     d3.select("#BK_2014").on("click", function() {
-        window.open(startcreatinglink(["BK","BK"],"All", 0, 2014),"_self");
+        settingCSVFiles("BK_BK_2014");
+        //window.open(startcreatinglink(["BK","BK"],"All", 0, 2014),"_self");
     });
     ///only one
     d3.select("#EDA_2011").on("click", function() {
-        window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDA_EDA_2011");
+        //window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2011),"_self");
     });
     d3.select("#EDA_2012").on("click", function() {
-        window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDA_EDA_2012");
+        //window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2012),"_self");
     });
     d3.select("#EDA_2013").on("click", function() {
-        window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDA_EDA_2013");
+        //window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2013),"_self");
     });
     d3.select("#EDA_2014").on("click", function() {
-        window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDA_EDA_2014");
+       // window.open(startcreatinglink(["EDA","EDA"],"All", 0, 2014),"_self");
     });
     ///only one
     d3.select("#EDI_2011").on("click", function() {
-        window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDI_EDI_2011");
+        //window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2011),"_self");
     });
     d3.select("#EDI_2012").on("click", function() {
-        window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDI_EDI_2012");
+       // window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2012),"_self");
     });
     d3.select("#EDI_2013").on("click", function() {
-        window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDI_EDI_2013");
+        //window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2013),"_self");
     });
     d3.select("#EDI_2014").on("click", function() {
-        window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2011),"_self");
+        settingCSVFiles("EDI_EDI_2014");
+        //window.open(startcreatinglink(["EDI","EDI"],"All", 0, 2014),"_self");
     });
     ///only one
     d3.select("#EFD_2011").on("click", function() {
-        window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2011),"_self");
+        settingCSVFiles("BK_BK_2011");
+        //window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2011),"_self");
     });
     d3.select("#EFD_2012").on("click", function() {
-        window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2011),"_self");
+        settingCSVFiles("BK_BK_2012");
+        //window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2012),"_self");
     });
     d3.select("#EFD_2013").on("click", function() {
-        window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2011),"_self");
+        settingCSVFiles("BK_BK_2013");
+        //window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2013),"_self");
     });
     d3.select("#EFD_2014").on("click", function() {
-        window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2011),"_self");
+        settingCSVFiles("BK_BK_2014");
+        //window.open(startcreatinglink(["EFD","EFD"],"All", 0, 2014),"_self");
     });
 
     ///only one
@@ -352,13 +371,13 @@
         window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2011),"_self");
     });
     d3.select("#EJPD_2012").on("click", function() {
-        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2011),"_self");
+        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2012),"_self");
     });
     d3.select("#EJPD_2013").on("click", function() {
-        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2011),"_self");
+        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2013),"_self");
     });
     d3.select("#EJPD_2014").on("click", function() {
-        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2011),"_self");
+        window.open(startcreatinglink(["EJPD","EJPD"],"All", 0, 2014),"_self");
     });
 
     /*BK *** EDA*/

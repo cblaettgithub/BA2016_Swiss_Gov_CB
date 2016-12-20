@@ -23,6 +23,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
     var filtercontentB;
     var ds_supplier_x=[];
     //setSupplierCat("supp_B", 10);
+    console.log("readcsv:"+modul._choiceData);
 
     filtercontent=choicesupplier[modul._choiceData].value;
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
@@ -156,7 +157,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014":
             modul._countDep=7;
-            modul._filterSupplier=filtercontent;
+            modul._filterSupplier=filtercontent.slice(0, 8);
+            filtercontent=filtercontent.slice(0, 8);
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
             modul._filterFullCategory=dept;
             data =filter(data, filtercontent, "supplier");

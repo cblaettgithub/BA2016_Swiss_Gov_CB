@@ -39,6 +39,18 @@ appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res)
 
     global.setchoiceData_Supp=function(name){
         modul._choiceData=name;
+        switch ( modul._choiceData){
+            case "supp_A":
+                modul._currentcolor="csv/color_2.csv";
+                break;
+            case "supp_B":
+                modul._currentcolor="csv/color_3.csv";
+                break;
+            case "supp_C":
+                modul._currentcolor="csv/color_4.csv";
+                break;
+            default:
+        }
         console.log("choice:"+  modul._choiceData);
     };
     global.setchoiceData_Cat=function(name){
@@ -88,7 +100,8 @@ global.serverinput=function(value){
 };
 // CreateLink Querystring (0)
 global.startcreatinglink=function(dept, supplier, category, year){
-    console.log(modul._error_counter+" start creatinglink");
+
+    console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
     CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParam(dept,supplier, category, year);
     CreatingLinks.createLink();

@@ -100,7 +100,9 @@ global.serverinput=function(value){
 };
 // CreateLink Querystring (0)
 global.startcreatinglink=function(dept, supplier, category, year){
-
+    if (modul._choiceData="")
+        modul._choiceData="supp_A";
+    console.log("startcreatinglink:supplier."+supplier);
     console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
     CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParam(dept,supplier, category, year);

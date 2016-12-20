@@ -53,14 +53,16 @@ function setParam(dept, supplier, category, year)
     }
 
     console.log("l:"+_ArrayCounter);
-    if (supplier=0){
+    _supplier=supplier;
+    _category=category;
+    /*if (supplier=0){
         _supplier=0;
        _category=category;
     }
     else{
         _supplier=supplier;
         _category=0;
-    }
+    }*/
     _year=year;
 }
 
@@ -104,6 +106,19 @@ function create_choicevariable(queryObject){
 
     choice+=queryObject.year.substr(0,4);
     modul._v_choice=choice;
+    modul._choiceData=queryObject.supplier;
+    switch ( modul._choiceData){
+        case "supp_A":
+            modul._currentcolor="csv/color_2.csv";
+            break;
+        case "supp_B":
+            modul._currentcolor="csv/color_3.csv";
+            break;
+        case "supp_C":
+            modul._currentcolor="csv/color_4.csv";
+            break;
+        default:
+    }
 }
 
 

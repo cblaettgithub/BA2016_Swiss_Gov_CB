@@ -2,9 +2,7 @@
  * Created by chris on 21.10.2016.
  */
 modul =   require('./Modul');
-
-/*var SettingData = require('./SettingDatas.js');
-var _maindata = new SettingData();*/
+var d3 = require("d3");
 
 module.exports ={
     neighborhood:neighborhood,
@@ -14,7 +12,7 @@ module.exports ={
     mouseover:mouseover,
     mouseout:mouseout
 
-}
+};
 function neighborhood() {//Länderbogen
     console.log("neighbor");
     modul._group = modul._svg.selectAll("g.group")
@@ -96,29 +94,44 @@ function groupText() {//den länderbogen beschriften
            });
    }
 }
-
 function grouptextFilter() {
     modul._groupText.filter(function (d, i) {
             return modul._groupPath[0][i].getTotalLength() / 2 - 16 < this.getComputedTextLength();
         })
         .remove();
 }
-
-function mouseover(d, i) {
+/*function mouseover(d, i) {
     modul._chord.classed("fade", function(p) {
         return p.source.index != i
             && p.target.index != i;
     })
-    .transition()
-    .style("opacity", 0.5);
+    .style("opacity", 0.5)
+    .transition();
+
+}*/
+
+function mouseover(d, i) {
+    d3.select("#tooltip")
+        .style("visibility", "visible")
+        .html(modul._supplier[i+7].key + "<br>  "+
+           modul._supplier[i+7].values[0])
+        .style("top", function () { return (d3.event.pageY - 80)+"px"})
+        .style("left", function () { return (d3.event.pageX - 130)+"px";})
+
+    modul._chord.classed("fade", function(p) {
+        return p.source.index != i
+            && p.target.index != i;
+    });
 }
+
 function mouseout(d, i) {
+    d3.select("#tooltip").style("visibility", "hidden")
     modul._chord.classed("fade", function(p) {
             return p.source.index != i
                 && p.target.index != i;
         })
-        .transition()
-        .style("opacity", 0.5);
+        .style("opacity", 0.5)
+        .transition();
 }
 
 

@@ -10,7 +10,9 @@
     var _currentcsv_G="CSV/VBS - 2011.csv";
     var _currentcsv_H="CSV/WBF - 2011.csv";
     var _currentjson="CSV/matrix.json";
-    var _currentcolor="CSV/Color.csv";
+    var _currentcolor="CSV/Color_234.csv";
+    var _currentSupplier="json/filterSupplier.json";
+    var _currentCat="json/filterCategory.json";
     var _svg;// = d3.select("svg");
     var _width;
     var _height;
@@ -54,6 +56,8 @@
     var _maxnumber=0;
     var _filterSupplier;
     var _filterFullCategory;
+    var _choiceData="supp_A";
+    var _choiceData_Cat="categyory_A";
     /*creatinglinks*/
 
     module.exports ={
@@ -110,5 +114,9 @@
         _http_uri:_http_uri,
         _maxnumber:_maxnumber,
         _filterSupplier:_filterSupplier,
-        _filterFullCategory:_filterFullCategory
+        _filterFullCategory:_filterFullCategory,
+        _choiceData:_choiceData,
+        _choiceData_Cat:_choiceData_Cat,
+        _currentSupplier:_currentSupplier,
+        _currentCat:_currentCat
     };

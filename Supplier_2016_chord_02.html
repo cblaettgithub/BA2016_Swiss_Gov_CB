@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        #tooltip {
+            color: #454545;
+            opacity: .9;
+            background: #eee;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 10;
+            visibility: hidden;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
         #circle circle {
             fill: none;
             pointer-events: all;
@@ -19,11 +33,27 @@
         #circle:hover path.fade {
             display: none;
         }
+
     </style>
 </head>
 <body>
-
 <table border="1">
+    <tr >
+        <td>Choice Suppliers</td>
+        <td id="choice_1">choice_1</td>
+        <td id="choice_2">choice_2</td>
+        <td id="choice_3">choice_3</td>
+        <td ></td>
+        <td ></td>
+    </tr>
+    <tr >
+        <td>Choice Categorys</td>
+        <td id="cat_1">choice_1</td>
+        <td id="cat_2">choice_2</td>
+        <td id="cat_3">choice_3</td>
+        <td ></td>
+        <td ></td>
+    </tr>
     <tr >
         <td>Dept EDA-EDI</td>
         <td id="EDA_EDI_2011">2011</td>
@@ -160,13 +190,16 @@
         <td>BK </td>
     </tr>
 </table>
+<div id="tooltip">
+
+</div>
+
 <script src="https://d3js.org/d3.v3.js"></script>
 <script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src="https://d3js.org/d3-collection.v1.min.js"></script>
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <script>
-
     var query = window.location.search.substring(1);
     var loc = window.location;
 
@@ -180,6 +213,38 @@
         ("color", "black");
         d3.select("#urlLink").style("color", "red");
         starturlmodus(loc+"?depts=EDA&depts=EDI&supplier=0&cat=0&year=2011");
+    });
+
+    d3.select("#choice_1").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#choice_1").style("color", "red");
+        setchoiceData_Supp("supp_A");
+    });
+    d3.select("#choice_2").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#choice_2").style("color", "red");
+        setchoiceData_Supp("supp_B");
+    });
+
+    d3.select("#choice_3").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#choice_3").style("color", "red");
+        setchoiceData_Supp("supp_C");
+    });
+    d3.select("#cat_1").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#cat_1").style("color", "red");
+        setchoiceData_Cat("categyory_A");
+    });
+    d3.select("#cat_2").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#cat_2").style("color", "red");
+        setchoiceData_Cat("category_B");
+    });
+    d3.select("#cat_3").on("click", function() {
+        d3.selectAll("td").style("color", "black");
+        d3.select("#cat_3").style("color", "red");
+        setchoiceData_Cat("category_C");
     });
 
     /*EDA ***EDI*/

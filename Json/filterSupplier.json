@@ -1,0 +1,33 @@
+{
+  "supp_A": {
+    "name": "supp_A",
+    "value": [
+      "Schweiz. Depeschenagentur AG",      "Trivadis AG",
+      "Fabasoft CH Software AG",      "Ecoplan AG",      "Schweizerische Bundesbahnen SBB",
+      "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",      "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
+      "SRG SSR idÃ©e suisse Media Services"
+    ]
+  },
+  "supp_B":{
+  "name": "supp_B",
+  "value": ["AirPlus International AG","Schweizerische Bundesbahnen SBB",
+    "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
+    "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
+  ]
+},
+  "supp_C":{
+    "name": "supp_C",
+    "value": [
+      "Schweiz. Depeschenagentur AG",      "Trivadis AG",
+      "prospective media services pms AG Dienstleistungen Human Res",      "DHL Express (Schweiz) AG",      "Schweizerische Bundesbahnen SBB",
+      "Packimpex AG Int. UmzÃ¼ge Verpackungen",      "FS Communications GmbH Satellitenkommunikation",
+      "Victorinox AG"
+    ]
+  }
+}
+
+
+
+
+
+

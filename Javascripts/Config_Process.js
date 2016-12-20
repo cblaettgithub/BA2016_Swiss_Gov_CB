@@ -5,12 +5,15 @@
 modul =   require('./Modul');
 DataManager = require('./DataManager');
 MatrixCreatorX =require('./MatrixCreatorX');
+var d3 = require("d3");
 
 module.exports={
     readcsv:readcsv
 };
+var msupplier;
 
-function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix){
+function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
+                 data_H ,matrix, choicesupplier, choiceCat){
     console.log(modul._error_counter + " readcsv");
     modul._error_counter++;
     var supplier;
@@ -19,29 +22,17 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
     var filtercontent;
     var filtercontentB;
     var ds_supplier_x=[];
-    //console.log("Länge:"+data.length);
+    //setSupplierCat("supp_B", 10);
 
-    filtercontent=["Schweiz. Depeschenagentur AG",         "Trivadis AG",
-        "Fabasoft CH Software AG",  "Ecoplan AG",     "Schweizerische Bundesbahnen SBB",
-        "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
-        "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
-        "SRG SSR idÃ©e suisse Media Services"] ;
-    modul._filterSupplier=filtercontent;
-    filtercontentB=["Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
-        "Sprach- und Ãœbersetzungsdienstleistungen",
-        "Informatik-DL exkl. Personalverleih im Bereich IKT",
-        "SW-Pflege und HW Wartung",
-        "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-        "Informationsarbeit",
-        "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
-        "DL im Zusammenhang mit Personentransporten, Hotels, usw."];
-
+    filtercontent=choicesupplier[modul._choiceData].value;
+    modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
+    filtercontentB=choiceCat[modul._choiceData_Cat].value;
     switch (modul._v_choice){
         case "EDA_EDI_2011"://EDA 2011, EDI 2011
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
         case "EDA_EDI_2013"://EDA 2013, EDI 2011
         case "EDA_EDI_2014"://EDA 2014, EDI 2011
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
+            filtercontent=filtercontent.slice(0,2);
             data =filter(data,filtercontent, "supplier");//EDA
             data_B =filter(data_B,filtercontent, "supplier");//EDI
             modul._ds_supplier_EDA= DataManager.getDummy_EDA(data, "supplier");
@@ -54,7 +45,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDI_2012"://BK EDA 2012,
         case "BK_EDI_2013"://BK EDA 2013,
         case "BK_EDI_2014"://BK EDA 2014,
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB"];
+            filtercontent=filtercontent.slice(0,2);
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             modul._ds_supplier_EDI= DataManager.getDummy_BK(data, "supplier");
@@ -67,8 +58,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte"];
+            filtercontent=filtercontent.slice(0,3);
             data =filter(data, filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             data_C =filter(data_C,filtercontent, "supplier");
@@ -84,8 +74,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_2012_Tri"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Tri"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Tri"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["Trivadis AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte"];
+            filtercontent=filtercontent.slice(0,3);
             data =filter(data, filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             data_C =filter(data_C,filtercontent, "supplier");
@@ -101,8 +90,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["Hardware","SW-Pflege und HW Wartung",
-                "Informatik-DL exkl. Personalverleih im Bereich IKT"];
+            filtercontent=choiceCat[modul._choiceData_Cat].value;
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -118,9 +106,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_2012_Cat_2"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Cat_2"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Cat_2"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-                "Beratungs-DL für Management und Organisation sowie Coaching",
-                "SW-Pflege und HW Wartung"];
+            filtercontent=choiceCat[modul._choiceData_Cat].value;
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -136,8 +122,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_2012_Cat_3"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Cat_3"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Cat_3"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["Postdienste","Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-                "Hardware"];
+            filtercontent=choiceCat[modul._choiceData_Cat].value;
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -153,8 +138,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_EJPD_2012_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_EJPD_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_EJPD_2014_Cat"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
-                "Hardware","Postdienste"]; //jedes data ein departement, mindesten 4 pro dept
+            filtercontent=choiceCat[modul._choiceData_Cat].value; //jedes data ein departement, mindesten 4 pro dept
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -165,7 +149,6 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
             modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_D, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI,modul._ds_supplier_EJPD]);
-
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumBFM"]);
             break;
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011":
@@ -173,10 +156,6 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2014":
             modul._countDep=7;
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-                "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
-            ];
             modul._filterSupplier=filtercontent;
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
             modul._filterFullCategory=dept;
@@ -207,11 +186,10 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
             //7 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7":
             modul._countDep=6;
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-                "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG"
-            ];
-            modul._filterSupplier=filtercontent;
+            console.log("7 elemente");
+            modul._filterSupplier=filtercontent.slice(0, 7);
+            filtercontent=filtercontent.slice(0, 7);
+            console.log("elemente:"+ modul._filterSupplier.length);
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS"];
             modul._filterFullCategory=dept;
             data =filter(data, filtercontent, "supplier");
@@ -241,11 +219,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         //6 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6":
             modul._countDep=5;
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-                "Universal-Job AG","Dell SA"
-            ];
-            modul._filterSupplier=filtercontent;
+            modul._filterSupplier=filtercontent.slice(0, 6);
+            filtercontent=filtercontent.slice(0, 6);
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK"];
             modul._filterFullCategory=dept;
             data =filter(data, filtercontent, "supplier");
@@ -275,11 +250,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         //5 elements
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5":
             modul._countDep=4;
-            filtercontent=["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-                "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-                "Universal-Job AG"
-            ];
-            modul._filterSupplier=filtercontent;
+            modul._filterSupplier=filtercontent.slice(0, 5);
+            filtercontent=filtercontent.slice(0, 5);
             var dept=["BK", "EDI","EDA","EFD","EJPD"];
             modul._filterFullCategory=dept;
             data =filter(data, filtercontent, "supplier");
@@ -391,18 +363,9 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,data_H ,matrix
         default:
     }
 }
-
 function filter(data, param, filtername){
     console.log(modul._error_counter+" filter");
     modul._error_counter++;
-    /* if (param.length==2){
-     return data.filter(function(row) {
-     if (row[filtername] == param[0]
-     ||  row[filtername] == param[1]
-     )
-     {  return row;  }
-     });
-     }*/
 
     return data.filter(function(row) {
         for (var i=0;i< param.length;i++) {
@@ -511,4 +474,13 @@ function checkcountRows(currenttotal, rows){//wenn die Matrix zuwenig Datensätz
         }
     }
     return rows;
+}
+
+function setSupplierCat(vname, element){
+    modul._mSupplier=d3.json("Json/filterSupplier.json", function(error, data){
+        console.log("setSupplier:"+data[vname].name);
+        console.log("setSupplier:"+ msupplier[0]);
+        return data[vname].value;
+    });
+
 }

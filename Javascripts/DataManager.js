@@ -15,6 +15,7 @@ module.exports={
     getDummy_WBF:getDummy_WBF,
     getSupplier:getSupplier
 };
+var d3 = require("d3");
 
 function getDummy_BK(csv, name){
     var nested_data=d3.nest()
@@ -64,9 +65,16 @@ function getDummy_EJPD(csv, name){
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
             sumBFM: d3.sum(v, function(d) {
-               /* if (d["ISC-EJPD"]=="")
-                    d["ISC-EJPD"]="0";*/
-                return d["BFM"]; })
+                console.log("1:"+ d["ISC-EJPD"]);
+                console.log("2:"+ d["BFM"]);
+                /*if (isNaN(d["ISC-EJPD"].value)){
+                    console.log("getDummy_EJPD:isna");
+                    d["ISC-EJPD"]=0;
+                }*/
+                /*if (isNaN(d["ISC-EJPD"])){
+                    d["ISC-EJPD"]=0;
+                }*/
+                return d["BFM"]+ (d["ISC-EJPD"]); })
         };})
         .entries(csv);
     return nested_data;

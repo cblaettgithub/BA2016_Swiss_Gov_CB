@@ -1,0 +1,50 @@
+{
+  "categyory_A":{
+  "name": "categyory_A",
+  "value": [
+    "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+    "Sprach- und Ãœbersetzungsdienstleistungen",
+    "Informatik-DL exkl. Personalverleih im Bereich IKT",
+    "SW-Pflege und HW Wartung",
+    "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+    "Informationsarbeit",
+    "Keiner Kategorie zuordenbar, inkl Wartung und Reparatur",
+    "DL im Zusammenhang mit Personentransporten, Hotels, usw."
+  ]
+},
+  "category_B": {
+  "name": "category_B",
+  "value": [
+    "Hardware",
+    "SW-Pflege und HW Wartung",
+    "Informatik-DL exkl. Personalverleih im Bereich IKT"
+  ]
+},
+    "category_C":{
+    "name" :"category_C",
+    "value" :
+    ["Transportdienstleistungen, GÃ¼ter und Waren",
+    "Bundespublikationen, Drucksachen",
+    "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching"]
+},
+    "category_D": {
+    "name": "category_D", "value" : [
+    "Postdienste", "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+    "Hardware"
+    ]
+},
+    "category_E": {
+    "name": "category_E", "value": [
+    "Informationsarbeit", "Informatik-DL exkl. Personalverleih im Bereich IKT",
+    "Hardware", "Postdienste"
+    ]
+  }
+}
+
+
+
+
+
+
+
+

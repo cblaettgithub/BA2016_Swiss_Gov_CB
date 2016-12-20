@@ -37,6 +37,15 @@ appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res)
     serverinput("BK_BK_2011");
 });*/
 
+    global.setchoiceData_Supp=function(name){
+        modul._choiceData=name;
+        console.log("choice:"+  modul._choiceData);
+    };
+    global.setchoiceData_Cat=function(name){
+    modul._choiceData_Cat=name;
+    console.log("choice:"+  modul._choiceData_Cat);
+    };
+
 global.startwithLink=function(kind, choice){
     console.log("svg.remove()");
     d3.select("svg").remove();
@@ -196,6 +205,8 @@ function process(filename, filename_B, filename_C, filename_D) {
             .defer(d3.csv, modul._currentcsv_H)
             .defer(d3.json,modul._currentjson)
             .defer(d3.csv, modul._currentcolor)
+            .defer(d3.json, modul._currentSupplier)
+            .defer(d3.json, modul._currentCat)
             .await(SettingsB)
     }
     else{ //2011 - 2014//kummulation
@@ -224,7 +235,7 @@ function process(filename, filename_B, filename_C, filename_D) {
 }
 function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
                    m_supplier_E,  m_supplier_F, m_supplier_G,m_supplier_H,
-                   matrix, color){
+                   matrix, color, choicesupplier, choiceCat){
     if (error){
         console.log(error);
     }
@@ -234,7 +245,7 @@ function SettingsB(error, m_supplier,  m_supplier_B, m_supplier_C,m_supplier_D,
         modul._error_counter++;
         modul._supplier = m_supplier;//Länderbogennamenn setzen
         Config_Process.readcsv(m_supplier, m_supplier_B, m_supplier_C, m_supplier_D,
-            m_supplier_E, m_supplier_F, m_supplier_G, m_supplier_H, matrix);//Fill DS-Supplier + DS-Dept, Matrix
+            m_supplier_E, m_supplier_F, m_supplier_G, m_supplier_H, matrix,choicesupplier, choiceCat);//Fill DS-Supplier + DS-Dept, Matrix
         modul._layout.matrix(modul._matrix);
         modul._color = color;
         //console.log("2:SettingsB: Anzah:_supplier:"+modul._supplier.length);

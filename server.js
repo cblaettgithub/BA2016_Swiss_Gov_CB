@@ -8,6 +8,7 @@ var app= require('./app');
 var url="http://localhost:63343";
 var urlname='/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html';
 var urlname_short='/BA2016_Swiss_Gov/chords_ba2016/';
+var d3=require("d3");
 
 var port = process.env.PORT || 63343;
 var router = express.Router();
@@ -64,9 +65,14 @@ appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res)
     console.log(res);
     console.log(req.path);
     console.log( "depts and supplier year");
+
+    /*d3.csv("BK - 2011.csv", function(data)
+    {
+        console.log(data[0].length);
+    });*/
     //res.redirect("http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html");
-    modul._error_counter=0;
-    serverinput("BK_BK_2011");
+    //modul._error_counter=0;
+    //serverinput("BK_BK_2011");
     //starturimodus( req.path);
     /*res.json({ message: 'depts and supplier! welcome to our api!',
         result2: req.path

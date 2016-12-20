@@ -64,6 +64,7 @@ function matrix_Creator(DataEDI_EDA, DataEDI_EDA_Sort, Names_sumsEDA_EDI_BK){
         matrix.push(mrow);
     }
     modul._matrix = matrix;
+
     while(modul._supplier.length > 0)
         modul._supplier.pop();
     createSupplierList(DataEDI_EDA,Names_sumsEDA_EDI_BK );

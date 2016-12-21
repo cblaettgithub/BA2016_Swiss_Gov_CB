@@ -10,7 +10,6 @@ var d3 = require("d3");
 module.exports={
     readcsv:readcsv
 };
-var msupplier;
 
 function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                  data_H ,matrix, choicesupplier, choiceCat){
@@ -23,7 +22,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
     var filtercontentB;
     var ds_supplier_x=[];
     //setSupplierCat("supp_B", 10);
-    console.log("readcsv:"+modul._choiceData);
+    console.log(modul._choiceData);
 
     filtercontent=choicesupplier[modul._choiceData].value;
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
@@ -33,7 +32,10 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "EDA_EDI_2012"://EDA 2012, EDI 2011
         case "EDA_EDI_2013"://EDA 2013, EDI 2011
         case "EDA_EDI_2014"://EDA 2014, EDI 2011
+            modul._choiceData="supp_B";//offen Aenderungen
+            filtercontent=choicesupplier[modul._choiceData].value;
             filtercontent=filtercontent.slice(0,2);
+            console.log("*******************EDA_EDI:länge:"+filtercontent.length);
             data =filter(data,filtercontent, "supplier");//EDA
             data_B =filter(data_B,filtercontent, "supplier");//EDI
             modul._ds_supplier_EDA= DataManager.getDummy_EDA(data, "supplier");
@@ -46,6 +48,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "BK_EDI_2012"://BK EDA 2012,
         case "BK_EDI_2013"://BK EDA 2013,
         case "BK_EDI_2014"://BK EDA 2014,
+            modul._choiceData="supp_B";//offen Aenderungen
+            filtercontent=choicesupplier[modul._choiceData].value;
             filtercontent=filtercontent.slice(0,2);
             data =filter(data,filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -59,22 +63,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "BK_EDA_EDI_2012"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=filtercontent.slice(0,3);
-            data =filter(data, filtercontent, "supplier");
-            data_B =filter(data_B,filtercontent, "supplier");
-            data_C =filter(data_C,filtercontent, "supplier");
-            console.log("filter created");
-            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
-            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
-            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
-            csvsort=sortingFiles(csvall, filtercontent);
-            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvsort, ["sumBundeskanzelt","sumEDA","sumEDI"]);
-            break;
-        case "BK_EDA_EDI_2011_Tri"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2012_Tri"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2013_Tri"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2014_Tri"://EDA 2014, EDI 2011, BK 2011
+            modul._choiceData="supp_B";//offen Aenderungen
+            filtercontent=choicesupplier[modul._choiceData].value;
             filtercontent=filtercontent.slice(0,3);
             data =filter(data, filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
@@ -91,39 +81,9 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "BK_EDA_EDI_2012_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_2014_Cat"://EDA 2014, EDI 2011, BK 2011
+            modul._choiceData_Cat="category_B";
             filtercontent=choiceCat[modul._choiceData_Cat].value;
-            data =filter(data, filtercontent, "fullCategory");
-            data_B =filter(data_B,filtercontent, "fullCategory");
-            data_C =filter(data_C,filtercontent, "fullCategory");
-            console.log("filter created");
-            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
-            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
-            csvsort=sortingFiles(csvall, filtercontent);
-            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvsort, ["sumBundeskanzelt","sumEDA","sumEDI"]);
-            break;
-        case "BK_EDA_EDI_2011_Cat_2"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2012_Cat_2"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2013_Cat_2"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2014_Cat_2"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=choiceCat[modul._choiceData_Cat].value;
-            data =filter(data, filtercontent, "fullCategory");
-            data_B =filter(data_B,filtercontent, "fullCategory");
-            data_C =filter(data_C,filtercontent, "fullCategory");
-            console.log("filter created");
-            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "fullCategory");
-            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "fullCategory");
-            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "fullCategory");
-            csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI]);
-            csvsort=sortingFiles(csvall, filtercontent);
-            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvsort, ["sumBundeskanzelt","sumEDA","sumEDI"]);
-            break;
-        case "BK_EDA_EDI_2011_Cat_3"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2012_Cat_3"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2013_Cat_3"://EDA 2014, EDI 2011, BK 2011
-        case "BK_EDA_EDI_2014_Cat_3"://EDA 2014, EDI 2011, BK 2011
-            filtercontent=choiceCat[modul._choiceData_Cat].value;
+            filtercontent=filtercontent.slice(0,3);
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -139,7 +99,10 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         case "BK_EDA_EDI_EJPD_2012_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_EJPD_2013_Cat"://EDA 2014, EDI 2011, BK 2011
         case "BK_EDA_EDI_EJPD_2014_Cat"://EDA 2014, EDI 2011, BK 2011
+            modul._choiceData_Cat="category_D";
             filtercontent=choiceCat[modul._choiceData_Cat].value; //jedes data ein departement, mindesten 4 pro dept
+            filtercontent=filtercontent.slice(0,4);
+            console.log("**************output:"+filtercontent.length);
             data =filter(data, filtercontent, "fullCategory");
             data_B =filter(data_B,filtercontent, "fullCategory");
             data_C =filter(data_C,filtercontent, "fullCategory");
@@ -160,7 +123,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             modul._filterSupplier=filtercontent.slice(0, 8);
             filtercontent=filtercontent.slice(0, 8);
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
-            modul._filterFullCategory=dept;
+            modul._filterFullCategory=dept;//
             data =filter(data, filtercontent, "supplier");
             data_B =filter(data_B,filtercontent, "supplier");
             data_C =filter(data_C,filtercontent, "supplier");
@@ -186,7 +149,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                 "sumBFM", "sumUVEK", "sumVBS", "sumWBF"]);
             break;
             //7 elements
-        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_7":
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_2011":
             modul._countDep=6;
             console.log("7 elemente");
             modul._filterSupplier=filtercontent.slice(0, 7);
@@ -219,7 +182,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                 "sumBFM", "sumUVEK", "sumVBS"]);
             break;
         //6 elements
-        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_6":
+        case "BK_EDA_EDI_EFD_EJPD_UVEK_2011":
             modul._countDep=5;
             modul._filterSupplier=filtercontent.slice(0, 6);
             filtercontent=filtercontent.slice(0, 6);
@@ -250,7 +213,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                 "sumBFM", "sumUVEK"]);
             break;
         //5 elements
-        case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011_5":
+        case "BK_EDA_EDI_EFD_EJPD_2011":
             modul._countDep=4;
             modul._filterSupplier=filtercontent.slice(0, 5);
             filtercontent=filtercontent.slice(0, 5);
@@ -295,6 +258,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             break;
         case "BK_BK_2011":        case "BK_BK_2012":
         case "BK_BK_2013":        case "BK_BK_2014":
+             console.log("BK_BK:"+modul._choiceData_Cat);
             modul._filterFullCategory=filtercontentB;
             for (var i=0;i<8;i++){
                 ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
@@ -308,16 +272,16 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             break;
         case "EDA_EDA_2011":        case "EDA_EDA_2012":
         case "EDA_EDA_2013":        case "EDA_EDA_2014":
-        modul._filterFullCategory=filtercontentB;
-        for (var i=0;i<8;i++){
-            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
-            ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
-            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
-        }
-        csvall=mergingFiles( ds_supplier_x);
-        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDA","sumEDA",
-            "sumEDA","sumEDA","sumEDA","sumEDA",
-            "sumEDA","sumEDA"]);
+            modul._filterFullCategory=filtercontentB;
+            for (var i=0;i<8;i++){
+                ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+                ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
+                ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            }
+            csvall=mergingFiles( ds_supplier_x);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEDA","sumEDA",
+                "sumEDA","sumEDA","sumEDA","sumEDA",
+                "sumEDA","sumEDA"]);
         break;
         case "EDI_EDI_2011":        case "EDI_EDI_2012":
         case "EDI_EDI_2013":        case "EDI_EDI_2014":
@@ -334,33 +298,33 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             break;
         case "EFD_EFD_2011":        case "EFD_EFD_2012":
         case "EFD_EFD_2013":        case "EFD_EFD_2014":
-        console.log("----EFD");
-        modul._filterFullCategory=filtercontentB;
-        for (var i=0;i<8;i++){
-            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
-            ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
-            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
-        }
-        csvall=mergingFiles( ds_supplier_x);
-        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEFD","sumEFD",
-            "sumEFD","sumEFD","sumEFD","sumEFD",
-            "sumEFD","sumEFD"]);
-        console.log("EFD-----");
+            console.log("----EFD");
+            modul._filterFullCategory=filtercontentB;
+            for (var i=0;i<8;i++){
+                ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+                ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
+                ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            }
+            csvall=mergingFiles( ds_supplier_x);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumEFD","sumEFD",
+                "sumEFD","sumEFD","sumEFD","sumEFD",
+                "sumEFD","sumEFD"]);
+            console.log("EFD-----");
         break;
         case "EJPD_EJPD_2011":        case "EJPD_EJPD_2012":
         case "EJPD_EJPD_2013":        case "EJPD_EJPD_2014":
-        console.log("----EJPD");
-        modul._filterFullCategory=filtercontentB;
-        for (var i=0;i<8;i++){
-            ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
-            ds_supplier_x[i]=DataManager.getDummy_EJPD(ds_supplier_x[i], "supplier");
-            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
-        }
-        csvall=mergingFiles( ds_supplier_x);
-        modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBFM","sumBFM",
-            "sumBFM","sumBFM","sumBFM","sumBFM",
-            "sumBFM","sumBFM"]);
-        console.log("sumBFM-----");
+            console.log("----EJPD");
+            modul._filterFullCategory=filtercontentB;
+            for (var i=0;i<8;i++){
+                ds_supplier_x[i] =filterC(data, filtercontent[i], "supplier",filtercontentB, "fullCategory");
+                ds_supplier_x[i]=DataManager.getDummy_EJPD(ds_supplier_x[i], "supplier");
+                ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            }
+            csvall=mergingFiles( ds_supplier_x);
+            modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBFM","sumBFM",
+                "sumBFM","sumBFM","sumBFM","sumBFM",
+                "sumBFM","sumBFM"]);
+            console.log("sumBFM-----");
         break;
         default:
     }

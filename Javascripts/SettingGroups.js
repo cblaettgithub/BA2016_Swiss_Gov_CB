@@ -11,7 +11,6 @@ module.exports ={
     grouptextFilter:grouptextFilter,
     mouseover:mouseover,
     mouseout:mouseout
-
 };
 function neighborhood() {//Länderbogen
     console.log("neighbor");
@@ -113,8 +112,8 @@ function grouptextFilter() {
 function mouseover(d, i) {
     d3.select("#tooltip")
         .style("visibility", "visible")
-        .html(modul._supplier[i+7].key + "<br>  "+
-           modul._supplier[i+7].values[0])
+        .html(modul._supplier[i].key + "<br>  "+
+           modul._supplier[i].values[0])
         .style("top", function () { return (d3.event.pageY - 80)+"px"})
         .style("left", function () { return (d3.event.pageX - 130)+"px";})
 

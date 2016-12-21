@@ -1,6 +1,6 @@
 {
-  "categyory_A":{
-  "name": "categyory_A",
+  "category_A":{
+  "name": "category_A",
   "value": [
     "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
     "Sprach- und Ãœbersetzungsdienstleistungen",
@@ -13,30 +13,42 @@
   ]
 },
   "category_B": {
-  "name": "category_B",
-  "value": [
-    "Hardware",
-    "SW-Pflege und HW Wartung",
-    "Informatik-DL exkl. Personalverleih im Bereich IKT"
-  ]
-},
-    "category_C":{
+    "name": "category_B",
+    "value": [
+      "Hardware",
+      "SW-Pflege und HW Wartung",
+      "Informatik-DL exkl. Personalverleih im Bereich IKT",
+      "Transportdienstleistungen, GÃ¼ter und Waren",
+      "Bundespublikationen, Drucksachen",
+      "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+      "Postdienste", "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
+      "Zivile Bauten, Bauleistungen inkl.Honorare"
+    ]
+  },
+  "category_C":{
     "name" :"category_C",
     "value" :
     ["Transportdienstleistungen, GÃ¼ter und Waren",
-    "Bundespublikationen, Drucksachen",
-    "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching"]
-},
-    "category_D": {
-    "name": "category_D", "value" : [
-    "Postdienste", "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare",
-    "Hardware"
+      "Bundespublikationen, Drucksachen",
+      "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+      "Software inkl. Lizenzen",
+      "Medizinische Produkte und Pharmabereich",
+      "Telekommunikation",
+      "Informationsarbeit",
+      "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"
     ]
-},
-    "category_E": {
-    "name": "category_E", "value": [
-    "Informationsarbeit", "Informatik-DL exkl. Personalverleih im Bereich IKT",
-    "Hardware", "Postdienste"
+  },
+  "category_D":{
+    "name" :"category_D",
+    "value" :
+    ["Informationsarbeit","Informatik-DL exkl. Personalverleih im Bereich IKT",
+    "Hardware","Postdienste",
+      "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+      "Software inkl. Lizenzen",
+      "Medizinische Produkte und Pharmabereich",
+      "Telekommunikation",
+      "Informationsarbeit",
+      "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"
     ]
   }
 }

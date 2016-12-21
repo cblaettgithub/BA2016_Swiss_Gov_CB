@@ -57,7 +57,7 @@
     var _filterSupplier;
     var _filterFullCategory;
     var _choiceData="supp_A";
-    var _choiceData_Cat="categyory_A";
+    var _choiceData_Cat="category_A";
     /*creatinglinks*/
 
     module.exports ={

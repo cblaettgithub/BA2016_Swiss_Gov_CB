@@ -60,12 +60,20 @@ function getDummy_EFD(csv, name){
     return nested_data;
 }
 function getDummy_EJPD(csv, name){
+    var temp;
     var nested_data=d3.nest()
         .key(function(d){return d[name]})
         .key(function(d){return d.dept})
         .rollup(function(v) { return{
             sumBFM: d3.sum(v, function(d) {
                 console.log("1:"+ d["ISC-EJPD"]);
+                if ((d["ISC-EJPD"].value!== undefined)){
+                         console.log("not undefined:"+d["ISC-EJPD"].value);
+                         temp=d["ISC-EJPD"].value;
+                }
+                if ((d["ISC-EJPD"].value== undefined)){
+                    console.log("undefined:"+d["ISC-EJPD"].value);
+                }
                 console.log("2:"+ d["BFM"]);
                 /*if (isNaN(d["ISC-EJPD"].value)){
                     console.log("getDummy_EJPD:isna");
@@ -74,7 +82,7 @@ function getDummy_EJPD(csv, name){
                 /*if (isNaN(d["ISC-EJPD"])){
                     d["ISC-EJPD"]=0;
                 }*/
-                return d["BFM"]+ (d["ISC-EJPD"]); })
+                return d["BFM"]+ d["ISC-EJPD"]; })
         };})
         .entries(csv);
     return nested_data;

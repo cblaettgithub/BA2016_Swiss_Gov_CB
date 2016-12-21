@@ -107,6 +107,8 @@ function create_choicevariable(queryObject){
     choice+=queryObject.year.substr(0,4);
     modul._v_choice=choice;
     modul._choiceData=queryObject.supplier;
+    modul._choiceData_Cat=queryObject.cat;
+
     switch ( modul._choiceData){
         case "supp_A":
             modul._currentcolor="csv/color_2.csv";

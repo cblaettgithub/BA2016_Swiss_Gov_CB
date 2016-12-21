@@ -304,6 +304,7 @@ function createSupplierList(dataRows, supplier_field){
     console.log(modul._error_counter+" createSupplierList");
     modul._error_counter++;
     var v_Supplier=supplier_field.length;
+    console.log("creatsupplier+ anzahl supplier:"+v_Supplier);
     var i=0;
     var end;
     if (v_Supplier==1){
@@ -358,7 +359,7 @@ function createSupplierList(dataRows, supplier_field){
 function supplierlabel(){
     console.log("supplierlabel");
     var elements;
-    var dept=modul._filterFullCategory;
+    var dept=modul._filterFullCategory;//ändern auf fillFullDept
     filtercontent=modul._filterSupplier;
 
     //dept

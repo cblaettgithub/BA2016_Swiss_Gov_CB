@@ -46,6 +46,7 @@
     var _ds_supplier_VBS;
     var _ds_supplier_WBF;
     var _ds_supplier_itself;
+    var _ds_supplier_all;
     var _v_choice="EDA_EDI_2011";//default
     var _vhttp="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
     var _http_query="";
@@ -56,7 +57,7 @@
     var _maxnumber=0;
     var _filterSupplier;
     var _filterFullCategory;
-    var _choiceData="supp_A";
+    var _choiceData="supp_A";//supp_A
     var _choiceData_Cat="category_A";
     /*creatinglinks*/
 
@@ -105,6 +106,7 @@
         _ds_supplier_VBS    :_ds_supplier_VBS,
         _ds_supplier_WBF    :_ds_supplier_WBF,
         _ds_supplier_itself:_ds_supplier_itself,
+        _ds_supplier_all:_ds_supplier_all,
         _v_choice:_v_choice,
         _vhttp:_vhttp,
         _vmodus:_vmodus,

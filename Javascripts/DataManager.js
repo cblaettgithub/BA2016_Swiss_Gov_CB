@@ -68,13 +68,13 @@ function getDummy_EJPD(csv, name){
             sumBFM: d3.sum(v, function(d) {
                 console.log("1:"+ d["ISC-EJPD"]);
                 if ((d["ISC-EJPD"].value!== undefined)){
-                         console.log("not undefined:"+d["ISC-EJPD"].value);
+                         //console.log("not undefined:"+d["ISC-EJPD"].value);
                          temp=d["ISC-EJPD"].value;
                 }
                 if ((d["ISC-EJPD"].value== undefined)){
-                    console.log("undefined:"+d["ISC-EJPD"].value);
+                    //console.log("undefined:"+d["ISC-EJPD"].value);
                 }
-                console.log("2:"+ d["BFM"]);
+                //console.log("2:"+ d["BFM"]);
                 /*if (isNaN(d["ISC-EJPD"].value)){
                     console.log("getDummy_EJPD:isna");
                     d["ISC-EJPD"]=0;

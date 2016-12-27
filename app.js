@@ -50,6 +50,7 @@ appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res)
                 modul._currentcolor="csv/color_4.csv";
                 break;
             default:
+                modul._currentcolor="csv/color_2.csv";
         }
         console.log("choice:"+  modul._choiceData);
     };

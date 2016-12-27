@@ -11,20 +11,26 @@ module.exports={
     readcsv:readcsv
 };
 
+var csvall;
+ var csvsort;
+ var filtercontent;
+ var filtercontentB;
+
 function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                  data_H ,matrix, choicesupplier, choiceCat){
     console.log(modul._error_counter + " readcsv");
     modul._error_counter++;
     var supplier;
-    var csvall;
+    /*var csvall;
     var csvsort;
     var filtercontent;
-    var filtercontentB;
+    var filtercontentB;*/
     var ds_supplier_x=[];
+    const column_name="idSupplier";
     //setSupplierCat("supp_B", 10);
     console.log(modul._choiceData);
 
-    filtercontent=choicesupplier[modul._choiceData].value;
+    filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
     filtercontentB=choiceCat[modul._choiceData_Cat].value;
     switch (modul._v_choice){
@@ -114,7 +120,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_D, "fullCategory");
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI,modul._ds_supplier_EJPD]);
             modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, ["sumBundeskanzelt","sumEDA","sumEDI", "sumBFM"]);
-            break;
+            break;//neu
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2011":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2012":
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2013":
@@ -124,22 +130,22 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             filtercontent=filtercontent.slice(0, 8);
             var dept=["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"];
             modul._filterFullCategory=dept;//
-            data =filter(data, filtercontent, "supplier");
-            data_B =filter(data_B,filtercontent, "supplier");
-            data_C =filter(data_C,filtercontent, "supplier");
-            data_D =filter(data_D,filtercontent, "supplier");
-            data_E =filter(data_E, filtercontent, "supplier");
-            data_F=filter(data_F,filtercontent, "supplier");
-            data_G =filter(data_G,filtercontent, "supplier");
-            data_H =filter(data_H,filtercontent, "supplier");
-            modul._ds_supplier_BK= DataManager.getDummy_BK(data, "supplier");
-            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, "supplier");
-            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, "supplier");
-            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, "supplier");
-            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, "supplier");
-            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, "supplier");
-            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, "supplier");
-            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, "supplier");
+            data =filter(data, filtercontent, column_name);
+            data_B =filter(data_B,filtercontent, column_name);
+            data_C =filter(data_C,filtercontent, column_name);
+            data_D =filter(data_D,filtercontent, column_name);
+            data_E =filter(data_E, filtercontent, column_name);
+            data_F=filter(data_F,filtercontent, column_name);
+            data_G =filter(data_G,filtercontent, column_name);
+            data_H =filter(data_H,filtercontent, column_name);
+            modul._ds_supplier_BK= DataManager.getDummy_BK(data, column_name);
+            modul._ds_supplier_EDA= DataManager.getDummy_EDA(data_B, column_name);
+            modul._ds_supplier_EDI= DataManager.getDummy_EDI(data_C, column_name);
+            modul._ds_supplier_EFD= DataManager.getDummy_EFD(data_D, column_name);
+            modul._ds_supplier_EJPD= DataManager.getDummy_EJPD(data_E, column_name);
+            modul._ds_supplier_UVEK= DataManager.getDummy_UVEK(data_F, column_name);
+            modul._ds_supplier_VBS= DataManager.getDummy_VBS(data_G, column_name);
+            modul._ds_supplier_WBF= DataManager.getDummy_WBF(data_H, column_name);
             checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
             csvall=mergingFiles([ modul._ds_supplier_BK, modul._ds_supplier_EDA, modul._ds_supplier_EDI, modul._ds_supplier_EFD,
                 modul._ds_supplier_EJPD, modul._ds_supplier_UVEK, modul._ds_supplier_VBS, modul._ds_supplier_WBF,
@@ -326,10 +332,111 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                 "sumBFM","sumBFM"]);
             console.log("sumBFM-----");
         break;
+        case "Dept_dynamic":
+            dynam_chordmaker(["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"], "", "",
+            2015, [data, data_B, data_C, data_D, data_E, data_F, data_G, data_H]);
+            break;
         default:
     }
 }
-function filter(data, param, filtername){
+//dynamically making chords
+function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, array_data){
+
+    var array_length=array_dept.length;
+    modul._countDep=8;
+    modul._filterSupplier=filtercontent.slice(0, 7);
+    modul._ds_supplier_all[array_length];
+
+    filtercontent=filtercontent.slice(0, 7);
+    modul._filterFullCategory=array_dept;//
+
+    //Filter
+    for (var i=0;i<array_length;i++){
+        array_data[i] =filter(array_data[i], filtercontent, "supplier");
+    }
+    console.log("dynam_chordmaker:Filter");
+
+    //getdata
+    for(var i=0;i< array_length; i++){
+        switch(array_dept[i]){
+            case "BK":
+                modul._ds_supplier_all[i]= DataManager.getDummy_BK(array_data[0], "supplier");
+                break;
+            case "EDA":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[1], "supplier");
+                break;
+            case "EDI":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[2], "supplier");
+                break;
+            case "EFD":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EFD(array_data[3], "supplier");
+                break;
+            case "EJPD":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EJPD(array_data[4], "supplier");
+                break;
+            case "UVEK":
+                modul._ds_supplier_all[i]= DataManager.getDummy_UVEK(array_data[5], "supplier");
+                break;
+            case "VBS":
+                modul._ds_supplier_all[i]= DataManager.getDummy_VBS(array_data[6], "supplier");
+                break;
+            case "WBF":
+                modul._ds_supplier_all[i]= DataManager.getDummy_WBF(array_data[7], "supplier");
+                break;
+            default:
+                //push item in array
+        }
+    }
+    console.log("dynam_chordmaker:getdata");
+    //check
+    checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
+    //and merging
+    for(var i=0;i<array_length;i++){
+        csvall=mergingFiles([ modul._ds_supplier_all[i]]);
+    }
+    console.log("dynam_chordmaker:merging");
+    //sorting
+    csvsort=sortingFiles(csvall, filtercontent);
+    //creating
+
+    //Matrix Creator
+    //Array of names of columsn
+    var arraycolumns;
+    for(var i=0;i<array_length;i++){
+        switch(i){
+            case 0:
+                arraycolumns[i]="sumBundeskanzelt";
+                break;
+            case 1:
+                arraycolumns[i]="sumEDA";
+                break;
+            case 2:
+                arraycolumns[i]="sumEDI";
+                break;
+            case 3:
+                arraycolumns[i]="sumEFD";
+                break;
+            case 4:
+                arraycolumns[i]="sumBFM";
+                break;
+            case 5:
+                arraycolumns[i]="sumUVEK";
+                break;
+            case 6:
+                arraycolumns[i]="sumVBS";
+                break;
+            case 7:
+                arraycolumns[i]="sumWBF";
+                break;
+        }
+    }
+    console.log("dynam_chordmaker:arraycolumns");
+    modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
+}
+
+
+function
+filter(data, param, filtername){
     console.log(modul._error_counter+" filter");
     modul._error_counter++;
 
@@ -411,7 +518,7 @@ function checkCountRowsSupplier( ){
         modul._ds_supplier_UVEK,
         modul._ds_supplier_VBS,
         modul._ds_supplier_WBF];
-
+//for (var i=0;
     supplierarray.forEach(function(rows) {
         var keyzahl=100;
         var nodeName ="nodename";

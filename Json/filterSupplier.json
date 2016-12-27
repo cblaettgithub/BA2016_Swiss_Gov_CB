@@ -2,32 +2,69 @@
   "supp_A": {
     "name": "supp_A",
     "value": [
-      "Schweiz. Depeschenagentur AG",      "Trivadis AG",
-      "Fabasoft CH Software AG",      "Ecoplan AG",      "Schweizerische Bundesbahnen SBB",
-      "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",      "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
+      "Schweiz. Depeschenagentur AG",
+      "Trivadis AG",
+      "Fabasoft CH Software AG",
+      "Ecoplan AG",
+      "Schweizerische Bundesbahnen SBB",
+      "GFS.Bern Forsch.Politik Kommunikation+Gesellsch.",
+      "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
       "SRG SSR idÃ©e suisse Media Services"
     ]
   },
-  "supp_B":{
-  "name": "supp_B",
-  "value": ["AirPlus International AG","Schweizerische Bundesbahnen SBB",
-    "Die Schweizerische Post Service Center Finanzen Mitte","SRG SSR idée suisse Media Services",
-    "Universal-Job AG","Dell SA","DHL Express (Schweiz) AG","Allianz Suisse Versicherungs-Gesellschaft"
-  ]
-},
-  "supp_C":{
+  "supp_B": {
+    "name": "supp_B",
+    "value": [
+      "AirPlus International AG",
+      "Schweizerische Bundesbahnen SBB",
+      "Die Schweizerische Post Service Center Finanzen Mitte",
+      "SRG SSR idée suisse Media Services",
+      "Universal-Job AG",
+      "Dell SA",
+      "DHL Express (Schweiz) AG",
+      "Allianz Suisse Versicherungs-Gesellschaft"
+    ]
+  },
+  "supp_C": {
     "name": "supp_C",
     "value": [
-      "Schweiz. Depeschenagentur AG",      "Trivadis AG",
-      "prospective media services pms AG Dienstleistungen Human Res",      "DHL Express (Schweiz) AG",      "Schweizerische Bundesbahnen SBB",
-      "Packimpex AG Int. UmzÃ¼ge Verpackungen",      "FS Communications GmbH Satellitenkommunikation",
+      "Schweiz. Depeschenagentur AG",
+      "Trivadis AG",
+      "prospective media services pms AG Dienstleistungen Human Res",
+      "DHL Express (Schweiz) AG",
+      "Schweizerische Bundesbahnen SBB",
+      "Packimpex AG Int. UmzÃ¼ge Verpackungen",
+      "FS Communications GmbH Satellitenkommunikation",
       "Victorinox AG"
+    ]
+  },
+  "supp_D": {
+    "name": "supp_D",
+    "value": [
+      "Schweiz. Depeschenagentur AG, 481426823",
+      "Trivadis AG,484457734",
+      "Fabasoft CH Software AG,480822068",
+      "Ecoplan AG,485486377",
+      "Schweizerische Bundesbahnen SBB,480683648",
+      "FS Communications GmbH Satellitenkommunikation,487360646",
+      "Victorinox AG,480907146",
+      "SRG SSR idÃ©e suisse Media Services,480580922"
+    ]
+  },
+  "supp_Id": {
+    "name": "supp_Id",
+    "value": [
+      "481426823",
+      "484457734",
+      "480822068",
+      "485486377",
+      "480683648",
+      "487360646",
+      "480907146",
+      "480580922"
     ]
   }
 }
-
-
-
 
 
 

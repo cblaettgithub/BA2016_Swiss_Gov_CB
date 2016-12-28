@@ -50,6 +50,19 @@
       "Informationsarbeit",
       "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"
     ]
+  },
+  "category_id":{
+    "name" :"category_id",
+    "value" :
+    ["18.4","18.2",
+      "15.1","14.1",
+      "18.3",
+      "15.2",
+      "5",
+      "15.3",
+      "18.4",
+      "18.1"
+    ]
   }
 }
 

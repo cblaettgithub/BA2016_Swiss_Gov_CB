@@ -24,7 +24,10 @@ var _height;
 var _currentURL="Supplier_2016_chord.html";
 var _ArrayParams;
 var _queryOutput="";
-var _ArrayCounter=0;
+var _ArrayCounterDept=0;
+var _ArrayCounterSupplier=0;
+var _ArrayCounterCategorys=0;
+
 var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
 
 var params =
@@ -32,9 +35,10 @@ var params =
     total_EDI: "data.csv",total_EDA: "data.csv",width: "data.csv",
     height:    "data.csv",currentURL: "data.csv"
 };
-var depts=
-{
-};
+var depts={};
+var suppliers={};
+var categorys={};
+
 function setCurrentUrl(startUrl){
     _currentURL=startUrl
 };
@@ -49,20 +53,29 @@ function setParam(dept, supplier, category, year)
         depts[name]=dept[i];
         console.log("dept:"+depts[i]);
         name="";
-        _ArrayCounter++;
+        _ArrayCounterDept++;
     }
+    //supplier
+       // _supplier=supplier;//->alte version
+        for (var i=0;i<supplier.length;i++){
+            name="de";
+            name+=i;
+            suppliers[name]=supplier[i];
+            console.log("dept:"+suppliers[i]);
+            name="";
+            _ArrayCounterSupplier++;
+        }
+    //categorys
+         // _category=category;//->alte version
+        for (var i=0;i<category.length;i++){
+            name="de";
+            name+=i;
+            categorys[name]=category[i];
+            console.log("dept:"+categorys[i]);
+            name="";
+            _ArrayCounterCategorys++;
+        }
 
-    console.log("l:"+_ArrayCounter);
-    _supplier=supplier;
-    _category=category;
-    /*if (supplier=0){
-        _supplier=0;
-       _category=category;
-    }
-    else{
-        _supplier=supplier;
-        _category=0;
-    }*/
     _year=year;
 }
 
@@ -77,15 +90,33 @@ function createLink(){
     _queryOutput=myurl;
     _queryOutput+=startappend;
 
-    for(var i=0;i<_ArrayCounter;i++){
+    for(var i=0; i<_ArrayCounterDept; i++){
         name="de";
         name+=i;
         _queryOutput+="depts"+seperator+depts[name]+appender;
         console.log("query:"+_queryOutput);
         name="";
     }
-    _queryOutput+="supplier="+_supplier;
-    _queryOutput+=appender+"cat="+_category;
+
+    //supplier
+    //_queryOutput+="supplier="+_supplier;//->alte version
+    for(var i=0; i<_ArrayCounterSupplier; i++){
+        name="de";
+        name+=i;
+        _queryOutput+="sup"+seperator+suppliers[name]+appender;
+        console.log("query:"+_queryOutput);
+        name="";
+    }
+
+    //categorys
+    //_queryOutput+=appender+"cat="+_category;//->alte version
+    for(var i=0; i<_ArrayCounterCategorys; i++){//-->neue version
+        name="de";
+        name+=i;
+        _queryOutput+="cat"+seperator+categorys[name]+appender;
+        console.log("query:"+_queryOutput);
+        name="";
+    }
     _queryOutput+=appender+"year="+_year;
 
     modul._http_query=_queryOutput;

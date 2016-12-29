@@ -188,17 +188,24 @@ function startingApplication(content){
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
             break;
-        case content.substring(0,1):
+        /*case content.substring(0,1):
             startprocessglobal
             ("Dept_dynamic","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
-            break;
+            break;*/
         case "dynam"://case year noch dazu
             startprocessglobal
             ("dynam","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
+        break;
+        case "Dyn_2016"://case year noch dazu
+            startprocessglobal
+            ("dynam","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
+                "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
+            );
+        break;
 
         //dynamische auswahl
         //*********************

@@ -41,8 +41,8 @@ var params =
     height:    "data.csv",currentURL: "data.csv"
 };
 var depts={};
-var suppliers={};
-var categorys={};
+var sup={};
+var cat={};
 
 function setCurrentUrl(startUrl){
     _currentURL=startUrl
@@ -84,8 +84,8 @@ function setParamMain(dept, supplier, category, year)
     for (var i=0;i<supplier.length;i++){
         name="de";
         name+=i;
-        suppliers[name]=supplier[i];
-        console.log("dept:"+suppliers[i]);
+        sup[name]=supplier[i];
+        console.log("dept:"+sup[i]);
         name="";
         _ArrayCounterSupplier++;
     }
@@ -94,8 +94,8 @@ function setParamMain(dept, supplier, category, year)
     for (var i=0;i<category.length;i++){
         name="de";
         name+=i;
-        categorys[name]=category[i];
-        console.log("dept:"+categorys[i]);
+        cat[name]=category[i];
+        console.log("dept:"+cat[i]);
         name="";
         _ArrayCounterCategorys++;
     }
@@ -155,7 +155,7 @@ function createLinkMain(){
     for(var i=0; i<_ArrayCounterSupplier; i++){
         name="de";
         name+=i;
-        _queryOutput+="sup"+seperator+suppliers[name]+appender;
+        _queryOutput+="sup"+seperator+sup[name]+appender;
         console.log("query:"+_queryOutput);
         name="";
     }
@@ -165,11 +165,11 @@ function createLinkMain(){
     for(var i=0; i<_ArrayCounterCategorys; i++){//-->neue version
         name="de";
         name+=i;
-        _queryOutput+="cat"+seperator+categorys[name]+appender;
+        _queryOutput+="cat"+seperator+cat[name]+appender;
         console.log("query:"+_queryOutput);
         name="";
     }
-    _queryOutput+=appender+"year="+_year;
+    _queryOutput+="year="+_year;
 
     modul._http_query=_queryOutput;
     console.log(_queryOutput);
@@ -216,8 +216,8 @@ function create_supp_category_modulvariable(queryObject){
         deptlist[i]=queryObject.depts[i];
 
     //supplier
-    for (var i=0;i<queryObject.supplier.length;i++)
-        supplierlist[i]=queryObject.supplier[i];
+    for (var i=0;i<queryObject.sup.length;i++)
+        supplierlist[i]=queryObject.sup[i];
 
     //cateogry
     for (var i=0;i<queryObject.cat.length;i++)

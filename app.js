@@ -89,8 +89,8 @@ global.startcreatinglink=function(dept, supplier, category, year){
 global.startcreatinglinkMain=function(dept, supplier, category, year){
     if (modul._choiceData="")
         modul._choiceData="supp_A";
-    console.log("startcreatinglink:supplier."+supplier);
-    console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
+    console.log("100: startcreatinglinkMain:supplier."+supplier);
+    console.log(modul._error_counter+" start startcreatinglinkMain+Supplierchoice"+modul._choiceData);
     CreatingLinks.setCurrentUrl("hostname");
     CreatingLinks.setParamMain(dept,supplier, category, year);
     CreatingLinks.createLinkMain();
@@ -98,7 +98,7 @@ global.startcreatinglinkMain=function(dept, supplier, category, year){
 };
 //querystring after the click (1)
 global.starturlmodus=function(loc){
-    console.log("starturlmodus1:"+"'"+loc+"'");
+    console.log("200: starturlmodus1:"+"'"+loc+"'");
     if (loc.search==""){
         Config_start.startingApplication("BK_2011");
     }
@@ -112,16 +112,17 @@ global.starturlmodus=function(loc){
 //querystring after the click mainpage
 
 global.starturlmodusMain=function(loc){
-    console.log("starturlmodus1:"+"'"+loc+"'");
+    modul._v_choice="dynam";
+    console.log("starturlmodusMain:"+"'"+loc+"'");
     if (loc.search==""){
-        Config_start.startingApplication("BK_2011");
+        Config_start.startingApplication("Dyn_2016");
     }
-    else{
-        modul._vchoice="dynam";
-        var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
+    else {
+        var queryObject = url.parse("'" + loc + "'", true).query;//get querystring
         CreatingLinks.create_supp_category_modulvariable(queryObject);
         Config_start.startingApplication("Dyn_2016");
     }
+
 };
 
 // CreateLink Uri ok (2)

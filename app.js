@@ -69,7 +69,34 @@ global.startwithLink=function(kind, choice){
     Config_start.startingApplication( modul._vchoice);
 };
 
-//querystring after the click (2)
+global.serverinput=function(value){
+    console.log("serverinput:"+value);
+    Config_start.startingApplication(value);
+};
+
+// CreateLink Querystring (0)
+global.startcreatinglink=function(dept, supplier, category, year){
+    if (modul._choiceData="")
+        modul._choiceData="supp_A";
+    console.log("startcreatinglink:supplier."+supplier);
+    console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
+    CreatingLinks.setCurrentUrl("hostname");
+    CreatingLinks.setParam(dept,supplier, category, year);
+    CreatingLinks.createLink();
+    return modul._http_query;
+};
+// CreateLink Querystring (0)
+global.startcreatinglinkMain=function(dept, supplier, category, year){
+    if (modul._choiceData="")
+        modul._choiceData="supp_A";
+    console.log("startcreatinglink:supplier."+supplier);
+    console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
+    CreatingLinks.setCurrentUrl("hostname");
+    CreatingLinks.setParamMain(dept,supplier, category, year);
+    CreatingLinks.createLinkMain();
+    return modul._http_query;
+};
+//querystring after the click (1)
 global.starturlmodus=function(loc){
     console.log("starturlmodus1:"+"'"+loc+"'");
     if (loc.search==""){
@@ -81,7 +108,33 @@ global.starturlmodus=function(loc){
         Config_start.startingApplication( modul._v_choice);
     }
 };
-//uri after the click (2)
+
+//querystring after the click mainpage
+
+global.starturlmodusMain=function(loc){
+    console.log("starturlmodus1:"+"'"+loc+"'");
+    if (loc.search==""){
+        Config_start.startingApplication("BK_2011");
+    }
+    else{
+        modul._vchoice="dynam";
+        var queryObject = url.parse("'"+loc+"'",true).query;//get querystring
+        CreatingLinks.create_supp_category_modulvariable(queryObject);
+        Config_start.startingApplication("Dyn_2016");
+    }
+};
+
+// CreateLink Uri ok (2)
+global.startcreatinglinkUri=function(dept, supplier, category, year){
+    console.log(modul._error_counter+" start creatinglinkUri");
+    modul._svg=d3.selection("svg");
+    CreatingUri.setCurrentUrl("hostname");
+    CreatingUri.setParamsUri(dept,supplier, category, year);
+    CreatingUri.createUri();
+    return modul._http_uri;
+};
+
+//uri after the click (3)
 global.starturimodus=function(loc){
     console.log("starturi:"+"'"+loc+"'");
     if (loc.search==""){
@@ -95,41 +148,17 @@ global.starturimodus=function(loc){
     }
 };
 
-global.serverinput=function(value){
-    console.log("serverinput:"+value);
-    Config_start.startingApplication(value);
-};
-// CreateLink Querystring (0)
-global.startcreatinglink=function(dept, supplier, category, year){
-    if (modul._choiceData="")
-        modul._choiceData="supp_A";
-    console.log("startcreatinglink:supplier."+supplier);
-    console.log(modul._error_counter+" start creatinglink+Supplierchoice"+modul._choiceData);
-    CreatingLinks.setCurrentUrl("hostname");
-    CreatingLinks.setParam(dept,supplier, category, year);
-    CreatingLinks.createLink();
-    return modul._http_query;
-};
-// CreateLink Uri ok (0)
-global.startcreatinglinkUri=function(dept, supplier, category, year){
-    console.log(modul._error_counter+" start creatinglinkUri");
-    modul._svg=d3.selection("svg");
-    CreatingUri.setCurrentUrl("hostname");
-    CreatingUri.setParamsUri(dept,supplier, category, year);
-    CreatingUri.createUri();
-    return modul._http_uri;
-};
 //starting with choiced csv-fils
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
-
-    //modul._currentcsv="";
-    //var murl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/csv/BK - 2012.csv";
-    //modul._currentcsv=murl;
-    console.log("startprocessglobal");
-    console.log(modul._error_counter+" startprocessglobal");
     modul._v_choice=choice;
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
-    process(content, content_B,content_C,content_D);
+
+    //default
+    modul._currentcsv="csv/"+content;
+    modul._currentcsv_B="csv/"+content_B;
+
+    csvFileSet(content, content_B,content_C,content_D, 0, 0, 0, 0);
+    process();
     //process(modul._currentcsv, content_B,content_C,content_D);
 };
 
@@ -143,7 +172,7 @@ global.startprocessDesign=function(content, name, width, height, radius_i, radiu
     settingParam(0, 0, width, height, 6, 15, 0, radius_o);
     process(content);
 };
-function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filename_F, filename_G, filename_H){
+function csvFileSet(filename, filename_B, filename_C, filename_D, filename_E, filename_F, filename_G, filename_H){
     if (filename_C!=0){     //lösung immer 4 files mitgeben*/
         modul._currentcsv_C="csv/"+filename_C;
         modul._countDep=2;
@@ -169,34 +198,16 @@ function hasFile(filename, filename_B, filename_C, filename_D,filename_E, filena
         modul._countDep=7;
     }
 }
-function process(filename, filename_B, filename_C, filename_D) {
-
-    /*jsdom.env("https://google.com", function(error, window) {
-        if (error) throw error;
-        modul._svg=d3.select("svg").remove();
-        modul._svg = d3.select("svg");
-    });*/
-
+function process() {
     modul._svg=d3.select("svg").remove();
     modul._svg = d3.select("svg");
 
-    console.log(modul._error_counter+" process:main");
-    modul._error_counter++;
     //default
-   modul._currentcsv="csv/"+filename;
+    /*modul._currentcsv="csv/"+filename;
     modul._currentcsv_B="csv/"+filename_B;
 
-    hasFile(filename, filename_B, filename_C, filename_D, 0, 0, 0, 0);
-    console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);
-    /*jsdom.env("https://google.com", function(error, window) {
-        if (error) throw error;
-        SettingLayout.createArc();
-        SettingLayout.layout();
-        SettingLayout.path();
-        SettingLayout.setSVG();
-        //SettingLayout.movesvg();
-        SettingLayout.appendCircle();
-    });*/
+    csvFileSet(filename, filename_B, filename_C, filename_D, 0, 0, 0, 0);
+    console.log(" process "+filename+" "+ filename_B+" "+ filename_C+" "+ filename_D);*/
 
     SettingLayout.createArc();
     SettingLayout.layout();

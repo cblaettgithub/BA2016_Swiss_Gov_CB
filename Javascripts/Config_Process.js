@@ -57,8 +57,8 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         }
     ];
 
-    //filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
-    filtercontent=JsonSupplier[0]["supp_D"].value;// selectedsupplier
+    filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
+    //filtercontent=JsonSupplier[0]["supp_D"].value;// selectedsupplier
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
     filtercontentB=choiceCat[modul._choiceData_Cat].value;
     switch (modul._v_choice){
@@ -365,7 +365,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             2015, [data, data_B, data_C, data_D, data_E, data_F, data_G, data_H]);
             break;
         case "dynam":
-            dynam_chordmaker(modul._dept, "", "",
+            dynam_chordmaker(modul._currentdepList, modul._currentsupplierList, modul._currentcategoryList,
                 2015, [data, data_B, data_C, data_D, data_E, data_F, data_G, data_H]);
             break;
 
@@ -422,7 +422,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     }
     console.log("dynam_chordmaker:getdata");
     //check
-    checkCountRowsSupplier();//check if exist 8 rows per departement(matrix)
+    checkCountRowsSupplierDynamic();//check if exist 8 rows per departement(matrix)
     //and merging
     //for(var i=0;i<array_length;i++){
         csvall=mergingFiles(modul._ds_supplier_all);
@@ -466,11 +466,9 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     console.log("dynam_chordmaker:arraycolumns");
     modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 
-
 }
 
-function
-filter(data, param, filtername){
+function filter(data, param, filtername){
     console.log(modul._error_counter+" filter");
     modul._error_counter++;
 
@@ -538,7 +536,7 @@ function checkexistRow(mrow, onerow){
     }
     return check;
 }
-
+//method for static
 function checkCountRowsSupplier( ){
     console.log("method:checkCountRowsSupplier");
     var diff=0;
@@ -553,8 +551,7 @@ function checkCountRowsSupplier( ){
         modul._ds_supplier_VBS,
         modul._ds_supplier_WBF];
 
-    //supplierarray.forEach(function(rows) {
-    modul._ds_supplier_all.forEach(function(rows) {
+    supplierarray.forEach(function(rows) {
         var keyzahl=100;
         var nodeName ="nodename";
         var newGroup = 100;
@@ -565,6 +562,26 @@ function checkCountRowsSupplier( ){
                 keyzahl+=i;
                 //rows.push({key:keyzahl, values:["null"]});
                 //rows.push( {"values":{"name":nodeName,"group":newGroup}});
+                rows.push({key:keyzahl, values:[{key:"null"}]});//objekt mit einem array wo ein objekt ist
+            }
+        }
+    });
+}
+//method for dynamic
+function checkCountRowsSupplierDynamic( ){
+    console.log("method:checkCountRowsSupplier");
+    var diff=0;
+    var countdept= modul._countDep+1;
+
+    modul._ds_supplier_all.forEach(function(rows) {
+        var keyzahl=100;
+        var nodeName ="nodename";
+        var newGroup = 100;
+
+        if (rows.length   < countdept){
+            diff=countdept-(rows.length);
+            for (var i=0;i<diff;i++){
+                keyzahl+=i;
                 rows.push({key:keyzahl, values:[{key:"null"}]});//objekt mit einem array wo ein objekt ist
             }
         }

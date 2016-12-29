@@ -96,7 +96,7 @@
     var categories=[];
     var query = window.location.search.substring(1);
     var loc = window.location;
-    starturlmodus(loc);
+    starturlmodusMain(loc);
 
     function update_dept() {
         d3.selectAll(".dept").each(function (d) {
@@ -131,7 +131,7 @@
         update_category();
         d3.select("#output_suppliers").text(supplier[0]+supplier[1]);
         d3.select("#output_categorys").text(categories[0]);
-        window.open(startcreatinglink(dept,supplier, categories, 2014),"_self");
+        window.open(startcreatinglinkMain(dept,supplier, categories, 2014),"_self");
     });
 </script>
 </body>

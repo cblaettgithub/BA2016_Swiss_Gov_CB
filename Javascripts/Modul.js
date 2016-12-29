@@ -59,6 +59,11 @@
     var _filterFullCategory;
     var _choiceData="supp_A";//supp_A
     var _choiceData_Cat="category_A";
+    var _currentdepList;
+    var _currentsupplierList;
+    var _currentcategoryList;
+    var _currentYear;
+
     /*creatinglinks*/
 
     module.exports ={
@@ -120,5 +125,9 @@
         _choiceData:_choiceData,
         _choiceData_Cat:_choiceData_Cat,
         _currentSupplier:_currentSupplier,
-        _currentCat:_currentCat
+        _currentCat:_currentCat,
+        _currentdepList:_currentdepList,
+        _currentsupplierList:_currentsupplierList,
+        _currentcategoryList:_currentcategoryList,
+        _currentYear:_currentYear
     };

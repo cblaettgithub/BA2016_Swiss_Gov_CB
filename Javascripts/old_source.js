@@ -360,4 +360,24 @@ function matrix_Supplier(data) {
     return supplier;
 }
 
+/*jsdom.env("https://google.com", function(error, window) {
+ if (error) throw error;
+ modul._svg=d3.select("svg").remove();
+ modul._svg = d3.select("svg");
+ });*/
+
+/*jsdom.env("https://google.com", function(error, window) {
+ if (error) throw error;
+ SettingLayout.createArc();
+ SettingLayout.layout();
+ SettingLayout.path();
+ SettingLayout.setSVG();
+ //SettingLayout.movesvg();
+ SettingLayout.appendCircle();
+ });*/
+
+//modul._currentcsv="";
+//var murl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/csv/BK - 2012.csv";
+//modul._currentcsv=murl;
+
 

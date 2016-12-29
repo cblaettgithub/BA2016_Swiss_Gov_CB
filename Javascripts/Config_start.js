@@ -194,6 +194,11 @@ function startingApplication(content){
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
             break;
+        case "dynam"://case year noch dazu
+            startprocessglobal
+            ("dynam","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
+                "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
+            );
 
         //dynamische auswahl
         //*********************

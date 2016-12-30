@@ -15,6 +15,7 @@ var csvall;
  var csvsort;
  var filtercontent;
  var filtercontentB;
+var ds_supplier_x=[];
 
 function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                  data_H ,matrix, choicesupplier, choiceCat){
@@ -25,7 +26,7 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
     var csvsort;
     var filtercontent;
     var filtercontentB;*/
-    var ds_supplier_x=[];
+    //var ds_supplier_x=[];
     const column_name="idSupplier";
     //setSupplierCat("supp_B", 10);
     console.log(modul._choiceData);
@@ -363,10 +364,10 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
             console.log("sumBFM-----");
         break;
         case "Dept_dynamic":
-            dynam_chordmaker(["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"], "", "",
+            dynam_chordmaker_2(["BK", "EDI","EDA","EFD","EJPD","UVEK","VBS", "WBK"], "", "",
             2015, [data, data_B, data_C, data_D, data_E, data_F, data_G, data_H]);
             break;
-        case "dynam":
+        case "chord_main":
             dynam_chordmaker(modul._currentdepList, modul._currentsupplierList, modul._currentcategoryList,
                 2015, [data, data_B, data_C, data_D, data_E, data_F, data_G, data_H]);
             break;
@@ -378,28 +379,109 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
 function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, array_data){
 
     var array_length=array_dept.length;
+    var arraycolumns=[];
     console.log("dynam:array.lengt:"+array_length);
     modul._ds_supplier_all=[];
     modul._countDep=array_length-1;
-
-    //modul._filterSupplier=filtercontent.slice(0, 8);
     modul._filterSupplier=supplier_choose.slice(0, array_length);
 
     for (var i=0;i<supplier_choose.length;i++)
-            console.log("output:dynam:"+modul._filterSupplier[i]);
+        console.log("output:dynam:"+modul._filterSupplier[i]);
 
-   // filtercontent=filtercontent.slice(0, 8);
     filtercontent=supplier_choose.slice(0, array_length);
     modul._filterFullCategory=array_dept;//
     for (var i=0;i<array_dept.length;i++)
-        console.log("output: array_dept:"+array_dept[i]);
+        console.log("output: array_dept[0]:"+array_dept[0]);
+
+    //one departement, all supplier, all categories
+    if (array_length < 4){
+        var dataDept;
+
+        switch(array_dept[0])
+        {
+            case "BK":
+                dataDept=array_data[0];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumBundeskanzelt";
+                break;
+            case "EDA":
+                dataDept=array_data[1];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumEDA";
+                break;
+            case "EDI":
+                dataDept=array_data[2];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumEDI";
+                break;
+            case "EFD":
+                dataDept=array_data[3];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumEFD";
+                break;
+            case "EJPD":
+                dataDept=array_data[4];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumBFM";
+                break;
+            case "UVEK":
+                dataDept=array_data[5];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumUVEK";
+                break;
+            case "VBS":
+                dataDept=array_data[6];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumVBS";
+                break;
+            case "WBK":
+                dataDept=array_data[7];
+                for(var i=0;i<8;i++)
+                    arraycolumns[i]="sumWBF";
+                break;
+        }
+        modul._filterFullCategory=category_choose;
+        modul._filterSupplier=supplier_choose;
+        for (var i=0;i<8;i++){
+            ds_supplier_x[i] =filterC(dataDept,  modul._filterSupplier[i], "idSupplier", modul._filterFullCategory, "idCategory");
+            switch (array_dept[0])
+            {
+                case "BK":
+                    ds_supplier_x[i]=DataManager.getDummy_BK(ds_supplier_x[i], "supplier");
+                    break;
+                case "EDI":
+                    ds_supplier_x[i]=DataManager.getDummy_EDI(ds_supplier_x[i], "supplier");
+                    break;
+                case "EDA":
+                    ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
+                    break;
+                case "EFD":
+                    ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
+                    break;
+                case "EJPD":
+                    ds_supplier_x[i]=DataManager.getDummy_EJPD(ds_supplier_x[i], "supplier");
+                    break;
+                case "UVEK":
+                    ds_supplier_x[i]=DataManager.getDummy_UVEK(ds_supplier_x[i], "supplier");
+                    break;
+                case "VBS":
+                    ds_supplier_x[i]=DataManager.getDummy_VBS(ds_supplier_x[i], "supplier");
+                    break;
+                case "WBK":
+                    ds_supplier_x[i]=DataManager.getDummy_WBF(ds_supplier_x[i], "supplier");
+                    break;
+            }
+            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+        }
+        csvall=mergingFiles( ds_supplier_x);
+    }
+    else{
 
     //Filter
     for (var i=0;i<array_length;i++){
         array_data[i] =filter(array_data[i], filtercontent, "idSupplier");
         console.log("output:dynam:arraylengt:"+array_data[i].length);
     }
-
     console.log("dynam_chordmaker:Filter");
 
     //getdata
@@ -442,16 +524,127 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
         }
     }
     console.log("dynam_chordmaker:getdata");
+    //check
+    checkCountRowsSupplierDynamic();//check if exist 8 rows per departement(matrix)
+    //and merging
+
+    csvall=mergingFiles(modul._ds_supplier_all);
+    console.log("dynam_chordmaker:merging");
+    //sorting
+    //csvsort=sortingFiles(csvall, filtercontent); deaktiviert 27.12.2016
+    //creating
+
+    //Matrix Creator
+    //Array of names of columsn
+
+    for(var i=0;i<array_length;i++){
+        switch(array_dept[i]){
+            case "BK":
+                arraycolumns[i]="sumBundeskanzelt";
+                break;
+            case "EDI":
+                arraycolumns[i]="sumEDI";
+                break;
+            case "EDA":
+                arraycolumns[i]="sumEDA";
+                break;
+            case "EFD":
+                arraycolumns[i]="sumEFD";
+                break;
+            case "EJPD":
+                arraycolumns[i]="sumBFM";
+                break;
+            case "UVEK":
+                arraycolumns[i]="sumUVEK";
+                break;
+            case "VBS":
+                arraycolumns[i]="sumVBS";
+                break;
+            case "WBK":
+                arraycolumns[i]="sumWBF";
+                break;
+        }
+    }
+    }
+    console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
+    modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
+}
+
+//dynamically making chords
+function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, array_data){
+
+    var array_length=array_dept.length;
+    console.log("dynam:array.lengt:"+array_length);
+    modul._ds_supplier_all=[];
+    modul._countDep=array_length-1;
+
+    modul._filterSupplier=filtercontent.slice(0, 8);
+
+
+    for (var i=0;i<supplier_choose.length;i++)
+        console.log("output:dynam:"+modul._filterSupplier[i]);
+
+    filtercontent=filtercontent.slice(0, 8);
+      modul._filterFullCategory=array_dept;//
+    for (var i=0;i<array_dept.length;i++)
+        console.log("output: array_dept:"+array_dept[i]);
+
+    //Filter
+    for (var i=0;i<array_length;i++){
+        array_data[i] =filter(array_data[i], filtercontent, "idsupplier");
+        console.log("output:dynam:arraylengt:"+array_data[i].length);
+    }
+
+    console.log("dynam_chordmaker:Filter");
+
+    //getdata
+    for(var i=0;i< array_dept.length; i++){
+        switch(array_dept[i]){
+            case "BK":
+                modul._ds_supplier_all[i]= DataManager.getDummy_BK(array_data[0], "supplier");
+                console.log("BK:"+ modul._ds_supplier_all[i]);
+                break;
+            case "EDI":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[1], "supplier");
+                console.log("EDI:"+ modul._ds_supplier_all[i]);
+                break;
+            case "EDA":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[2], "supplier");
+                console.log("EDA:"+ modul._ds_supplier_all[i]);
+                break;
+            case "EFD":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EFD(array_data[3], "supplier");
+                console.log("EFD:"+ modul._ds_supplier_all[i]);
+                break;
+            case "EJPD":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EJPD(array_data[4], "supplier");
+                console.log("EJPD:"+ modul._ds_supplier_all[i]);
+                break;
+            case "UVEK":
+                modul._ds_supplier_all[i]= DataManager.getDummy_UVEK(array_data[5], "supplier");
+                console.log("UVEK:"+ modul._ds_supplier_all[i]);
+                break;
+            case "VBS":
+                modul._ds_supplier_all[i]= DataManager.getDummy_VBS(array_data[6], "supplier");
+                console.log("VBS:"+ modul._ds_supplier_all[i]);
+                break;
+            case "WBK":
+                modul._ds_supplier_all[i]= DataManager.getDummy_WBF(array_data[7], "supplier");
+                console.log("WBK:"+ modul._ds_supplier_all[i]);
+                break;
+            default:
+            //push item in array
+        }
+    }
+    console.log("dynam_chordmaker:getdata");
 
     //check
     checkCountRowsSupplierDynamic();//check if exist 8 rows per departement(matrix)
-    for(var i=0;i<6;i++)
-            console.log("array after :"+modul._ds_supplier_all.length);
+
     //and merging
     //for(var i=0;i<array_length;i++){
-        csvall=mergingFiles(modul._ds_supplier_all);
-        console.log("merging:"+csvall.length);
-    //}
+    csvall=mergingFiles(modul._ds_supplier_all);
+
     console.log("dynam_chordmaker:merging");
     //sorting
     //csvsort=sortingFiles(csvall, filtercontent); deaktiviert 27.12.2016
@@ -490,8 +683,8 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     }
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
     modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
-
 }
+
 
 function filter(data, param, filtername){
     console.log(modul._error_counter+" filter");

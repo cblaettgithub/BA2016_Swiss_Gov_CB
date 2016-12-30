@@ -43,18 +43,18 @@
         <td id="output_suppliers">Choice Suppliers</td>
         <td id="output_categorys">Choice Categorys</td>
         <td >Choice Years</td>
-        <td id="execute">Execute</td>
+        <td id="execute">Visualisierung</td>
     </tr>
     <tr >
         <td>
-            <input type="checkbox" class="dept" value="BK" checked="checked">BK<br>
-            <input type="checkbox" class="dept" value="EDI" checked="checked">EDA<br>
-            <input type="checkbox" class="dept" value="EDA" checked="checked">EDI<br>
-            <input type="checkbox" class="dept" value="EFD" checked="checked">EFD<br>
-            <input type="checkbox" class="dept" value="EJPD" checked="checked">EJPD<br>
-            <input type="checkbox" class="dept" value="UVEK" checked="checked">UVEK<br>
-            <input type="checkbox" class="dept" value="VBS" checked="checked">VBS<br>
-            <input type="checkbox" class="dept" value="WBK" checked="checked">WBF
+            <input type="checkbox" class="dept" value="BK" >BK<br>
+            <input type="checkbox" class="dept" value="EDI" >EDI<br>
+            <input type="checkbox" class="dept" value="EDA" >EDA<br>
+            <input type="checkbox" class="dept" value="EFD" >EFD<br>
+            <input type="checkbox" class="dept" value="EJPD" >EJPD<br>
+            <input type="checkbox" class="dept" value="UVEK" >UVEK<br>
+            <input type="checkbox" class="dept" value="VBS" >VBS<br>
+            <input type="checkbox" class="dept" value="WBK" >WBK
         </td>
         <td>
            <input type="checkbox" class="supplier" value="481426823" checked="checked">Schweiz. Depeschenagentur AG<br>
@@ -77,10 +77,18 @@
             <input type="checkbox" class="category" value="15.3" checked="checked">Telekommunikation
         </td>
         <td>
-            <input type="checkbox" class="year" value="1">2011<br>
-            <input type="checkbox" class="year" value="2">2012<br>
-            <input type="checkbox" class="year" value="3">2013<br>
-            <input type="checkbox" class="year" value="4" checked="checked">2014<br>
+            <input type="radio" class="year" value="2011" name="currentyear" checked="checked">2011<br>
+            <input type="radio" class="year" value="2012" name="currentyear">2012<br>
+            <input type="radio" class="year" value="2013" name="currentyear">2013<br>
+            <input type="radio" class="year" value="2014" name="currentyear">2014<br>
+            <br><br><br><br><br>
+        </td>
+        <td>
+            <input type="checkbox" class="visual" value="1" checked="checked">Supplier - Kategorien<br>
+            <input type="checkbox" class="visual" value="2">Supplier - Dept<br>
+            <input type="checkbox" class="visual" value="3">Categorien - Dept<br>
+           <br>
+            <br>
             <br><br><br><br><br>
         </td>
     </tr>
@@ -95,9 +103,19 @@
     var dept = [];
     var supplier = [];
     var categories=[];
+    var visualchoice;
     var query = window.location.search.substring(1);
     var loc = window.location;
     starturlmodusMain(loc);
+
+    function update_year(){
+        d3.selectAll(".year").each(function (d) {
+            cb = d3.select(this);
+            if (cb.property("checked")) {
+                visualchoice=cb.property("value");
+            }
+        });
+    }
 
     function update_dept() {
         d3.selectAll(".dept").each(function (d) {
@@ -127,12 +145,13 @@
 
     d3.select('#execute').on("click", function() {
         d3.select('#execute').style("color", "red");
+        update_year();
         update_dept();
         update_supplier();
         update_category();
         d3.select("#output_suppliers").text(supplier[0]+supplier[1]);
         d3.select("#output_categorys").text(categories[0]);
-        window.open(startcreatinglinkMain(dept,supplier, categories, 2014),"_self");
+        window.open(startcreatinglinkMain(dept,supplier, categories, visualchoice),"_self");
     });
 </script>
 </body>

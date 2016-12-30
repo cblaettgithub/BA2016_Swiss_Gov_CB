@@ -181,30 +181,41 @@ function startingApplication(content){
             );
             break;
             //*********************
-            //dynamische auswahl
+            //dynamische auswahl //dept dynamic
         case "BK_EDA_EDI_EFD_EJPD_UVEK_VBS_WBF_2015":
             startprocessglobal
             ("Dept_dynamic","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
                 "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
             );
             break;
-        /*case content.substring(0,1):
-            startprocessglobal
-            ("Dept_dynamic","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
-                "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
-            );
-            break;*/
-        case "dynam"://case year noch dazu
-            startprocessglobal
-            ("dynam","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
-                "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
-            );
-        break;
-        case "Dyn_2016"://case year noch dazu
-            startprocessglobal
-            ("dynam","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
-                "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
-            );
+      ///////////chord main
+        case "chord_main"://case year noch dazu
+            switch (modul._currentYear){
+                case "2011":
+                    startprocessglobal
+                    ("chord_main","BK - 2011.csv",   "EDA - 2011.csv","EDI - 2011.csv", "EFD - 2011.csv",
+                        "EJPD - 2011.csv", "UVEK - 2011.csv", "VBS - 2011.csv","WBF - 2011.csv"
+                    );
+                    break;
+                case "2012":
+                    startprocessglobal
+                    ("chord_main","BK - 2012.csv",   "EDA - 2012.csv","EDI - 2012.csv", "EFD - 2012.csv",
+                        "EJPD - 2012.csv", "UVEK - 2012.csv", "VBS - 2012.csv","WBF - 2012.csv"
+                    );
+                    break;
+                case "2013":
+                    startprocessglobal
+                    ("chord_main","BK - 2013.csv",   "EDA - 2013.csv","EDI - 2013.csv", "EFD - 2013.csv",
+                        "EJPD - 2013.csv", "UVEK - 2013.csv", "VBS - 2013.csv","WBF - 2013.csv"
+                    );
+                    break;
+                case "2014":
+                    startprocessglobal
+                    ("chord_main","BK - 2014.csv",   "EDA - 2014.csv","EDI - 2014.csv", "EFD - 2014.csv",
+                        "EJPD - 2014.csv", "UVEK - 2014.csv", "VBS - 2014.csv","WBF - 2014.csv"
+                    );
+                    break;
+            }
         break;
 
         //dynamische auswahl

@@ -214,6 +214,8 @@ function create_supp_category_modulvariable(queryObject){
     //dept
     for (var i=0;i<queryObject.depts.length;i++)
         deptlist[i]=queryObject.depts[i];
+    if ( deptlist[0].length==1) //otherwise it makes bk in b
+        deptlist[0]=queryObject.depts;
 
     //supplier
     for (var i=0;i<queryObject.sup.length;i++)

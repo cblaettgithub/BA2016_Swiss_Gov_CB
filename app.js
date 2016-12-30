@@ -112,17 +112,30 @@ global.starturlmodus=function(loc){
 //querystring after the click mainpage
 
 global.starturlmodusMain=function(loc){
-    modul._v_choice="dynam";
+    modul._v_choice="chord_main";
     console.log("starturlmodusMain:"+"'"+loc+"'");
     if (loc.search==""){
-        Config_start.startingApplication("Dyn_2016");
+        Config_start.startingApplication("chord_main");
     }
     else {
+        switch(modul._currentYear){
+            case "2011":
+                setchoiceData_Supp("supp_A");
+                break;
+            case "2012":
+                setchoiceData_Supp("supp_B");
+                break;
+            case "2013":
+                setchoiceData_Supp("supp_C");
+                break;
+            case "2014":
+                setchoiceData_Supp("supp_A");
+                break;
+        }
         var queryObject = url.parse("'" + loc + "'", true).query;//get querystring
         CreatingLinks.create_supp_category_modulvariable(queryObject);
-        Config_start.startingApplication("Dyn_2016");
+        Config_start.startingApplication("chord_main");
     }
-
 };
 
 // CreateLink Uri ok (2)
@@ -150,7 +163,8 @@ global.starturimodus=function(loc){
 };
 
 //starting with choiced csv-fils
-global.startprocessglobal = function(choice,content, content_B,content_C,content_D) {
+global.startprocessglobal = function(choice,content, content_B,content_C,content_D,
+                            content_E, content_F,content_G,content_H) {
     modul._v_choice=choice;
     settingParam(0, 0, 720, 720, 6, 15, 0, 0);
 
@@ -158,7 +172,7 @@ global.startprocessglobal = function(choice,content, content_B,content_C,content
     modul._currentcsv="csv/"+content;
     modul._currentcsv_B="csv/"+content_B;
 
-    csvFileSet(content, content_B,content_C,content_D, 0, 0, 0, 0);
+    csvFileSet(content, content_B,content_C,content_D, content_E, content_F,content_G,content_H);
     process();
     //process(modul._currentcsv, content_B,content_C,content_D);
 };

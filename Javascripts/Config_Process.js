@@ -12,10 +12,12 @@ module.exports={
 };
 
 var csvall;
- var csvsort;
- var filtercontent;
- var filtercontentB;
+var csvsort;
+var filtercontent;
+var filtercontentB;
 var ds_supplier_x=[];
+var choicecatarray=[];
+var supplierarray=[];
 
 function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                  data_H ,matrix, choicesupplier, choiceCat){
@@ -33,13 +35,36 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
     console.log("readcsv:datas:"+data.length+" :"+data_B.length+" :"+data_C.length+" :"+data_D.length+" :"+
     data_E.length+" :"+data_F.length+" :"+data_G.length+" :"+data_H.length+" :");
 
-    var JSONData = [
-        { "id": 3, "created_at": "Sun May 05 2013", "amount": 12000},
-        { "id": 1, "created_at": "Mon May 13 2013", "amount": 2000},
-        { "id": 2, "created_at": "Thu Jun 06 2013", "amount": 17000},
-        { "id": 4, "created_at": "Thu May 09 2013", "amount": 15000},
-        { "id": 5, "created_at": "Mon Jul 01 2013", "amount": 16000}
-    ];
+    var JSONData ={
+        "name":"mapping",
+        "cat":
+        {
+            "18.4":     "Informationsarbeit",
+            "18.2":        "Informatik-DL exkl. Personalverleih im Bereich IKT",
+            "15.1":         "Hardware",
+            "14.1":     "Postdienste",
+            "18.3":      "Beratungs-DL fÃ¼r Management und Organisation sowie Coaching",
+            "15.2":      "Software inkl. Lizenzen",
+            "5"   :        "Medizinische Produkte und Pharmabereich",
+            "15.3":     "Telekommunikation",
+            "18.1":      "Allg. Beratungs-DL im Fachbereich eines Amtes und Honorare"
+        }
+    };
+
+    var JsonDataSupplier={
+        "name":"mapping",
+        "supp":
+            {
+            "481426823": "Schweiz. Depeschenagentur AG",
+            "484457734":"Trivadis AG",
+            "480822068": "Fabasoft CH Software AG",
+            "485486377": "Ecoplan AG",
+            "480683648": "Schweizerische Bundesbahnen SBB",
+            "487360646": "FS Communications GmbH Satellitenkommunikation",
+            "480907146": "Victorinox AG",
+            "480580922": "SRG SSR idÃ©e suisse Media Services"
+            }
+    };
 
     //test
     var supplier = [
@@ -52,16 +77,17 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
         "SRG SSR idÃ©e suisse Media Services"
     ];
-    var JsonSupplier=[
-        {
-            "supp_D":{
-                "name":"supp_D", "value":supplier
-            }
-        }
-    ];
 
-    filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
-    //filtercontent=JsonSupplier[0]["supp_D"].value;// selectedsupplier
+    for (var i=0;i<modul._currentcategoryList.length;i++){
+        choicecatarray[i]=JSONData.cat[modul._currentcategoryList[i]];
+        console.log(choicecatarray[i]);
+    }
+    for (var i=0;i<modul._currentsupplierList.length;i++){
+        supplierarray[i]=JsonDataSupplier.supp[modul._currentsupplierList[i]];
+    }
+
+    //filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
+    filtercontent=supplierarray;// selectedsupplier
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
     filtercontentB=choiceCat[modul._choiceData_Cat].value; //selectedcategories
     switch (modul._v_choice){
@@ -442,6 +468,9 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
         }
         modul._filterFullCategory=category_choose;
         modul._filterSupplier=supplier_choose;
+
+
+        //modul._filterFullCategory[i]= ds_supplier_x[i][0].fullCategory;
         for (var i=0;i<8;i++){
             ds_supplier_x[i] =filterC(dataDept,  modul._filterSupplier[i], "idSupplier", modul._filterFullCategory, "idCategory");
             switch (array_dept[0])
@@ -473,6 +502,9 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
             }
             ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
         }
+        //neu
+        modul._filterFullCategory=choicecatarray;
+        modul._filterSupplier=supplierarray;
         csvall=mergingFiles( ds_supplier_x);
     }
     else{
@@ -569,6 +601,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
     modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 }
+
 
 //dynamically making chords
 function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, array_data){

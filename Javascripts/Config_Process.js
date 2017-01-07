@@ -77,17 +77,21 @@ function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
         "Stoupa & Partners AG Beratungsgesellschaft Betriebswi",
         "SRG SSR idÃ©e suisse Media Services"
     ];
-
-    for (var i=0;i<modul._currentcategoryList.length;i++){
-        choicecatarray[i]=JSONData.cat[modul._currentcategoryList[i]];
-        console.log(choicecatarray[i]);
+    //chord main
+    if (modul._v_choice=="chord_main"){
+        for (var i=0;i<modul._currentcategoryList.length;i++){
+            choicecatarray[i]=JSONData.cat[modul._currentcategoryList[i]];
+            console.log(choicecatarray[i]);
+        }
+        for (var i=0;i<modul._currentsupplierList.length;i++){
+            supplierarray[i]=JsonDataSupplier.supp[modul._currentsupplierList[i]];
+        }
+        filtercontent=supplierarray;// selectedsupplier
+    }//chord 02
+    else{
+        filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
     }
-    for (var i=0;i<modul._currentsupplierList.length;i++){
-        supplierarray[i]=JsonDataSupplier.supp[modul._currentsupplierList[i]];
-    }
 
-    //filtercontent=choicesupplier[modul._choiceData].value;// selectedsupplier
-    filtercontent=supplierarray;// selectedsupplier
     modul._filterSupplier=filtercontent;//filtersupplier notwendig später im modul matrix
     filtercontentB=choiceCat[modul._choiceData_Cat].value; //selectedcategories
     switch (modul._v_choice){
@@ -508,8 +512,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
         csvall=mergingFiles( ds_supplier_x);
     }
     else{
-
-    //Filter
+    //8 suppliers until 3  departement and suppliere with categories
     for (var i=0;i<array_length;i++){
         array_data[i] =filter(array_data[i], filtercontent, "idSupplier");
         console.log("output:dynam:arraylengt:"+array_data[i].length);
@@ -560,6 +563,14 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     checkCountRowsSupplierDynamic();//check if exist 8 rows per departement(matrix)
     //and merging
 
+        //neu
+    modul._filterFullCategory=choicecatarray;
+   for(var i=0;i<array_dept.length;i++)
+       supplierarray[i]=array_dept[i];
+
+    filtercontent=supplierarray;
+    modul._filterSupplier=supplierarray;
+
     csvall=mergingFiles(modul._ds_supplier_all);
     console.log("dynam_chordmaker:merging");
     //sorting
@@ -602,7 +613,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 }
 
-
+//for supplier 2016_chord_02.html
 //dynamically making chords
 function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, array_data){
 
@@ -610,9 +621,7 @@ function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, 
     console.log("dynam:array.lengt:"+array_length);
     modul._ds_supplier_all=[];
     modul._countDep=array_length-1;
-
     modul._filterSupplier=filtercontent.slice(0, 8);
-
 
     for (var i=0;i<supplier_choose.length;i++)
         console.log("output:dynam:"+modul._filterSupplier[i]);
@@ -717,7 +726,6 @@ function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, 
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
     modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 }
-
 
 function filter(data, param, filtername){
     console.log(modul._error_counter+" filter");

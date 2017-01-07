@@ -15,68 +15,68 @@ function startingApplication(content){
 
     switch(content) {//EDA-EDI 2011- 2014
         case 'BK_BK_2011':
-            startprocessglobal("BK_BK_2011","BK - 2011.csv","BK - 2011.csv", 0,0);
+            startprocessglobal("BK_BK_2011","BK - 2011.csv","BK - 2011.csv", 0,0,0,0,0,0);
             break;
         case 'BK_BK_2012':
-            startprocessglobal("BK_BK_2012","BK - 2012.csv","BK - 2012.csv", 0,0);
+            startprocessglobal("BK_BK_2012","BK - 2012.csv","BK - 2012.csv", 0,0,0,0,0,0);
             break;
         case 'BK_BK_2013':
-            startprocessglobal("BK_BK_2013","BK - 2013.csv","BK - 2013.csv", 0,0);
+            startprocessglobal("BK_BK_2013","BK - 2013.csv","BK - 2013.csv", 0,0,0,0,0,0);
             break;
         case 'BK_BK_2014':
-            startprocessglobal("BK_BK_2014","BK - 2014.csv","BK - 2014.csv", 0,0);
+            startprocessglobal("BK_BK_2014","BK - 2014.csv","BK - 2014.csv", 0,0,0,0,0,0);
             break;
 
         case 'EDA_EDA_2011':
-            startprocessglobal("EDA_EDA_2011","EDA - 2011.csv","EDA - 2011.csv", 0,0);
+            startprocessglobal("EDA_EDA_2011","EDA - 2011.csv","EDA - 2011.csv", 0,0,0,0,0,0);
             break;
         case 'EDA_EDA_2012':
-            startprocessglobal("EDA_EDA_2012","EDA - 2012.csv","EDA - 2012.csv", 0,0);
+            startprocessglobal("EDA_EDA_2012","EDA - 2012.csv","EDA - 2012.csv", 0,0,0,0,0,0);
             break;
         case 'EDA_EDA_2013':
-            startprocessglobal("EDA_EDA_2013","EDA - 2013.csv","EDA - 2013.csv", 0,0);
+            startprocessglobal("EDA_EDA_2013","EDA - 2013.csv","EDA - 2013.csv", 0,0,0,0,0,0);
             break;
         case 'EDA_EDA_2014':
-            startprocessglobal("EDA_EDA_2014","EDA - 2014.csv","EDA - 2014.csv", 0,0);
+            startprocessglobal("EDA_EDA_2014","EDA - 2014.csv","EDA - 2014.csv", 0,0,0,0,0,0);
             break;
 
         case 'EDI_EDI_2011':
-            startprocessglobal("EDI_EDI_2011","EDI - 2011.csv","EDI - 2011.csv", 0,0);
+            startprocessglobal("EDI_EDI_2011","EDI - 2011.csv","EDI - 2011.csv", 0,0,0,0,0,0);
             break;
         case 'EDI_EDI_2012':
-            startprocessglobal("EDI_EDI_2012","EDI - 2012.csv","EDI - 2012.csv", 0,0);
+            startprocessglobal("EDI_EDI_2012","EDI - 2012.csv","EDI - 2012.csv", 0,0,0,0,0,0);
             break;
         case 'EDI_EDI_2013':
-            startprocessglobal("EDI_EDI_2013","EDI - 2013.csv","EDI - 2013.csv", 0,0);
+            startprocessglobal("EDI_EDI_2013","EDI - 2013.csv","EDI - 2013.csv", 0,0,0,0,0,0);
             break;
         case 'EDI_EDI_2014':
-            startprocessglobal("EDI_EDI_2014","EDI - 2014.csv","EDI - 2014.csv", 0,0);
+            startprocessglobal("EDI_EDI_2014","EDI - 2014.csv","EDI - 2014.csv", 0,0,0,0,0,0);
             break;
 
         case 'EFD_EFD_2011':
-            startprocessglobal("EFD_EFD_2011","EFD - 2011.csv","EFD - 2011.csv", 0,0);
+            startprocessglobal("EFD_EFD_2011","EFD - 2011.csv","EFD - 2011.csv", 0,0,0,0,0,0);
             break;
         case 'EFD_EFD_2012':
-            startprocessglobal("EFD_EFD_2012","EFD - 2012.csv","EFD - 2012.csv", 0,0);
+            startprocessglobal("EFD_EFD_2012","EFD - 2012.csv","EFD - 2012.csv", 0,0,0,0,0,0);
             break;
         case 'EFD_EFD_2013':
-            startprocessglobal("EFD_EFD_2013","EFD - 2013.csv","EFD - 2013.csv", 0,0);
+            startprocessglobal("EFD_EFD_2013","EFD - 2013.csv","EFD - 2013.csv", 0,0,0,0,0,0);
             break;
         case 'EFD_EFD_2014':
-            startprocessglobal("EFD_EFD_2014","EFD - 2014.csv","EFD - 2014.csv", 0,0);
+            startprocessglobal("EFD_EFD_2014","EFD - 2014.csv","EFD - 2014.csv", 0,0,0,0,0,0);
             break;
 
         case 'EJPD_EJPD_2011':
-            startprocessglobal("EJPD_EJPD_2011","EJPD - 2011.csv","EJPD - 2011.csv", 0,0);
+            startprocessglobal("EJPD_EJPD_2011","EJPD - 2011.csv","EJPD - 2011.csv",0,0,0,0,0,0);
             break;
         case 'EJPD_EJPD_2012':
-            startprocessglobal("EJPD_EJPD_2012","EJPD - 2012.csv","EJPD - 2012.csv", 0,0);
+            startprocessglobal("EJPD_EJPD_2012","EJPD - 2012.csv","EJPD - 2012.csv", 0,0,0,0,0,0);
             break;
         case 'EJPD_EJPD_2013':
-            startprocessglobal("EJPD_EJPD_2013","EJPD - 2013.csv","EJPD - 2013.csv", 0,0);
+            startprocessglobal("EJPD_EJPD_2013","EJPD - 2013.csv","EJPD - 2013.csv", 0,0,0,0,0,0);
             break;
         case 'EJPD_EJPD_2014':
-            startprocessglobal("EJPD_EJPD_2014","EJPD - 2014.csv","EJPD - 2014.csv", 0,0);
+            startprocessglobal("EJPD_EJPD_2014","EJPD - 2014.csv","EJPD - 2014.csv", 0,0,0,0,0,0);
             break;
 
         case 'EDA_EDI_2011':

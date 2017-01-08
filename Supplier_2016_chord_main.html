@@ -47,6 +47,7 @@
     </tr>
     <tr >
         <td>
+            <input type="checkbox"  id="dept_A" >Alle<br>
             <input type="checkbox" class="dept" value="BK" >BK<br>
             <input type="checkbox" class="dept" value="EDI" >EDI<br>
             <input type="checkbox" class="dept" value="EDA" >EDA<br>
@@ -57,6 +58,7 @@
             <input type="checkbox" class="dept" value="WBK" >WBK
         </td>
         <td>
+            <input type="checkbox"  id="supp_A" >Alle<br>
            <input type="checkbox" class="supplier" value="481426823" checked="checked">Schweiz. Depeschenagentur AG<br>
            <input type="checkbox" class="supplier" value="484457734" checked="checked">Trivadis AG<br>
            <input type="checkbox" class="supplier" value="480822068" checked="checked">Fabasoft CH Software AG<br>
@@ -67,6 +69,7 @@
            <input type="checkbox" class="supplier" value="480580922" checked="checked">SRG SSR idÃ©e suisse Media Services
         </td>
         <td>
+            <input type="checkbox"  id="cat_A" >Alle<br>
             <input type="checkbox" class="category" value="18.4" checked="checked">Informationsarbeit<br>
             <input type="checkbox" class="category" value="18.2" checked="checked">Informatik-DL exkl. Personalverleih im Bereich IKT<br>
             <input type="checkbox" class="category" value="15.1" checked="checked">Hardware<br>
@@ -128,6 +131,16 @@
             }
         });
     }
+
+    d3.select("#dept_A").on("change", function(){
+        d3.selectAll('.dept').property('checked', true);
+    });
+    d3.select("#supp_A").on("change", function(){
+        d3.selectAll('.supplier').property('checked', true);
+    });
+    d3.select("#cat_A").on("change", function(){
+        d3.selectAll('.category').property('checked', true);
+    });
 
     function update_dept() {
         d3.selectAll(".dept").each(function (d) {

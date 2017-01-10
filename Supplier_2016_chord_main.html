@@ -55,7 +55,7 @@
             <input type="checkbox" class="dept" value="EJPD" >EJPD<br>
             <input type="checkbox" class="dept" value="UVEK" >UVEK<br>
             <input type="checkbox" class="dept" value="VBS" >VBS<br>
-            <input type="checkbox" class="dept" value="WBK" >WBK
+            <input type="checkbox" class="dept" value="WBK" >WBF
         </td>
         <td>
             <input type="checkbox"  id="supp_A" >Alle<br>
@@ -87,19 +87,11 @@
             <br><br><br><br><br>
         </td>
         <td>
-            <input type="checkbox" class="visual" value="1" checked="checked">Supplier - Kategorien<br>
-            <input type="checkbox" class="visual" value="2">Supplier - Dept<br>
-           <br>
+            <input type="radio" class="visual" value="1" checked="checked">Departementen - Supplier<br>
+            <input type="radio" class="visual" value="2">Departemente - Kategorien<br>
             <br>
             <br><br><br><br><br>
         </td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td id="leftTitle" style="bold"></td>
-        <td id="rightTitle"></td>
-        <td ></td>
     </tr>
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
@@ -108,11 +100,14 @@
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <div id="tooltip"></div>
+<div id="title_l" style="position:relative;top:10px;left:220px;">
+    <p><u><bold>Departemente - - - - - - - - - - - Supplier</bold></u></p>
+</div>
 <script>
     var dept = [];
     var supplier = [];
     var categories=[];
-    var visualchoice;
+    var visualchoice=2;
     var query = window.location.search.substring(1);
     var loc = window.location;
     starturlmodusMain(loc);
@@ -125,6 +120,14 @@
 
     function update_year(){
         d3.selectAll(".year").each(function (d) {
+            cb = d3.select(this);
+            if (cb.property("checked")) {
+                visualchoice=cb.property("value");
+            }
+        });
+    }
+    function update_visual(){
+        d3.selectAll(".visual").each(function (d) {
             cb = d3.select(this);
             if (cb.property("checked")) {
                 visualchoice=cb.property("value");
@@ -178,6 +181,44 @@
         d3.select("#output_categorys").text(categories[0]);
         window.open(startcreatinglinkMain(dept,supplier, categories, visualchoice),"_self");
     });
+
 </script>
+<div id="legende" style="width:800px;heigh:400px">
+    <table>
+        <tr>
+            <td><b>Legende</b></td>
+            <td>Departemente des Bundes</td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td colspan="3"><b>BK:</b> Schweizerische Bundeskasse, <b>EDI:</b> Eidgenössisches Departement des Innersn,
+               </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <b>EDA:</b> Eidgenösisches Departement des Aeusseren
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>EFD:</b> Eidgenösisches Finanzdepartement, <b>EJPD:</b> Eidgen. Justiz und Polizeidepartement,
+                         </td>
+        </tr>
+        <tr>
+            <td> <b>UVEK:</b> Eidg. Departement für Umwelt, Verkehr, Energie und Kommunikation</td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>VBS:</b> Eidgen. Departement für Verteidigung, Bevölkerungsschutz und Sport</td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>WBF:</b> Eidg. Departement für Wirtschaft, Bildung und Forschung,</td>
+        </tr>
+        <tr>
+            <td>Rechts:</td>
+            <td>Categorys von den Departementen</td>
+            <td></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

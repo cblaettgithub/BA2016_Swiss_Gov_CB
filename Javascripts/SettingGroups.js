@@ -54,6 +54,8 @@ function groupText() {//den länderbogen beschriften
 
     function groupTicks(d) {
         var k = (d.endAngle - d.startAngle) / d.value;
+        //tooltip
+        modul._currentCost.push(d.value);
         return d3.range(0, d.value, 1000000).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
@@ -61,7 +63,7 @@ function groupText() {//den länderbogen beschriften
             };//3// ///
         });
     }
-   if (modul._countDep!=7) {
+   if (modul._countDep!=8) {
        var g = modul._svg.selectAll("g.group")
        var ticks = g.selectAll("g")
            .data(groupTicks)
@@ -113,7 +115,9 @@ function mouseover(d, i) {
     d3.select("#tooltip")
         .style("visibility", "visible")
         .html(modul._supplier[i].key + "<br>  "+
-           modul._supplier[i].values[0])
+           modul._supplier[i].values[0]+ "<br>  "+
+           modul._currentCost[i]
+        )
         .style("top", function () { return (d3.event.pageY - 80)+"px"})
         .style("left", function () { return (d3.event.pageX - 130)+"px";})
 

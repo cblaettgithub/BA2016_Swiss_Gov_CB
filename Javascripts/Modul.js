@@ -62,7 +62,9 @@
     var _currentdepList;
     var _currentsupplierList;
     var _currentcategoryList;
-    var _currentYear;
+    var _currentYear=2011;
+    var _currentCost=[];
+    var _currentVisual=2;
 
     /*creatinglinks*/
 
@@ -129,5 +131,7 @@
         _currentdepList:_currentdepList,
         _currentsupplierList:_currentsupplierList,
         _currentcategoryList:_currentcategoryList,
-        _currentYear:_currentYear
+        _currentYear:_currentYear,
+        _currentCost:_currentCost,
+        _currentVisual:_currentVisual
     };

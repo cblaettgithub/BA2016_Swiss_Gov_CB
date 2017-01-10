@@ -294,6 +294,7 @@ function getMatrixValue(row,nameValue, counter, dep_sup){
     else if (nameValue.length==1){
         depName=nameValue[0];
     }
+
     if (row.values[0].key!="null"){
         setMaxNumber(d3.round(row.values[0].value[depName]));
         result=d3.round(row.values[0].value[depName]);

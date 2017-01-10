@@ -8,11 +8,12 @@ module.exports={
 function startingApplication(content){
     //console.log(modul._error_counter+" starting with Query");
     //modul._error_counter++;
+    modul._v_choice=content;
     if (content=="BK_EDI_All")
         modul._vmodus="BK_EDI_cumulation";
     else
         modul._vmodus="default";
-
+    console.log(modul._v_choice);
     switch(content) {//EDA-EDI 2011- 2014
         case 'BK_BK_2011':
             startprocessglobal("BK_BK_2011","BK - 2011.csv","BK - 2011.csv", 0,0,0,0,0,0);

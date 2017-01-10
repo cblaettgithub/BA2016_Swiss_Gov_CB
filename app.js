@@ -39,6 +39,7 @@ appmy.get(urlname+'/dept/:id/supplier/:id/cat/:id/year/:id', function (req, res)
 
     global.setchoiceData_Supp=function(name){
         modul._choiceData=name;
+        console.log("setchoiceData:"+name);
         switch ( modul._choiceData){
             case "supp_A":
                 modul._currentcolor="csv/color_2.csv";
@@ -114,29 +115,16 @@ global.starturlmodus=function(loc){
 global.starturlmodusMain=function(loc){
     modul._v_choice="chord_main";
     console.log("starturlmodusMain:"+"'"+loc+"'");
+
     if (loc.search==""){
         Config_start.startingApplication("chord_main");
     }
     else {
-        switch(modul._currentYear){
-            case "2011":
-                setchoiceData_Supp("supp_A");
-                break;
-            case "2012":
-                setchoiceData_Supp("supp_B");
-                break;
-            case "2013":
-                setchoiceData_Supp("supp_C");
-                break;
-            case "2014":
-                setchoiceData_Supp("supp_A");
-                break;
-        }
         var queryObject = url.parse("'" + loc + "'", true).query;//get querystring
         CreatingLinks.create_supp_category_modulvariable(queryObject);
         Config_start.startingApplication("chord_main");
     }
-};
+ };
 
 // CreateLink Uri ok (2)
 global.startcreatinglinkUri=function(dept, supplier, category, year){
@@ -234,6 +222,27 @@ function process() {
     console.log("process:defer:"+modul._currentcsv);
     var test=0; //0 normal, 1 kummulation
     console.log("choice modus:"+modul._vmodus);
+
+    //color für chord main
+    if (modul._v_choice=="chord_main")
+    {
+        console.log("starturlmodusMain:"+"'"+loc+"'");
+
+        switch(modul._currentYear){
+            case "2011":
+                modul._currentcolor="csv/color_2.csv";
+                break;
+            case "2012":
+                modul._currentcolor="csv/color_3.csv";
+                break;
+            case "2013":
+                modul._currentcolor="csv/color_4.csv";
+                break;
+            case "2014":
+                modul._currentcolor="csv/color_2.csv";
+                break;
+        }
+    }
     if (modul._vmodus=="default"){//each year
         q= d3.queue();
         q

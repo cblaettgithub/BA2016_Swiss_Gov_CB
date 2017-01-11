@@ -420,60 +420,61 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
 
 
     //one departement, all supplier, all categories
-    if (array_length < 3){
+    if (array_length < 4){
         modul._filterSupplier=supplier_choose.slice(0, array_length);
         filtercontent=supplier_choose.slice(0, array_length);
         modul._filterFullCategory=array_dept;//
         var dataDept;
+        var countsupplier=supplier_choose.length;
 
         switch(array_dept[0])
         {
             case "BK":
-                dataDept=array_data[0];
-                for(var i=0;i<8;i++)
+                dataDept=array_data[0]; //aus dem Array gemäss Auswahl Departement das korrekt Arrayelement holen, A, B,C..
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumBundeskanzelt";
                 break;
             case "EDA":
                 dataDept=array_data[1];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumEDA";
                 break;
             case "EDI":
                 dataDept=array_data[2];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumEDI";
                 break;
             case "EFD":
                 dataDept=array_data[3];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumEFD";
                 break;
             case "EJPD":
                 dataDept=array_data[4];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumBFM";
                 break;
             case "UVEK":
                 dataDept=array_data[5];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumUVEK";
                 break;
             case "VBS":
                 dataDept=array_data[6];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumVBS";
                 break;
             case "WBK":
                 dataDept=array_data[7];
-                for(var i=0;i<8;i++)
+                for(var i=0;i<countsupplier;i++)
                     arraycolumns[i]="sumWBF";
                 break;
         }
         modul._filterFullCategory=category_choose;
         modul._filterSupplier=supplier_choose;
 
-        //filtering for suppliery and categorys filter C(Category and Suppliers)
-        for (var i=0;i<8;i++){
+        //filtering for each suppliery and all categorys filter C(Category and Suppliers)
+        for (var i=0;i<countsupplier;i++){
             ds_supplier_x[i] =filterC(dataDept,  modul._filterSupplier[i], "idSupplier", modul._filterFullCategory, "idCategory");
             switch (array_dept[0])
             {
@@ -502,7 +503,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
                     ds_supplier_x[i]=DataManager.getDummy_WBF(ds_supplier_x[i], "supplier");
                     break;
             }
-            ds_supplier_x[i]=checkcountRows(8, ds_supplier_x[i] );
+            ds_supplier_x[i]=checkcountRows(countsupplier, ds_supplier_x[i] );
         }
         //neu für überschriften
         modul._filterFullCategory=choicecatarray;

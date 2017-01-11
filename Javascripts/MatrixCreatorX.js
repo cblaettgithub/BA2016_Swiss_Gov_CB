@@ -308,6 +308,7 @@ function createSupplierList(dataRows, supplier_field){
     console.log("creatsupplier+ anzahl supplier:"+v_Supplier);
     var i=0;
     var end;
+
     if (v_Supplier==1){
         end=2;
         for(var i=0;i<end;i++)
@@ -315,9 +316,14 @@ function createSupplierList(dataRows, supplier_field){
         for(var i=0;i<end;i++)
             modul._supplier.push(dataRows[i]);
     }
+    if (v_Supplier==3){
+        //end=v_Supplier*3;
+        supplierlabel();
+    }
 
     if (v_Supplier==4){
-        end=v_Supplier*3;
+        //end=v_Supplier*3;
+        supplierlabel();
     }
     else if   (modul._countDep==5){
         supplierlabel();

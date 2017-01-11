@@ -87,13 +87,13 @@ global.startcreatinglink=function(dept, supplier, category, year){
     return modul._http_query;
 };
 // CreateLink Querystring (0)
-global.startcreatinglinkMain=function(dept, supplier, category, year){
+global.startcreatinglinkMain=function(dept, supplier, category, year, visual){
     if (modul._choiceData="")
         modul._choiceData="supp_A";
     console.log("100: startcreatinglinkMain:supplier."+supplier);
     console.log(modul._error_counter+" start startcreatinglinkMain+Supplierchoice"+modul._choiceData);
     CreatingLinks.setCurrentUrl("hostname");
-    CreatingLinks.setParamMain(dept,supplier, category, year);
+    CreatingLinks.setParamMain(dept,supplier, category, year,visual);
     CreatingLinks.createLinkMain();
     return modul._http_query;
 };

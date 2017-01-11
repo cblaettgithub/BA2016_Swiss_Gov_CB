@@ -71,7 +71,7 @@ function matrix_Creator(DataEDI_EDA, DataEDI_EDA_Sort, Names_sumsEDA_EDI_BK){
 
     console.log(modul._error_counter+" matrix_Creator");
     modul._error_counter++;
-    return supplier;
+    //return supplier;
 }
 
 function compareCSV(dataA, dataB, dataC,dataD, field) {

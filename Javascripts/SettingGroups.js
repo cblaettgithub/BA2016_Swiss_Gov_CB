@@ -63,7 +63,7 @@ function groupText() {//den länderbogen beschriften
             };//3// ///
         });
     }
-   if (modul._countDep!=8) {
+   if (modul._countDep!=7) {
        var g = modul._svg.selectAll("g.group")
        var ticks = g.selectAll("g")
            .data(groupTicks)

@@ -18,7 +18,7 @@ var filtercontentB;
 var ds_supplier_x=[];
 var choicecatarray=[];
 var supplierarray=[];
-const column_name="idSupplier";
+var column_name="idSupplier";
 
 function readcsv(data, data_B,data_C,data_D,data_E, data_F,data_G,
                  data_H ,matrix, choicesupplier, choiceCat){
@@ -423,7 +423,6 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
         modul._filterSupplier=supplier_choose.slice(0, array_length);
         filtercontent=supplier_choose.slice(0, array_length);
         modul._filterFullCategory=array_dept;//
-
         var dataDept;
 
         switch(array_dept[0])
@@ -511,66 +510,62 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     }
     else
         {
-
-        modul._filterFullCategory=array_dept;//
+            console.log("current visual:"+modul._currentVisual);
         //check if for all departement supplier or categorys
         //1 filter for supplier, default categorys, using function filter(for suppliers or categorys)
         //filtercontent content the id of suppliers or categorys
-        if (modul._currentVisual==1){
-            modul._filterSupplier=supplier_choose.slice(0, array_length);
-            filtercontent=supplier_choose.slice(0, array_length);
+        if (modul._currentVisual=='dept_sup'){
+            console.log("current visual:"+modul._currentVisual);
+            //columname already supplierid
             modul._filterSupplier=supplierarray;
-            filtercontent=filtercontent.slice(0, array_length);
+            modul._filterFullCategory=array_dept;//
             for (var i=0;i<array_length;i++){
-                array_data[i] =filter(array_data[i], filtercontent, column_name);//id_supplier
+                array_data[i] =filter(array_data[i], supplier_choose.slice(0, array_length), column_name);//id_supplier
             }
-            modul._filterSupplier=supplierarray;    //alle Departement in variable filtersupplier
-            filtercontent=modul._filterFullCategory;//depts
+
         }
-        else{ //1 filter for categorys
-            modul._filterSupplier=category_choose.slice(0, array_length);
-            filtercontent=category_choose.slice(0, array_length);
+        else if (modul._currentVisual=='dept_cat'){ //1 filter for categorys
+            console.log("current visual:"+modul._currentVisual);
+            column_name="fullCategory";
             modul._filterSupplier=choicecatarray;
-            filtercontent=filtercontent.slice(0, array_length);
+            modul._filterFullCategory=array_dept;//
             for (var i=0;i<array_length;i++){
-                array_data[i] =filter(array_data[i], filtercontent, "idCategory");
+                array_data[i] =filter(array_data[i], choicecatarray.slice(0, array_length), "fullCategory");
             }
-            modul._filterSupplier=choicecatarray;    //alle Departement in variable filtersupplier
-            filtercontent=modul._filterFullCategory;//depts
         }
     //getdata
     for(var i=0;i< array_dept.length; i++){
         switch(array_dept[i]){
             case "BK":
-                modul._ds_supplier_all[i]= DataManager.getDummy_BK(array_data[0], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_BK(array_data[0], column_name);
                 console.log("BK:"+ modul._ds_supplier_all[i]);
                 break;
             case "EDI":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[1], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[1], column_name);
                 console.log("EDI:"+ modul._ds_supplier_all[i]);
                 break;
             case "EDA":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[2], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[2], column_name);
                 console.log("EDA:"+ modul._ds_supplier_all[i]);
                 break;
             case "EFD":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EFD(array_data[3], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_EFD(array_data[3], column_name);
                 console.log("EFD:"+ modul._ds_supplier_all[i]);
                 break;
             case "EJPD":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EJPD(array_data[4], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_EJPD(array_data[4], column_name);
                 console.log("EJPD:"+ modul._ds_supplier_all[i]);
                 break;
             case "UVEK":
-                modul._ds_supplier_all[i]= DataManager.getDummy_UVEK(array_data[5], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_UVEK(array_data[5], column_name);
                 console.log("UVEK:"+ modul._ds_supplier_all[i]);
                 break;
             case "VBS":
-                modul._ds_supplier_all[i]= DataManager.getDummy_VBS(array_data[6], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_VBS(array_data[6], column_name);
                 console.log("VBS:"+ modul._ds_supplier_all[i]);
                 break;
             case "WBK":
-                modul._ds_supplier_all[i]= DataManager.getDummy_WBF(array_data[7], "supplier");
+                modul._ds_supplier_all[i]= DataManager.getDummy_WBF(array_data[7], column_name);
                 console.log("WBK:"+ modul._ds_supplier_all[i]);
                 break;
             default:
@@ -581,8 +576,6 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     //check
     checkCountRowsSupplierDynamic();//check if exist 8 rows per departement(matrix)
     //and merging
-
-
 
     csvall=mergingFiles(modul._ds_supplier_all);
     console.log("dynam_chordmaker:merging");
@@ -623,7 +616,7 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
         }
     }
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
-    modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
+    MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 }
 
 //for supplier 2016_chord_02.html
@@ -737,7 +730,8 @@ function dynam_chordmaker_2(array_dept, supplier_choose, category_choose, year, 
         }
     }
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
-    modul._ds_supplier=MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
+    //modul._ds_supplier=
+    MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
 }
 
 function filter(data, param, filtername){

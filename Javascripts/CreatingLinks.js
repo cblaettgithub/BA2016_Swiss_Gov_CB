@@ -15,7 +15,7 @@ module.exports = {
     setParamMain:setParamMain,
     createLinkMain:createLinkMain
 };
-
+var _visual;
 var _year;
 var _dept;
 var _supplier;
@@ -33,7 +33,6 @@ var _ArrayCounterCategorys=0;
 
 var myurl="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_02.html";
 var myurl2="http://localhost:63342/BA2016_Swiss_Gov/chords_ba2016/Supplier_2016_chord_main.html";
-
 
 var params =
 {   year:      "data.csv",dept: "data.csv",     supplier: "data.csv",
@@ -67,7 +66,8 @@ function setParam(dept, supplier, category, year)
      _category=category;//->alte version
     _year=year;
 }
-function setParamMain(dept, supplier, category, year)
+//for chord_main
+function setParamMain(dept, supplier, category, year, visual)
 {
     console.log("CreatingLinks:setparam");
     var name="";
@@ -101,6 +101,7 @@ function setParamMain(dept, supplier, category, year)
     }
 
     _year=year;
+    _visual=visual;
 }
 
 function createLink(){
@@ -131,8 +132,9 @@ function createLink(){
     modul._http_query=_queryOutput;
     console.log(_queryOutput);
 }
+//for chord_main
 function createLinkMain(){
-    console.log("createLink");
+    console.log("createLinkMain");
 
     var startappend="?";
     var seperator="=";
@@ -170,11 +172,12 @@ function createLinkMain(){
         name="";
     }
     _queryOutput+="year="+_year;
+    _queryOutput+=appender+"visual="+_visual;
 
     modul._http_query=_queryOutput;
     console.log(_queryOutput);
 }
-
+//for supplier chord02
 function create_choicevariable(queryObject){
     var choice="";
     console.log("create_choicevariable:"+queryObject.cat);
@@ -205,11 +208,13 @@ function create_choicevariable(queryObject){
         default:
     }
 }
+//for chord_main
 function create_supp_category_modulvariable(queryObject){
     var deptlist=[];
     var supplierlist=[];
     var categorylist=[];
     var year;
+    var visual;
 
     //dept
     for (var i=0;i<queryObject.depts.length;i++)
@@ -228,11 +233,15 @@ function create_supp_category_modulvariable(queryObject){
     //year
     year=queryObject.year.substr(0,4);
 
+    //visual
+    visual=queryObject.visual.substr(0,8);
+
     //fill in modulvariable
     modul._currentdepList=deptlist;
     modul._currentsupplierList=supplierlist;
     modul._currentcategoryList=categorylist;
     modul._currentYear=year;
+    modul._currentVisual=visual;
 }
 
 

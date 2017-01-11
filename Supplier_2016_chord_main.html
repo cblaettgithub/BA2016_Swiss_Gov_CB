@@ -70,7 +70,7 @@
         </td>
         <td>
             <input type="checkbox"  id="cat_A" >Alle<br>
-            <input type="checkbox" class="category" value="18.4" checked="checked">Informationsarbeit<br>
+            <input type="checkbox" class="category" value="18.4" checked="checked" >Informationsarbeit<br>
             <input type="checkbox" class="category" value="18.2" checked="checked">Informatik-DL exkl. Personalverleih im Bereich IKT<br>
             <input type="checkbox" class="category" value="15.1" checked="checked">Hardware<br>
             <input type="checkbox" class="category" value="14.1" checked="checked">Postdienste<br>
@@ -87,8 +87,8 @@
             <br><br><br><br><br>
         </td>
         <td>
-            <input type="radio" class="visual" value="1" checked="checked">Departementen - Supplier<br>
-            <input type="radio" class="visual" value="2">Departemente - Kategorien<br>
+            <input type="radio" id="dept_sup_id" class="visual" value="dept_sup" name="visual" checked="checked">Departementen - Supplier<br>
+            <input type="radio"  id="dept_cat_id" class="visual" value="dept_cat" name="visual">Departemente - Kategorien<br>
             <br>
             <br><br><br><br><br>
         </td>
@@ -101,39 +101,18 @@
 <script src="bundle.js"></script>
 <div id="tooltip"></div>
 <div id="title_l" style="position:relative;top:10px;left:220px;">
-    <p><u><bold>Departemente - - - - - - - - - - - Supplier</bold></u></p>
+    <p><u><b>Departemente - - - - - - - - - - - Supplier</b></u></p>
 </div>
 <script>
     var dept = [];
     var supplier = [];
     var categories=[];
-    var visualchoice=2;
+    var year=2011;
+    var visual="dept_sup";
     var query = window.location.search.substring(1);
     var loc = window.location;
     starturlmodusMain(loc);
-    updateTitelChord("Categorys", "Supplier");
-
-    function updateTitelChord(leftTitel, rightTitel){
-        d3.select("#leftTitle").text(leftTitel);
-        d3.select("#rightTitle").text(rightTitel);
-    }
-
-    function update_year(){
-        d3.selectAll(".year").each(function (d) {
-            cb = d3.select(this);
-            if (cb.property("checked")) {
-                visualchoice=cb.property("value");
-            }
-        });
-    }
-    function update_visual(){
-        d3.selectAll(".visual").each(function (d) {
-            cb = d3.select(this);
-            if (cb.property("checked")) {
-                visualchoice=cb.property("value");
-            }
-        });
-    }
+    updateTitelChord("Supplier", "Categorien");
 
     d3.select("#dept_A").on("change", function(){
         d3.selectAll('.dept').property('checked', true);
@@ -144,6 +123,39 @@
     d3.select("#cat_A").on("change", function(){
         d3.selectAll('.category').property('checked', true);
     });
+
+    d3.select("#dept_sup_id").on("click", function(){
+        d3.selectAll('.category').property('disabled', true);
+        d3.selectAll('.supplier').property('disabled', false);
+        updateTitelChord("Supplier", "Departementen");
+    });
+    d3.select("#dept_cat_id").on("click", function(){
+        d3.selectAll('.supplier').property('disabled', true);
+        d3.selectAll('.category').property('disabled', false);
+        updateTitelChord("Kategorien", "Departementen");
+    });
+
+    function updateTitelChord(leftTitel, rightTitel){
+        d3.select("#leftTitle").text(leftTitel);
+        d3.select("#rightTitle").text(rightTitel);
+    }
+
+    function update_year(){
+        d3.selectAll(".year").each(function (d) {
+            cb = d3.select(this);
+            if (cb.property("checked")) {
+                year=cb.property("value");
+            }
+        });
+    }
+    function update_visual(){
+        d3.selectAll(".visual").each(function (d) {
+            cb = d3.select(this);
+            if (cb.property("checked")) {
+                visual=cb.property("value");
+            }
+        });
+    }
 
     function update_dept() {
         d3.selectAll(".dept").each(function (d) {
@@ -173,13 +185,20 @@
 
     d3.select('#execute').on("click", function() {
         d3.select('#execute').style("color", "red");
+        update_visual();
         update_year();
         update_dept();
         update_supplier();
         update_category();
+        if (visual=="dept_sup"){
+            updateTitelChord("Supplier", "Departementen");
+        }
+        else if (visual=="dept_cat"){
+            updateTitelChord("Kategorien", "Departementen");
+        }
         d3.select("#output_suppliers").text(supplier[0]+supplier[1]);
         d3.select("#output_categorys").text(categories[0]);
-        window.open(startcreatinglinkMain(dept,supplier, categories, visualchoice),"_self");
+        window.open(startcreatinglinkMain(dept,supplier, categories, year, visual),"_self");
     });
 
 </script>

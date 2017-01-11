@@ -64,7 +64,7 @@
     var _currentcategoryList;
     var _currentYear=2011;
     var _currentCost=[];
-    var _currentVisual=2;
+    var _currentVisual="dept_sup";
 
     /*creatinglinks*/
 

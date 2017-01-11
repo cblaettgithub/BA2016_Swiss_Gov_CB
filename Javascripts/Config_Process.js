@@ -481,11 +481,11 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
                 case "BK":
                     ds_supplier_x[i]=DataManager.getDummy_BK(ds_supplier_x[i], "supplier");
                     break;
-                case "EDI":
-                    ds_supplier_x[i]=DataManager.getDummy_EDI(ds_supplier_x[i], "supplier");
-                    break;
                 case "EDA":
                     ds_supplier_x[i]=DataManager.getDummy_EDA(ds_supplier_x[i], "supplier");
+                    break;
+                case "EDI":
+                    ds_supplier_x[i]=DataManager.getDummy_EDI(ds_supplier_x[i], "supplier");
                     break;
                 case "EFD":
                     ds_supplier_x[i]=DataManager.getDummy_EFD(ds_supplier_x[i], "supplier");
@@ -543,13 +543,13 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
                 modul._ds_supplier_all[i]= DataManager.getDummy_BK(array_data[0], column_name);
                 console.log("BK:"+ modul._ds_supplier_all[i]);
                 break;
-            case "EDI":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[1], column_name);
-                console.log("EDI:"+ modul._ds_supplier_all[i]);
-                break;
             case "EDA":
-                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[2], column_name);
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDA(array_data[1], column_name);
                 console.log("EDA:"+ modul._ds_supplier_all[i]);
+                break;
+            case "EDI":
+                modul._ds_supplier_all[i]= DataManager.getDummy_EDI(array_data[2], column_name);
+                console.log("EDI:"+ modul._ds_supplier_all[i]);
                 break;
             case "EFD":
                 modul._ds_supplier_all[i]= DataManager.getDummy_EFD(array_data[3], column_name);

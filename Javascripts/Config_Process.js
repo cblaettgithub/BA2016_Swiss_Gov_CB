@@ -413,13 +413,14 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
 
     var array_length=array_dept.length;
     var arraycolumns=[];
+    var array_content=[];
     console.log("dynam:array.lengt:"+array_length);
     modul._ds_supplier_all=[];
     modul._countDep=array_length-1;
 
 
     //one departement, all supplier, all categories
-    if (array_length < 4){
+    if (array_length < 3){
         modul._filterSupplier=supplier_choose.slice(0, array_length);
         filtercontent=supplier_choose.slice(0, array_length);
         modul._filterFullCategory=array_dept;//
@@ -519,16 +520,17 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
             //columname already supplierid
             modul._filterSupplier=supplierarray;
             modul._filterFullCategory=array_dept;//
+            array_data=getDatefromEachDepartement(array_content, array_dept, array_data); //Data vom richtigen Departemen
             for (var i=0;i<array_length;i++){
                 array_data[i] =filter(array_data[i], supplier_choose.slice(0, array_length), column_name);//id_supplier
             }
-
         }
         else if (modul._currentVisual=='dept_cat'){ //1 filter for categorys
             console.log("current visual:"+modul._currentVisual);
             column_name="fullCategory";
             modul._filterSupplier=choicecatarray;
             modul._filterFullCategory=array_dept;//
+            array_data=getDatefromEachDepartement(array_content, array_dept, array_data); //Data vom rich
             for (var i=0;i<array_length;i++){
                 array_data[i] =filter(array_data[i], choicecatarray.slice(0, array_length), "fullCategory");
             }
@@ -617,6 +619,40 @@ function dynam_chordmaker(array_dept, supplier_choose, category_choose, year, ar
     }
     console.log("dynam_chordmaker:arraycolumns:length:"+arraycolumns.length);
     MatrixCreatorX.matrix_Creator(csvall,csvall, arraycolumns);
+}
+
+function getDatefromEachDepartement(array_content, array_dept, array_data){
+    for(var i=0;i<array_dept.length;i++){//get the correct data for each department
+        switch(array_dept[i]){
+            case "BK":
+                array_content[i]=array_data[0];
+                break;
+            case "EDA":
+                array_content[i]=array_data[1];
+                break;
+            case "EDI":
+                array_content[i]=array_data[2];
+                break;
+            case "EFD":
+                array_content[i]=array_data[3];
+                break;
+            case "EJPD":
+                array_content[i]=array_data[4];
+                break;
+            case "UVEK":
+                array_content[i]=array_data[5];
+                break;
+            case "VBS":
+                array_content[i]=array_data[6];
+                break;
+            case "WBK":
+                array_content[i]=array_data[7];
+                break;
+            default:
+                break;
+        }
+    }
+    return array_content;
 }
 
 //for supplier 2016_chord_02.html

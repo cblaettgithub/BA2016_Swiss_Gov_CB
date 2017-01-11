@@ -43,7 +43,7 @@
         <td id="output_suppliers">Choice Suppliers</td>
         <td id="output_categorys">Choice Categorys</td>
         <td >Choice Years</td>
-        <td id="execute">Visualisierung</td>
+
     </tr>
     <tr >
         <td>
@@ -86,12 +86,7 @@
             <input type="radio" class="year" value="2014" name="currentyear">2014<br>
             <br><br><br><br><br>
         </td>
-        <td>
-            <input type="radio" id="dept_sup_id" class="visual" value="dept_sup" name="visual" checked="checked">Departementen - Supplier<br>
-            <input type="radio"  id="dept_cat_id" class="visual" value="dept_cat" name="visual">Departemente - Kategorien<br>
-            <br>
-            <br><br><br><br><br>
-        </td>
+
     </tr>
 </table>
 <script src="https://d3js.org/d3.v3.js"></script>
@@ -100,8 +95,27 @@
 <script src="https://d3js.org/d3-request.v1.min.js"></script>
 <script src="bundle.js"></script>
 <div id="tooltip"></div>
-<div id="title_l" style="position:relative;top:10px;left:220px;">
-    <p><u><b>Departemente - - - - - - - - - - - Supplier</b></u></p>
+<div id="title_l" style="position:relative;top:3px;left:220px;">
+    <table>
+        <tr width="400px">
+            <td id="leftTitle" style="width:250px"><u></u></td>
+            <td></td>
+            <td id="rightTitle"><u></u></td>
+        </tr>
+    </table>
+</div>
+<div id="frame_visualierung" style="position:absolute;top:350px;left:800px;">
+    <table border="1">
+        <tr>
+            <td id="execute"><h3>Visualisierung</h3></td>
+        </tr>
+        <td>
+            <input type="radio" id="dept_sup_id" class="visual" value="dept_sup" name="visual" checked="checked">Departementen - Supplier<br>
+            <input type="radio"  id="dept_cat_id" class="visual" value="dept_cat" name="visual">Departemente - Kategorien<br>
+<br>
+        </td>
+    </table>
+
 </div>
 <script>
     var dept = [];
@@ -112,7 +126,7 @@
     var query = window.location.search.substring(1);
     var loc = window.location;
     starturlmodusMain(loc);
-    updateTitelChord("Supplier", "Categorien");
+    updateTitelChord("Supplier", "Departemente");
 
     d3.select("#dept_A").on("change", function(){
         d3.selectAll('.dept').property('checked', true);
@@ -206,7 +220,12 @@
     <table>
         <tr>
             <td><b>Legende</b></td>
-            <td>Departemente des Bundes</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Departemente des Bundes</b></td>
+            <td></td>
             <td></td>
         </tr>
 
@@ -233,8 +252,38 @@
             <td colspan="3"><b>WBF:</b> Eidg. Departement für Wirtschaft, Bildung und Forschung,</td>
         </tr>
         <tr>
-            <td>Rechts:</td>
-            <td>Categorys von den Departementen</td>
+            <td><b>Categorys von den Departementen</b></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Auflistung aller Departement gemäss obenstehender Auswahl</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Auswahl der Departemeten und Kategorien</b></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+        <td>Bei Auswahl von 8 Departement müssen 8 Supplier oder 8 Kategorien ausgewählt werden</td>
+        <td></td>
+        <td></td>
+    </tr>
+        <tr>
+            <td>Bei Auswahl von weniger als 8 Departement dürfen nur die Anzahl Supplier oder Kategorien gemäss Auswahl von Departement ausgewählt werden</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td> Auswahl von 7 Departement -> 7 Supplier oder 7 Kategorien</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td> Auswahl von 6 Departement -> 6 Supplier oder 6 Kategorien usw.</td>
+            <td></td>
             <td></td>
         </tr>
     </table>

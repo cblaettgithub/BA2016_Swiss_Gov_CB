@@ -109,7 +109,6 @@ global.starturlmodus=function(loc){
         Config_start.startingApplication( modul._v_choice);
     }
 };
-
 //querystring after the click mainpage
 
 global.starturlmodusMain=function(loc){

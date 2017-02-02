@@ -119,7 +119,7 @@ function mouseover(d, i) {
            modul._currentCost[i]
         )
         .style("top", function () { return (d3.event.pageY - 80)+"px"})
-        .style("left", function () { return (d3.event.pageX - 130)+"px";})
+        .style("left", function () { return (d3.event.pageX - 30)+"px";})
 
     modul._chord.classed("fade", function(p) {
         return p.source.index != i

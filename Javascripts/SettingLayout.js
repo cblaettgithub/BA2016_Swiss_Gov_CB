@@ -40,7 +40,9 @@ function setSVG(){
         .attr("height",modul._height)
         .append("g")
         .attr("id", "circle")
-        .attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")");
+        //.attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")")
+        .attr("transform", "translate(" + 600 + "," + 430 + ")");
+
 }
 //6
 function appendCircle(){

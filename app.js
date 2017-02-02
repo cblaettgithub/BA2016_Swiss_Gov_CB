@@ -153,7 +153,7 @@ global.starturimodus=function(loc){
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D,
                             content_E, content_F,content_G,content_H) {
     modul._v_choice=choice;
-    settingParam(0, 0, 720, 720, 6, 15, 0, 0);
+    settingParam(0, 0, 1020, 820, 6, 15, 0, 0);//2.2.2017, settingParam(0, 0, 720, 720, 6, 15, 0, 0);//2.2.2017
 
     //default
     modul._currentcsv="csv/"+content;
@@ -351,6 +351,7 @@ function settingParam(trans_width, trans_height, width, height,
     //seeting inpu
     modul._group_x = group_x;
     modul._group_dy = group_dy;
+
 }
 function mergingFiles(csvFiles) {
     console.log(modul._error_counter + " merging files");

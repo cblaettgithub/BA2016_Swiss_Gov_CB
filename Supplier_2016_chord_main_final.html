@@ -2,40 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
     <title>Title</title>
-    <link rel="stylesheet" href="design.css"> </link>
-    <style>
-        #tooltip {
-            color: #454545;
-            opacity: .9;
-            background: #eee;
-            padding: 5px;
-            border: none;
-            border-radius: 5px;
-            position: absolute;
-            z-index: 10;
-            visibility: hidden;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        #circle circle {
-            fill: none;
-            pointer-events: all;
-        }
-        .group path {
-            fill-opacity: .5;
-        }
-        path.chord {
-            stroke: #000;
-            stroke-width: .25px;
-            fill-opacity: 0.5 !important;
-        }
-        #circle:hover path.fade {
-            display: none;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/design.css"/>
+    <link rel="stylesheet" href="css/settings.css"/>
 </head>
 <body>
 <div id="wrapper">
@@ -109,7 +79,7 @@
     <div id="footertitle">
         <table>
             <tr width="400px">
-                <td id="leftTitle" style="width:250px"><u></u></td>
+                <td id="leftTitle" style="width:350px"><u></u></td>
                 <td></td>
                 <td id="rightTitle"><u></u></td>
             </tr>
@@ -135,6 +105,7 @@
     var query = window.location.search.substring(1);
     var loc = window.location;
     starturlmodusMain(loc);
+    console.log("query search:"+window.location.search);
     updateTitelChord("Supplier", "Departemente");
 
     d3.select("#dept_A").on("change", function(){

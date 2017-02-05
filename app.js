@@ -119,6 +119,7 @@ global.starturlmodusMain=function(loc){
         Config_start.startingApplication("chord_main");
     }
     else {
+        console.log("log funct"+loc);
         var queryObject = url.parse("'" + loc + "'", true).query;//get querystring
         CreatingLinks.create_supp_category_modulvariable(queryObject);
         Config_start.startingApplication("chord_main");
@@ -153,7 +154,7 @@ global.starturimodus=function(loc){
 global.startprocessglobal = function(choice,content, content_B,content_C,content_D,
                             content_E, content_F,content_G,content_H) {
     modul._v_choice=choice;
-    settingParam(0, 0, 1020, 820, 6, 15, 0, 0);//2.2.2017, settingParam(0, 0, 720, 720, 6, 15, 0, 0);//2.2.2017
+    settingParam(0, 0, 1080, 700, 6, 15, 0, 0);//2.2.2017, settingParam(0, 0, 720, 720, 6, 15, 0, 0);//2.2.2017
 
     //default
     modul._currentcsv="csv/"+content;

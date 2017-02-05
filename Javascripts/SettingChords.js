@@ -4,8 +4,6 @@
 //7
 modul =   require('./Modul');
 
-/*var SettingData = require('./SettingDatas.js');
-_maindata = new SettingData();*/
 
 module.exports = {
     selectchords:selectchords

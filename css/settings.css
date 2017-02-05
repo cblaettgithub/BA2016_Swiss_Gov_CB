@@ -1,0 +1,30 @@
+#tooltip {
+    color: #454545;
+    opacity: .9;
+    background: #eee;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    position: absolute; left: 300px;
+    z-index: 10;
+    visibility: hidden;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+#circle circle {
+    fill: none;
+    pointer-events: all;
+    align:center;
+}
+.group path {
+    fill-opacity: .5;
+}
+path.chord {
+    stroke: #000;
+    stroke-width: .25px;
+    fill-opacity: 0.5 !important;
+}
+#circle:hover path.fade {
+    display: none;
+}

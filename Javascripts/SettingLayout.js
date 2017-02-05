@@ -36,12 +36,13 @@ function path(){
 //5
 function setSVG(){
     modul._svg = d3.select("body").append("svg")
+        .attr("id", "circle")
+        .attr("left", 300)
         .attr("width", modul._width)
         .attr("height",modul._height)
         .append("g")
-        .attr("id", "circle")
         //.attr("transform", "translate(" + modul._width / 2 + "," + modul._height / 2 + ")")
-        .attr("transform", "translate(" + 600 + "," + 430 + ")");
+        .attr("transform", "translate(" + 700 + "," + 370 + ")");
 
 }
 //6

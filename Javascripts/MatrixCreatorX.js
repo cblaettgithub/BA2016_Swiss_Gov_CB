@@ -372,7 +372,11 @@ function supplierlabel(){
     //dept
     console.log("supplierlabel:dept");
     for (var i=0;i< filtercontent.length;i++){
-        elements={"key":dept[i].substr(0,15), "values":[dept[i], 20]};
+        if (dept[i].length<15)
+            elements={"key":dept[i], "values":[dept[i], 20]};
+        else
+             elements={"key":dept[i].substr(0,15), "values":[dept[i], 20]};
+
         modul._supplier.push(elements);
     };
 

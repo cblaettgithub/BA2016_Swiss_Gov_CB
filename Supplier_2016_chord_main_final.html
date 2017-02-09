@@ -17,14 +17,14 @@
         Dept<br>
         <ul>
        <li> <input type="checkbox"  id="dept_A" >Alle</li>
-        <li>  <input type="checkbox" class="dept" value="BK" >BK</li>
-        <li>  <input type="checkbox" class="dept" value="EDA" >EDA</li>
-        <li>  <input type="checkbox" class="dept" value="EDI" >EDI</li>
-        <li>  <input type="checkbox" class="dept" value="EFD" >EFD</li>
-        <li>  <input type="checkbox" class="dept" value="EJPD" >EJPD</li>
-        <li>  <input type="checkbox" class="dept" value="UVEK" >UVEK</li>
-        <li>  <input type="checkbox" class="dept" value="VBS" >VBS</li>
-        <li>  <input type="checkbox" class="dept" value="WBK" >WBF</li>
+        <li>  <input type="checkbox" class="dept" value="BK" checked="checked">BK</li>
+        <li>  <input type="checkbox" class="dept" value="EDA" checked="checked">EDA</li>
+        <li>  <input type="checkbox" class="dept" value="EDI" checked="checked">EDI</li>
+        <li>  <input type="checkbox" class="dept" value="EFD" checked="checked">EFD</li>
+        <li>  <input type="checkbox" class="dept" value="EJPD" checked="checked">EJPD</li>
+        <li>  <input type="checkbox" class="dept" value="UVEK" checked="checked">UVEK</li>
+        <li>  <input type="checkbox" class="dept" value="VBS" checked="checked">VBS</li>
+        <li>  <input type="checkbox" class="dept" value="WBK" checked="checked">WBF</li>
         </ul>
         </div>
 
@@ -102,10 +102,13 @@
     var categories=[];
     var year=2011;
     var visual="dept_sup";
-    var query = window.location.search.substring(1);
-    var loc = window.location;
+    var loc;
+    var query=window.location.search.substring(1);
+    if (query.length==0)
+        loc="?depts=BK&depts=EDA&depts=EDI&sup=481426823&sup=484457734&sup=480822068&cat=18.4&cat=18.2&cat=15.1&cat=14.1&cat=18.3&cat=15.2&cat=5&cat=15.3&year=2011&visual=dept_sup";
+    else
+        loc = window.location;
     starturlmodusMain(loc);
-    console.log("query search:"+window.location.search);
     updateTitelChord("Supplier", "Departemente");
 
     d3.select("#dept_A").on("change", function(){

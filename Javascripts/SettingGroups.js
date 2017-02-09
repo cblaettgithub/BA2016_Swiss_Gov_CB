@@ -63,8 +63,8 @@ function groupText() {//den länderbogen beschriften
             };//3// ///
         });
     }
-   if (modul._countDep!=7) {
-       var g = modul._svg.selectAll("g.group")
+   if ((modul._countDep!=7 && modul._currentVisual == "dept_sup" ) || (modul._currentYear < 2012 && modul._currentVisual == "dept_cat")) {
+       var g = modul._svg.selectAll("g.group");
        var ticks = g.selectAll("g")
            .data(groupTicks)
            .enter().append("g")
@@ -94,6 +94,7 @@ function groupText() {//den länderbogen beschriften
                return d.label;
            });
    }
+
 }
 function grouptextFilter() {
     modul._groupText.filter(function (d, i) {
